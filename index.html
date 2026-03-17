@@ -3,35 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로또번호 자동생성기</title>
+    <title>지하철 최단거리 안내</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <main class="container">
-        <button id="theme-toggle" class="theme-toggle" type="button">라이트 모드</button>
-        <p class="eyebrow">LUCKY PICK 6/45</p>
-        <h1>로또번호 자동생성기</h1>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 변경">라이트 모드</button>
+        <p class="eyebrow">METRO NAVIGATOR</p>
+        <h1>지하철 최단거리 안내</h1>
         <p class="description">
-            1부터 45까지의 숫자 중 메인 번호 6개와 보너스볼 1개를 중복 없이 자동 생성합니다.
+            출발역과 도착역을 선택하여 가장 빠른 경로와 환승 정보를 확인하세요.
         </p>
 
-        <section class="control-panel" aria-label="생성 설정">
-            <label class="pick-count-label" for="pick-count">생성 세트 수</label>
-            <select id="pick-count" class="pick-count">
-                <option value="1">1세트</option>
-                <option value="3">3세트</option>
-                <option value="5">5세트</option>
-            </select>
-            <button id="generator-btn" type="button">번호 생성하기</button>
+        <section class="control-panel" aria-label="경로 검색 설정">
+            <div class="input-group">
+                <label for="start-station">출발역</label>
+                <input list="station-list" id="start-station" class="station-input" placeholder="예: 시청" autocomplete="off">
+            </div>
+            
+            <div class="swap-btn-container">
+                <button id="swap-btn" class="icon-btn" type="button" aria-label="출발역과 도착역 서로 바꾸기">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="16 3 21 3 21 8"></polyline>
+                        <line x1="4" y1="14" x2="21" y2="3"></line>
+                        <polyline points="8 21 3 21 3 16"></polyline>
+                        <line x1="20" y1="10" x2="3" y2="21"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="input-group">
+                <label for="end-station">도착역</label>
+                <input list="station-list" id="end-station" class="station-input" placeholder="예: 강남" autocomplete="off">
+            </div>
+
+            <datalist id="station-list"></datalist>
+            <button id="find-path-btn" class="primary-btn" type="button">경로 찾기</button>
         </section>
 
-        <section class="result-panel" aria-live="polite">
-            <div class="result-head">
-                <h2>추천 번호</h2>
-                <p id="result-meta">아직 번호가 생성되지 않았습니다.</p>
+        <section id="result-panel" class="result-panel" aria-live="polite" hidden>
+            <div class="summary-card">
+                <div class="summary-time">
+                    <span id="total-time">0</span><span class="unit">분</span>
+                </div>
+                <div class="summary-details">
+                    <p id="route-summary">환승 0회 | 0개 역 이동</p>
+                </div>
             </div>
-            <div id="lotto-numbers-container" class="lotto-numbers-container"></div>
+            <div class="path-details">
+                <h3>상세 경로</h3>
+                <ul id="path-list" class="path-list"></ul>
+            </div>
         </section>
+        
+        <p id="error-message" class="error-message" hidden></p>
     </main>
     <script src="main.js"></script>
 </body>
