@@ -18,6 +18,7 @@
       --line: rgba(255, 255, 255, 0.08);
       --text: #f5f8ff;
       --muted: #a8b6d4;
+      --label: #dce6ff;
       --primary: #78a8ff;
       --primary-2: #96b9ff;
       --primary-3: #4d85ff;
@@ -30,11 +31,31 @@
       --radius-md: 18px;
       --radius-sm: 14px;
       --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Light Mode Variables */
+    [data-theme="light"] {
+      --bg: #f4f7fc;
+      --bg-2: #ffffff;
+      --surface: rgba(0, 0, 0, 0.04);
+      --surface-2: rgba(0, 0, 0, 0.06);
+      --surface-3: rgba(0, 0, 0, 0.08);
+      --line: rgba(0, 0, 0, 0.08);
+      --text: #1a1f2e;
+      --muted: #64748b;
+      --label: #475569;
+      --primary: #3b82f6;
+      --primary-2: #60a5fa;
+      --primary-3: #2563eb;
+      --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 10px 28px rgba(0, 0, 0, 0.06);
     }
 
     * {
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
+      transition: background-color var(--transition), border-color var(--transition), color var(--transition);
     }
 
     html {
@@ -45,12 +66,42 @@
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
       color: var(--text);
+      background: var(--bg);
+      min-height: 100vh;
+    }
+
+    [data-theme="dark"] body {
       background:
         radial-gradient(circle at top left, rgba(120, 168, 255, 0.18), transparent 24%),
         radial-gradient(circle at top right, rgba(83, 214, 163, 0.14), transparent 18%),
         linear-gradient(180deg, #06101c 0%, #081424 42%, #0b1729 100%);
-      min-height: 100vh;
     }
+
+    [data-theme="light"] body {
+      background:
+        radial-gradient(circle at top left, rgba(59, 130, 246, 0.08), transparent 30%),
+        radial-gradient(circle at top right, rgba(16, 185, 129, 0.06), transparent 20%),
+        #f8fafc;
+    }
+
+    .theme-toggle-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 1.2rem;
+      color: var(--text);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .theme-toggle-btn .icon-light { display: none; }
+    [data-theme="light"] .theme-toggle-btn .icon-dark { display: none; }
+    [data-theme="light"] .theme-toggle-btn .icon-light { display: block; }
 
     a {
       color: inherit;
@@ -308,7 +359,7 @@
       display: block;
       margin-bottom: 7px;
       font-size: 0.88rem;
-      color: #dce6ff; /* Increased contrast from var(--muted) */
+      color: var(--label);
       font-weight: 700;
     }
 
@@ -671,6 +722,12 @@
   </style>
 </head>
 <body>
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
   <div class="status-glow"></div>
 
   <div class="app-shell">
@@ -683,6 +740,10 @@
             <p>대출 · 할부 · 이자 시뮬레이터</p>
           </div>
         </div>
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="테마 전환">
+          <span class="icon-dark">🌙</span>
+          <span class="icon-light">☀️</span>
+        </button>
       </div>
     </header>
 
@@ -1076,6 +1137,22 @@
   </div>
 
   <script>
+    // Theme Logic
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const htmlEl = document.documentElement;
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    htmlEl.setAttribute('data-theme', savedTheme);
+
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = htmlEl.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      htmlEl.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+
     function formatKRW(value) {
       if (!isFinite(value)) return "-";
       return Math.round(value).toLocaleString("ko-KR") + "원";
