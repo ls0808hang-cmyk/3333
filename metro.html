@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서울 지하철 경로 탐색기</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="container">
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="테마 전환"></button>
+
+        <p class="eyebrow">SEOUL METRO</p>
+        <h1>지하철 최단 경로를 빠르게 찾으세요</h1>
+        <p class="description">
+            출발역과 도착역을 입력하면 예상 이동 시간과 환승 구간을 한 번에 보여줍니다.
+        </p>
+
+        <section class="control-panel" aria-label="경로 탐색 입력">
+            <div class="input-group">
+                <label for="start-station">출발역</label>
+                <input
+                    id="start-station"
+                    class="station-input"
+                    type="text"
+                    list="station-list"
+                    placeholder="예: 시청"
+                    autocomplete="off"
+                >
+            </div>
+
+            <div class="swap-btn-container">
+                <button id="swap-btn" class="icon-btn" type="button" aria-label="출발역과 도착역 바꾸기">
+                    ⇅
+                </button>
+            </div>
+
+            <div class="input-group">
+                <label for="end-station">도착역</label>
+                <input
+                    id="end-station"
+                    class="station-input"
+                    type="text"
+                    list="station-list"
+                    placeholder="예: 강남"
+                    autocomplete="off"
+                >
+            </div>
+
+            <button id="find-path-btn" class="primary-btn" type="button">경로 찾기</button>
+        </section>
+
+        <p id="error-message" class="error-message" hidden></p><a href="index.html">새로운 페이지 구경가기</a>
+        
+
+        <section id="result-panel" class="result-panel" hidden aria-live="polite">
+            <div class="summary-card">
+                <div class="summary-time">
+                    <span id="total-time">0</span><span class="unit">분</span>
+                </div>
+                <div id="route-summary" class="summary-details"></div>
+            </div>
+
+            <div class="path-details">
+                <h3>이동 경로</h3>
+                <ol id="path-list" class="path-list"></ol>
+            </div>
+        </section>
+
+        <datalist id="station-list"></datalist>
+    </main>
+
+    <script src="main.js" defer></script>
+</body>
+</html>

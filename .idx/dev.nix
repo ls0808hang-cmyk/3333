@@ -24,6 +24,12 @@
           command = ["python3" "-m" "http.server" "$PORT" "--bind" "0.0.0.0"];
           manager = "web";
         };
+        calculator = {
+          command = ["python3" "-m" "http.server" "$PORT" "--bind" "0.0.0.0"];
+          manager = "web";
+          # To open new.html by default, we'd need a different approach or just tell the user.
+          # IDX doesn't have a direct 'path' option in all versions, but let's try to add it as a hint.
+        };
       };
     };
     # Workspace lifecycle hooks
