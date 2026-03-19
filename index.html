@@ -629,38 +629,52 @@
     }
 
     @media (max-width: 719px) {
-      .hero-title { font-size: 1.6rem; }
-      .hero-desc { font-size: 0.88rem; }
-      .hero-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
-      .hero-stat { padding: 10px 6px; border-radius: 14px; }
-      .hero-stat span { font-size: 0.7rem; }
-      .hero-stat strong { font-size: 0.8rem; }
+      body { word-break: keep-all; }
+      .hero-title { font-size: 1.5rem; line-height: 1.2; letter-spacing: -0.05em; }
+      .hero-desc { font-size: 0.85rem; }
+      .hero-grid { grid-template-columns: repeat(3, 1fr); gap: 4px; }
+      .hero-stat { padding: 10px 4px; border-radius: 12px; }
+      .hero-stat span { font-size: 0.65rem; white-space: nowrap; }
+      .hero-stat strong { font-size: 0.75rem; white-space: nowrap; letter-spacing: -0.03em; }
       
-      .segmented { grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 4px; }
-      .segmented a { padding: 10px 2px; font-size: 0.8rem; border-radius: 12px; }
+      .segmented { grid-template-columns: repeat(4, 1fr); gap: 2px; padding: 4px; }
+      .segmented a { padding: 10px 0; font-size: 0.78rem; white-space: nowrap; letter-spacing: -0.04em; }
       
       .summary-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-      .summary-card:last-child { grid-column: span 2; display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; }
+      .summary-card span { font-size: 0.75rem; white-space: nowrap; }
+      .summary-card strong { font-size: 0.95rem; white-space: nowrap; letter-spacing: -0.02em; }
+      
+      .summary-card:last-child { 
+        grid-column: span 2; 
+        display: flex; 
+        align-items: center; 
+        justify-content: space-between; 
+        padding: 12px 14px; 
+      }
       .summary-card:last-child span { margin-bottom: 0; }
-      .summary-card:last-child strong { font-size: 1.1rem; }
+      .summary-card:last-child strong { font-size: 1.05rem; }
       
       .insight-row { grid-template-columns: 1fr; gap: 8px; }
+      .mini-card h4 { font-size: 0.85rem; }
+      .mini-card p { font-size: 0.8rem; white-space: nowrap; }
+      
       .grid-2 { grid-template-columns: 1fr; }
       
-      .card-inner { padding: 14px; }
-      .section-head h2 { font-size: 1.1rem; }
-      .section-head p { font-size: 0.82rem; }
+      .card-inner { padding: 12px; }
+      .section-head h2 { font-size: 1.05rem; }
+      .section-head p { font-size: 0.8rem; }
       
-      .field input, .field select { padding: 12px 10px; font-size: 0.95rem; }
+      .field label { font-size: 0.82rem; }
+      .field input, .field select { padding: 12px 10px; font-size: 0.9rem; }
       
-      .table-wrap { margin: 0 -4px; }
-      table { min-width: 500px; }
-      th, td { padding: 10px 8px; font-size: 0.8rem; }
+      .table-wrap { margin: 0 -2px; }
+      table { min-width: 480px; }
+      th, td { padding: 10px 6px; font-size: 0.78rem; white-space: nowrap; }
       
-      .bottom-nav { padding: 8px 10px calc(8px + var(--safe-bottom)); }
-      .bottom-nav-inner { padding: 6px; border-radius: 20px; }
-      .bottom-nav a { padding: 6px 2px; font-size: 0.7rem; }
-      .nav-icon { width: 22px; height: 22px; font-size: 0.8rem; }
+      .bottom-nav { padding: 8px 8px calc(8px + var(--safe-bottom)); }
+      .bottom-nav-inner { padding: 4px; border-radius: 18px; }
+      .bottom-nav a { padding: 4px 0; font-size: 0.68rem; letter-spacing: -0.03em; }
+      .nav-icon { width: 20px; height: 20px; font-size: 0.75rem; }
     }
   </style>
 </head>
