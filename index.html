@@ -998,7 +998,15 @@
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { position: 'bottom', labels: { color: textColor, font: { size: 11, weight: 'bold' }, padding: 15 } }
+            legend: { position: 'bottom', labels: { color: textColor, font: { size: 11, weight: 'bold' }, padding: 15 } },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  let val = context.raw || 0;
+                  return context.label + ": " + Math.round(val).toLocaleString("ko-KR") + "원";
+                }
+              }
+            }
           }
         }
       });
@@ -1014,9 +1022,33 @@
     });
 
     function formatKRW(value) { if (!isFinite(value)) return "-"; return Math.round(value).toLocaleString("ko-KR") + "원"; }
-    function formatPercent(value) { if (!isFinite(value)) return "-"; return value.toFixed(2) + "%"; }
-    function getNumber(id) { return Number(document.getElementById(id).value || 0); }
+    function formatPercent(value) { if (!isFinite(value)) return "-"; return value.toLocaleString("ko-KR", {minimumFractionDigits: 2, maximumFractionDigits: 2}) + "%"; }
+    function getNumber(id) { 
+      const val = document.getElementById(id).value;
+      return Number(val.replace(/,/g, "") || 0); 
+    }
     function clampNonNegative(num) { return Math.max(0, num); }
+
+    function handleInputFormatting(e) {
+      let value = e.target.value.replace(/[^0-9]/g, "");
+      if (value === "") {
+        e.target.value = "";
+      } else {
+        e.target.value = Number(value).toLocaleString("ko-KR");
+      }
+    }
+
+    const currencyInputIds = ["loanAmount", "itemPrice", "downPayment", "principal"];
+    currencyInputIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.type = "text";
+        el.addEventListener("input", handleInputFormatting);
+        if (el.value) {
+          el.value = Number(el.value).toLocaleString("ko-KR");
+        }
+      }
+    });
 
     function annuitySchedule(principal, annualRate, months) {
       const r = annualRate / 100 / 12;
