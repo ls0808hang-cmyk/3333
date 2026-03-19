@@ -766,15 +766,34 @@
                 <canvas id="loanChart" style="max-height: 200px;"></canvas>
               </div>
               <div id="loanComparison" class="insight-row" style="margin-top:12px"></div>
-              <div class="sheet" style="margin-top:12px">
-                <div class="sheet-head"><h4>월별 상환 스케줄</h4><span>최대 24회차</span></div>
-                <div class="table-wrap">
-                  <table>
-                    <thead><tr><th>회차</th><th>납입금</th><th>원금</th><th>이자</th><th>잔액</th></tr></thead>
-                    <tbody id="loanScheduleBody"></tbody>
-                  </table>
-                </div>
+            </div>
+          </div>
+        </div>
+        <!-- Wide Schedule Section -->
+        <div class="card" style="margin-top:18px">
+          <div class="card-inner">
+            <div class="sheet">
+              <div class="sheet-head">
+                <h4 style="font-size: 1.1rem; font-weight: 800;">📅 상세 상환 스케줄</h4>
+                <span style="font-weight: 600;">최대 24회차까지 표시됩니다.</span>
               </div>
+              <div class="table-wrap">
+                <table style="min-width: 600px;">
+                  <thead>
+                    <tr>
+                      <th style="width: 10%;">회차</th>
+                      <th style="width: 22%;">월 납입액</th>
+                      <th style="width: 22%;">원금 상환액</th>
+                      <th style="width: 22%;">이자 납부액</th>
+                      <th style="width: 24%;">대출 잔액</th>
+                    </tr>
+                  </thead>
+                  <tbody id="loanScheduleBody"></tbody>
+                </table>
+              </div>
+            </div>
+            <div class="notice" style="margin-top: 14px; font-size: 0.82rem;">
+              * 실제 대출 실행 시 영업일 기준 이자 계산 방식 등에 따라 소액의 차이가 발생할 수 있습니다.
             </div>
           </div>
         </div>
