@@ -678,6 +678,103 @@
       .bottom-nav a { padding: 4px 0; font-size: 0.68rem; letter-spacing: -0.03em; }
       .nav-icon { width: 20px; height: 20px; font-size: 0.75rem; }
     }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    .modal-container {
+      background: var(--bg-2);
+      width: min(100%, 420px);
+      border-radius: 28px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      letter-spacing: -0.03em;
+    }
+
+    .modal-close {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      color: var(--text);
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 1.2rem;
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .modal-result-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px dotted var(--line);
+    }
+
+    .modal-result-item:last-child {
+      border-bottom: none;
+    }
+
+    .modal-result-label {
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .modal-result-value {
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+
+    .modal-footer {
+      padding: 16px 24px 24px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(20px) scale(0.95); opacity: 0; }
+      to { transform: translateY(0) scale(1); opacity: 1; }
+    }
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1526973327653342" crossorigin="anonymous"></script>
 </head>
@@ -689,6 +786,27 @@
     })();
   </script>
   <div class="status-glow"></div>
+
+  <!-- Modal Structure -->
+  <div id="resultModal" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 id="modalTitle">계산 결과</h3>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div id="modalBody" class="modal-body">
+        <!-- Results injected here -->
+      </div>
+      <div id="modalChartContainer" style="padding: 0 24px 16px; display: none;">
+        <div style="background: var(--surface); border-radius: 18px; padding: 16px; border: 1px solid var(--line); height: 200px;">
+          <canvas id="modalChart"></canvas>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" style="width: 100%" onclick="closeModal()">확인</button>
+      </div>
+    </div>
+  </div>
 
   <div class="app-shell">
     <header class="top-appbar">
@@ -1154,17 +1272,56 @@
       });
     }
 
+    const modalOverlay = document.getElementById('resultModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    const modalChartContainer = document.getElementById('modalChartContainer');
+    let modalChartObj = null;
+
+    function openModal(title, results, chartData = null) {
+      modalTitle.textContent = title;
+      modalBody.innerHTML = results.map(res => `
+        <div class="modal-result-item">
+          <span class="modal-result-label">${res.label}</span>
+          <span class="modal-result-value">${res.value}</span>
+        </div>
+      `).join('');
+      
+      if (chartData) {
+        modalChartContainer.style.display = 'block';
+        const ctx = document.getElementById('modalChart').getContext('2d');
+        modalChartObj = updateChart(ctx, chartData.type, chartData.labels, chartData.datasets, modalChartObj);
+      } else {
+        modalChartContainer.style.display = 'none';
+        if (modalChartObj) modalChartObj.destroy();
+      }
+      
+      modalOverlay.classList.add('active');
+    }
+
+    function closeModal() {
+      modalOverlay.classList.remove('active');
+      if (modalChartObj) {
+        modalChartObj.destroy();
+        modalChartObj = null;
+      }
+    }
+
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) closeModal();
+    });
+
     themeToggleBtn.addEventListener('click', () => {
       const currentTheme = htmlEl.getAttribute('data-theme');
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
       htmlEl.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
-      calculateLoan();
-      calculateInterest();
-      calculateVat();
-      calculateMargin();
-      calculateFee();
-      calculateExchange();
+      calculateLoan(false);
+      calculateInterest(false);
+      calculateVat(false);
+      calculateMargin(false);
+      calculateFee(false);
+      calculateExchange(false);
     });
 
     function formatKRW(value) { if (!isFinite(value)) return "-"; return Math.round(value).toLocaleString("ko-KR") + "원"; }
@@ -1199,7 +1356,7 @@
       }
     });
 
-    function calculateVat() {
+    function calculateVat(showPop = true) {
       const amount = getNumber("vatAmount");
       const rate = getNumber("vatRate");
       const type = document.getElementById("vatType").value;
@@ -1216,9 +1373,25 @@
       document.getElementById("supplyValue").textContent = formatKRW(supply);
       document.getElementById("vatValue").textContent = formatKRW(vat);
       document.getElementById("totalValue").textContent = formatKRW(total);
+
+      if (showPop) {
+        openModal("부가세 계산 결과", [
+          { label: "공급가액", value: formatKRW(supply) },
+          { label: "부가세", value: formatKRW(vat) },
+          { label: "합계금액", value: formatKRW(total) }
+        ], {
+          type: 'doughnut',
+          labels: ['공급가액', '부가세'],
+          datasets: [{
+            data: [supply, vat],
+            backgroundColor: ['#78a8ff', '#ffb86b'],
+            borderWidth: 0
+          }]
+        });
+      }
     }
 
-    function calculateMargin() {
+    function calculateMargin(showPop = true) {
       const buy = getNumber("buyPrice");
       const sell = getNumber("sellPrice");
       const feeRate = getNumber("marketFee");
@@ -1230,9 +1403,26 @@
       document.getElementById("marginProfit").textContent = formatKRW(profit);
       document.getElementById("marginRate").textContent = formatPercent(marginRate);
       document.getElementById("marginRoi").textContent = formatPercent(roi);
+
+      if (showPop) {
+        const totalCost = buy + fee + other;
+        openModal("마진 계산 결과", [
+          { label: "순이익", value: formatKRW(profit) },
+          { label: "마진율", value: formatPercent(marginRate) },
+          { label: "수익률(ROI)", value: formatPercent(roi) }
+        ], {
+          type: 'doughnut',
+          labels: ['순이익', '총비용'],
+          datasets: [{
+            data: [Math.max(0, profit), totalCost],
+            backgroundColor: ['#53d6a3', '#78a8ff'],
+            borderWidth: 0
+          }]
+        });
+      }
     }
 
-    function calculateFee() {
+    function calculateFee(showPop = true) {
       const sales = getNumber("salesAmount");
       const platform = document.getElementById("platformSelect").value;
       let rate;
@@ -1246,9 +1436,25 @@
       document.getElementById("netSettlement").textContent = formatKRW(net);
       document.getElementById("feeAmount").textContent = formatKRW(feeAmount);
       document.getElementById("appliedFeeRate").textContent = formatPercent(rate);
+
+      if (showPop) {
+        openModal("수수료 계산 결과", [
+          { label: "정산금액", value: formatKRW(net) },
+          { label: "수수료액", value: formatKRW(feeAmount) },
+          { label: "수수료율", value: formatPercent(rate) }
+        ], {
+          type: 'doughnut',
+          labels: ['정산금액', '수수료액'],
+          datasets: [{
+            data: [net, feeAmount],
+            backgroundColor: ['#78a8ff', '#ffb86b'],
+            borderWidth: 0
+          }]
+        });
+      }
     }
 
-    function calculateExchange() {
+    function calculateExchange(showPop = true) {
       const foreign = getNumber("foreignAmount");
       const rate = getNumber("exchangeRate");
       const feeRate = getNumber("exchangeFee");
@@ -1259,21 +1465,37 @@
       document.getElementById("krwResult").textContent = formatKRW(totalKrw);
       document.getElementById("exFeeAmount").textContent = formatKRW(fee);
       document.getElementById("effectiveRate").textContent = effective.toLocaleString("ko-KR", {maximumFractionDigits: 2}) + "원";
+
+      if (showPop) {
+        openModal("환율 정산 결과", [
+          { label: "최종 한화액", value: formatKRW(totalKrw) },
+          { label: "수수료액", value: formatKRW(fee) },
+          { label: "실질 환율", value: effective.toLocaleString("ko-KR", {maximumFractionDigits: 2}) + "원" }
+        ], {
+          type: 'doughnut',
+          labels: ['기준금액', '수수료액'],
+          datasets: [{
+            data: [baseKrw, fee],
+            backgroundColor: ['#78a8ff', '#ffb86b'],
+            borderWidth: 0
+          }]
+        });
+      }
     }
 
     document.getElementById("platformSelect").addEventListener("change", (e) => {
       document.getElementById("customFeeRow").style.display = e.target.value === "custom" ? "block" : "none";
     });
 
-    document.getElementById("vatCalcBtn").addEventListener("click", calculateVat);
-    document.getElementById("marginCalcBtn").addEventListener("click", calculateMargin);
-    document.getElementById("feeCalcBtn").addEventListener("click", calculateFee);
-    document.getElementById("exchangeCalcBtn").addEventListener("click", calculateExchange);
+    document.getElementById("vatCalcBtn").addEventListener("click", () => calculateVat(true));
+    document.getElementById("marginCalcBtn").addEventListener("click", () => calculateMargin(true));
+    document.getElementById("feeCalcBtn").addEventListener("click", () => calculateFee(true));
+    document.getElementById("exchangeCalcBtn").addEventListener("click", () => calculateExchange(true));
 
-    document.getElementById("vatResetBtn").addEventListener("click", () => { document.getElementById("vatAmount").value = "100,000"; calculateVat(); });
-    document.getElementById("marginResetBtn").addEventListener("click", () => { document.getElementById("buyPrice").value = "10,000"; document.getElementById("sellPrice").value = "20,000"; calculateMargin(); });
-    document.getElementById("feeResetBtn").addEventListener("click", () => { document.getElementById("salesAmount").value = "1,000,000"; calculateFee(); });
-    document.getElementById("exchangeResetBtn").addEventListener("click", () => { document.getElementById("foreignAmount").value = "100"; calculateExchange(); });
+    document.getElementById("vatResetBtn").addEventListener("click", () => { document.getElementById("vatAmount").value = "100,000"; calculateVat(false); });
+    document.getElementById("marginResetBtn").addEventListener("click", () => { document.getElementById("buyPrice").value = "10,000"; document.getElementById("sellPrice").value = "20,000"; calculateMargin(false); });
+    document.getElementById("feeResetBtn").addEventListener("click", () => { document.getElementById("salesAmount").value = "1,000,000"; calculateFee(false); });
+    document.getElementById("exchangeResetBtn").addEventListener("click", () => { document.getElementById("foreignAmount").value = "100"; calculateExchange(false); });
 
 
     function annuitySchedule(principal, annualRate, months) {
@@ -1309,7 +1531,7 @@
       return { monthlyPayment: interestOnly, totalInterest, totalPayment: principal + totalInterest, schedule: [] };
     }
 
-    function calculateLoan() {
+    function calculateLoan(showPop = true) {
       const p = clampNonNegative(getNumber("loanAmount")), r = clampNonNegative(getNumber("loanRate")), m = Math.max(1, Math.floor(getNumber("loanMonths"))), t = document.getElementById("repaymentType").value;
       let res = t === "annuity" ? annuitySchedule(p, r, m) : t === "equalPrincipal" ? equalPrincipalSchedule(p, r, m) : bulletSchedule(p, r, m);
       document.getElementById("loanMonthly").textContent = formatKRW(res.monthlyPayment);
@@ -1328,9 +1550,25 @@
       document.getElementById("loanComparison").innerHTML = compItems.map(i => `<div class="mini-card"><h4>${i.t}</h4><p>월 ${formatKRW(i.d.monthlyPayment)}</p><p>총이자 ${formatKRW(i.d.totalInterest)}</p></div>`).join("");
       const tbody = document.getElementById("loanScheduleBody");
       tbody.innerHTML = (res.schedule || []).slice(0, 24).map(row => `<tr><td>${row.month}</td><td>${formatKRW(row.payment)}</td><td>${formatKRW(row.principalPaid)}</td><td>${formatKRW(row.interest)}</td><td>${formatKRW(row.balance)}</td></tr>`).join("");
+
+      if (showPop) {
+        openModal("대출 계산 결과", [
+          { label: "월 납입액", value: formatKRW(res.monthlyPayment) },
+          { label: "총 이자", value: formatKRW(res.totalInterest) },
+          { label: "총 상환액", value: formatKRW(res.totalPayment) }
+        ], {
+          type: 'doughnut',
+          labels: ['원금', '총이자'],
+          datasets: [{
+            data: [p, res.totalInterest],
+            backgroundColor: ['#78a8ff', '#53d6a3'],
+            borderWidth: 0
+          }]
+        });
+      }
     }
 
-    function calculateInstallment() {
+    function calculateInstallment(showPop = true) {
       const p = clampNonNegative(getNumber("itemPrice")), d = clampNonNegative(getNumber("downPayment")), m = Math.max(1, getNumber("installmentMonths")), r = clampNonNegative(getNumber("installmentRate")), f = document.getElementById("interestFree").value === "true";
       const financed = Math.max(0, p - d);
       let monthly = 0, interest = 0;
@@ -1342,9 +1580,25 @@
       document.getElementById("installmentMonthly").textContent = formatKRW(monthly);
       document.getElementById("installmentInterest").textContent = formatKRW(interest);
       document.getElementById("installmentTotal").textContent = formatKRW(financed + interest + d);
+
+      if (showPop) {
+        openModal("할부 계산 결과", [
+          { label: "월 납부액", value: formatKRW(monthly) },
+          { label: "총 이자", value: formatKRW(interest) },
+          { label: "총 결제액", value: formatKRW(financed + interest + d) }
+        ], {
+          type: 'doughnut',
+          labels: ['할부원금', '총이자'],
+          datasets: [{
+            data: [financed, interest],
+            backgroundColor: ['#78a8ff', '#53d6a3'],
+            borderWidth: 0
+          }]
+        });
+      }
     }
 
-    function calculateInterest() {
+    function calculateInterest(showPop = true) {
       const p = clampNonNegative(getNumber("principal")), r = clampNonNegative(getNumber("interestRate")), y = clampNonNegative(getNumber("interestYears")), t = document.getElementById("interestType").value, f = Number(document.getElementById("compoundFrequency").value);
       let maturity = t === "simple" ? p * (1 + (r / 100) * y) : p * Math.pow(1 + (r / 100) / f, f * y);
       document.getElementById("maturityAmount").textContent = formatKRW(maturity);
@@ -1358,12 +1612,28 @@
         borderWidth: 0,
         hoverOffset: 4
       }], interestChartObj);
+
+      if (showPop) {
+        openModal("이자 계산 결과", [
+          { label: "만기 금액", value: formatKRW(maturity) },
+          { label: "이자 수익", value: formatKRW(maturity - p) },
+          { label: "수익률", value: formatPercent(p === 0 ? 0 : ((maturity - p) / p) * 100) }
+        ], {
+          type: 'doughnut',
+          labels: ['원금', '이자수익'],
+          datasets: [{
+            data: [p, maturity - p],
+            backgroundColor: ['#78a8ff', '#ffb86b'],
+            borderWidth: 0
+          }]
+        });
+      }
     }
 
-    document.getElementById("loanCalcBtn").addEventListener("click", calculateLoan);
-    document.getElementById("installmentCalcBtn").addEventListener("click", calculateInstallment);
-    document.getElementById("interestCalcBtn").addEventListener("click", calculateInterest);
-    calculateLoan(); calculateInstallment(); calculateInterest(); calculateVat(); calculateMargin(); calculateFee(); calculateExchange();
+    document.getElementById("loanCalcBtn").addEventListener("click", () => calculateLoan(true));
+    document.getElementById("installmentCalcBtn").addEventListener("click", () => calculateInstallment(true));
+    document.getElementById("interestCalcBtn").addEventListener("click", () => calculateInterest(true));
+    calculateLoan(false); calculateInstallment(false); calculateInterest(false); calculateVat(false); calculateMargin(false); calculateFee(false); calculateExchange(false);
   </script>
 </body>
 </html>
