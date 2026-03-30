@@ -129,13 +129,16 @@
           </div>
           <div class="field">
             <label>상환 방식</label>
-            <select id="loan-method" onchange="toggleGraceField()">
+            <select id="loan-method" onchange="updateLoanMethodInfo()">
               <option value="annuity">원리금 균등분할 상환</option>
               <option value="principal">원금 균등분할 상환</option>
               <option value="bullet">만기일시 상환</option>
               <option value="grace-annuity">거치후 원리금 균등</option>
               <option value="grace-principal">거치후 원금 균등</option>
             </select>
+          </div>
+          <div id="loan-method-desc" style="background: var(--surface); padding: 14px; border-radius: 16px; font-size: 0.82rem; color: var(--muted); line-height: 1.5; margin-bottom: 16px; border: 1px dashed var(--line);">
+            <strong>원리금 균등:</strong> 매달 갚는 원금과 이자의 합계가 동일합니다. 계획적인 지출 관리에 유리합니다.
           </div>
           <div id="loan-grace-field" class="field"><label>거치 기간(개월)</label><input id="loan-g" type="number" value="12"></div>
           <button class="btn-primary" onclick="calcLoan()">대출 계산하기</button>
@@ -301,11 +304,26 @@
       }
     }
 
-    function toggleGraceField() {
+    function updateLoanMethodInfo() {
       const method = document.getElementById('loan-method').value;
-      const field = document.getElementById('loan-grace-field');
-      if(method.startsWith('grace-')) field.classList.add('active');
-      else field.classList.remove('active');
+      const descEl = document.getElementById('loan-method-desc');
+      const graceField = document.getElementById('loan-grace-field');
+      
+      const descriptions = {
+        'annuity': '<strong>원리금 균등:</strong> 매달 갚는 원금과 이자의 합계가 동일합니다. 계획적인 지출 관리에 유리합니다.',
+        'principal': '<strong>원금 균등:</strong> 매달 동일한 원금을 갚습니다. 시간이 갈수록 이자가 줄어들어 총 이자 비용이 가장 적습니다.',
+        'bullet': '<strong>만기일시:</strong> 대출 기간 동안 이자만 납부하고 만기에 원금을 일시 상환합니다. 월 부담은 가장 적습니다.',
+        'grace-annuity': '<strong>거치후 원리금 균등:</strong> 거치 기간 동안 이자만 내다가 이후 원리금 균등 방식으로 상환합니다.',
+        'grace-principal': '<strong>거치후 원금 균등:</strong> 거치 기간 동안 이자만 내다가 이후 원금 균등 방식으로 상환합니다.'
+      };
+
+      descEl.innerHTML = descriptions[method];
+      
+      if(method.startsWith('grace-')) {
+        graceField.classList.add('active');
+      } else {
+        graceField.classList.remove('active');
+      }
     }
 
     function updateChart(canvasId, labels, data, colors) {
