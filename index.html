@@ -100,11 +100,11 @@
     </nav>
 
     <main id="main-view">
-      <!-- HOME -->
+      <!-- HOME VIEW -->
       <section id="view-home" class="view-section active">
         <div class="card" style="background: linear-gradient(135deg, #1a2a4a, #07111f); padding: 30px 20px; border:none;">
           <h2 style="margin:0; font-size: 1.8rem; line-height: 1.2; color: white;">금융 계산의 모든 것,<br>한 곳에서 간편하게.</h2>
-          <p style="color: #a8b6d4; margin-top: 10px; font-size: 0.9rem;">정확한 상환 방식별 시뮬레이션을 제공합니다.</p>
+          <p style="color: #a8b6d4; margin-top: 10px; font-size: 0.9rem;">도넛 차트로 결과의 비중을 한눈에 확인하세요.</p>
         </div>
         <div class="category-grid">
           <div class="category-item" onclick="showView('loan')"><div class="category-icon">💰</div><div style="font-weight: 800;">대출 계산기</div></div>
@@ -117,7 +117,7 @@
         </div>
       </section>
 
-      <!-- LOAN -->
+      <!-- LOAN VIEW -->
       <section id="view-loan" class="view-section">
         <div class="back-to-home" onclick="showView('home')">← 홈으로</div>
         <div class="card"><div class="card-inner">
@@ -137,10 +137,7 @@
               <option value="grace-principal">거치후 원금 균등</option>
             </select>
           </div>
-          <div id="loan-grace-field" class="field">
-            <label>거치 기간(개월)</label>
-            <input id="loan-g" type="number" value="12">
-          </div>
+          <div id="loan-grace-field" class="field"><label>거치 기간(개월)</label><input id="loan-g" type="number" value="12"></div>
           <button class="btn-primary" onclick="calcLoan()">대출 계산하기</button>
         </div></div>
         <div class="card"><div class="card-inner">
@@ -153,7 +150,7 @@
         </div></div>
       </section>
 
-      <!-- INSTALLMENT -->
+      <!-- INSTALLMENT VIEW -->
       <section id="view-installment" class="view-section">
         <div class="back-to-home" onclick="showView('home')">← 홈으로</div>
         <div class="card"><div class="card-inner">
@@ -176,7 +173,7 @@
         </div></div>
       </section>
 
-      <!-- INTEREST -->
+      <!-- INTEREST VIEW -->
       <section id="view-interest" class="view-section">
         <div class="back-to-home" onclick="showView('home')">← 홈으로</div>
         <div class="card"><div class="card-inner">
@@ -206,7 +203,7 @@
         </div></div>
       </section>
 
-      <!-- VAT -->
+      <!-- VAT VIEW -->
       <section id="view-vat" class="view-section">
         <div class="back-to-home" onclick="showView('home')">← 홈으로</div>
         <div class="card"><div class="card-inner">
@@ -225,7 +222,7 @@
         </div></div>
       </section>
 
-      <!-- MARGIN -->
+      <!-- MARGIN VIEW -->
       <section id="view-margin" class="view-section">
         <div class="back-to-home" onclick="showView('home')">← 홈으로</div>
         <div class="card"><div class="card-inner">
@@ -247,7 +244,7 @@
         </div></div>
       </section>
 
-      <!-- FEE -->
+      <!-- FEE VIEW -->
       <section id="view-fee" class="view-section">
         <div class="back-to-home" onclick="showView('home')">← 홈으로</div>
         <div class="card"><div class="card-inner">
@@ -266,7 +263,7 @@
         </div></div>
       </section>
 
-      <!-- EXCHANGE -->
+      <!-- EXCHANGE VIEW -->
       <section id="view-exchange" class="view-section">
         <div class="back-to-home" onclick="showView('home')">← 홈으로</div>
         <div class="card"><div class="card-inner">
@@ -298,7 +295,6 @@
       const activeGnb = document.getElementById('gnb-' + viewId);
       if(activeGnb) activeGnb.classList.add('active');
       window.scrollTo(0, 0);
-      
       if(viewId !== 'home') {
         const btn = document.querySelector(`#view-${viewId} button`);
         if(btn) btn.click();
@@ -308,49 +304,36 @@
     function toggleGraceField() {
       const method = document.getElementById('loan-method').value;
       const field = document.getElementById('loan-grace-field');
-      if(method.startsWith('grace-')) {
-        field.classList.add('active');
-      } else {
-        field.classList.remove('active');
-      }
+      if(method.startsWith('grace-')) field.classList.add('active');
+      else field.classList.remove('active');
     }
 
     function updateChart(canvasId, labels, data, colors) {
       if(charts[canvasId]) charts[canvasId].destroy();
       const canvas = document.getElementById(canvasId);
       if(!canvas) return;
-      const ctx = canvas.getContext('2d');
-      charts[canvasId] = new Chart(ctx, {
+      charts[canvasId] = new Chart(canvas.getContext('2d'), {
         type: 'doughnut',
         data: {
           labels: labels,
-          datasets: [{
-            data: data,
-            backgroundColor: colors,
-            borderWidth: 0,
-            hoverOffset: 4
-          }]
+          datasets: [{ data: data, backgroundColor: colors, borderWidth: 0, hoverOffset: 4 }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: {
-            legend: { position: 'bottom', labels: { color: getComputedStyle(document.documentElement).getPropertyValue('--text'), font: { size: 11 } } }
-          }
+          plugins: { legend: { position: 'bottom', labels: { color: getComputedStyle(document.documentElement).getPropertyValue('--text'), font: { size: 11 } } } }
         }
       });
     }
 
     function toggleTheme() {
       const html = document.documentElement;
-      const current = html.getAttribute('data-theme');
-      const next = current === 'light' ? 'dark' : 'light';
+      const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
       html.setAttribute('data-theme', next);
       document.getElementById('theme-toggle').innerText = next === 'light' ? '☀️' : '🌙';
       Object.keys(charts).forEach(id => {
-        const chart = charts[id];
-        chart.options.plugins.legend.labels.color = getComputedStyle(document.documentElement).getPropertyValue('--text');
-        chart.update();
+        charts[id].options.plugins.legend.labels.color = getComputedStyle(document.documentElement).getPropertyValue('--text');
+        charts[id].update();
       });
     }
 
@@ -363,37 +346,14 @@
 
     function calcLoan() {
       const p = getNum('loan-p'), r = Number(document.getElementById('loan-r').value)/100/12, m = Number(document.getElementById('loan-m').value);
-      const method = document.getElementById('loan-method').value;
-      const g = getNum('loan-g') || 0;
-      
+      const method = document.getElementById('loan-method').value, g = getNum('loan-g') || 0;
       if(!p || isNaN(r) || !m) return;
-
       let firstPayment = 0, totalInt = 0;
-
-      if(method === 'bullet') {
-        firstPayment = p * r;
-        totalInt = (p * r) * m;
-      } else if(method === 'annuity') {
-        firstPayment = p * (r * Math.pow(1+r, m)) / (Math.pow(1+r, m) - 1);
-        totalInt = (firstPayment * m) - p;
-      } else if(method === 'principal') {
-        firstPayment = (p / m) + (p * r);
-        for(let i=0; i<m; i++) { totalInt += (p - (p/m)*i) * r; }
-      } else if(method === 'grace-annuity') {
-        const graceInt = (p * r) * g;
-        const remainM = m - g;
-        const monthly = p * (r * Math.pow(1+r, remainM)) / (Math.pow(1+r, remainM) - 1);
-        firstPayment = p * r; // 거치기간 중 납입액
-        totalInt = graceInt + (monthly * remainM) - p;
-      } else if(method === 'grace-principal') {
-        const graceInt = (p * r) * g;
-        const remainM = m - g;
-        firstPayment = p * r; // 거치기간 중 납입액
-        let remainInt = 0;
-        for(let i=0; i<remainM; i++) { remainInt += (p - (p/remainM)*i) * r; }
-        totalInt = graceInt + remainInt;
-      }
-
+      if(method === 'bullet') { firstPayment = p * r; totalInt = (p * r) * m; }
+      else if(method === 'annuity') { firstPayment = p * (r * Math.pow(1+r, m)) / (Math.pow(1+r, m) - 1); totalInt = (firstPayment * m) - p; }
+      else if(method === 'principal') { firstPayment = (p / m) + (p * r); for(let i=0; i<m; i++) totalInt += (p - (p/m)*i) * r; }
+      else if(method === 'grace-annuity') { const graceInt = (p * r) * g, remainM = m - g, monthly = p * (r * Math.pow(1+r, remainM)) / (Math.pow(1+r, remainM) - 1); firstPayment = p * r; totalInt = graceInt + (monthly * remainM) - p; }
+      else if(method === 'grace-principal') { const graceInt = (p * r) * g, remainM = m - g; firstPayment = p * r; let remainInt = 0; for(let i=0; i<remainM; i++) remainInt += (p - (p/remainM)*i) * r; totalInt = graceInt + remainInt; }
       document.getElementById('res-loan-monthly').innerText = toKRW(firstPayment);
       document.getElementById('res-loan-int').innerText = toKRW(totalInt);
       document.getElementById('res-loan-total').innerText = toKRW(p + totalInt);
@@ -402,9 +362,7 @@
 
     function calcInstallment() {
       const p = getNum('inst-p'), d = getNum('inst-d'), m = getNum('inst-m'), r = Number(document.getElementById('inst-r').value)/100/12;
-      const financed = p - d;
-      const monthly = r === 0 ? financed / m : financed * (r * Math.pow(1 + r, m)) / (Math.pow(1 + r, m) - 1);
-      const totalInt = monthly * m - financed;
+      const financed = p - d, monthly = r === 0 ? financed / m : financed * (r * Math.pow(1 + r, m)) / (Math.pow(1 + r, m) - 1), totalInt = monthly * m - financed;
       document.getElementById('res-inst-monthly').innerText = toKRW(monthly);
       document.getElementById('res-inst-int').innerText = toKRW(totalInt);
       document.getElementById('res-inst-total').innerText = toKRW(monthly * m + d);
@@ -413,11 +371,14 @@
 
     function calcInterest() {
       const p = getNum('int-p'), r = Number(document.getElementById('int-r').value)/100, y = Number(document.getElementById('int-y').value);
-      const pureInt = p * r * y;
-      document.getElementById('res-int-total').innerText = toKRW(p + pureInt);
-      document.getElementById('res-int-pure').innerText = toKRW(pureInt);
-      document.getElementById('res-int-yield').innerText = (r * y * 100).toFixed(2) + "%";
-      updateChart('chart-int', ['원금', '이자수익'], [p, pureInt], ['#78a8ff', '#53d6a3']);
+      const taxRate = Number(document.getElementById('int-tax').value)/100;
+      const grossInt = p * r * y;
+      const taxVal = grossInt * taxRate;
+      const netInt = grossInt - taxVal;
+      document.getElementById('res-int-total').innerText = toKRW(p + netInt);
+      document.getElementById('res-int-tax-val').innerText = toKRW(taxVal);
+      document.getElementById('res-int-pure').innerText = toKRW(netInt);
+      updateChart('chart-int', ['원금', '세후 이자', '공제 세금'], [p, netInt, taxVal], ['#78a8ff', '#53d6a3', '#ffb86b']);
     }
 
     function calcVat() {
@@ -433,8 +394,7 @@
 
     function calcMargin() {
       const b = getNum('marg-b'), s = getNum('marg-s'), f = Number(document.getElementById('marg-f').value)/100;
-      const fee = s * f;
-      const profit = s - b - fee;
+      const fee = s * f, profit = s - b - fee;
       document.getElementById('res-marg-p').innerText = toKRW(profit);
       document.getElementById('res-marg-r').innerText = ((profit / s) * 100).toFixed(2) + "%";
       document.getElementById('res-marg-roi').innerText = ((profit / b) * 100).toFixed(2) + "%";
@@ -443,8 +403,7 @@
 
     function calcFee() {
       const a = getNum('fee-a'), r = Number(document.getElementById('fee-r').value)/100;
-      const feeVal = a * r;
-      const net = a - feeVal;
+      const feeVal = a * r, net = a - feeVal;
       document.getElementById('res-fee-net').innerText = toKRW(net);
       document.getElementById('res-fee-val').innerText = toKRW(feeVal);
       document.getElementById('res-fee-total').innerText = toKRW(net);
