@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>올인원 정산 계산기 | SPA</title>
+  <title>올인원 정산 계산기 | SPA & Advanced Loan</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
@@ -23,7 +23,6 @@
     
     .app-shell { width: min(100%, 520px); margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
     
-    /* Header & GNB */
     .top-appbar { position: sticky; top: 0; z-index: 100; background: var(--bg); backdrop-filter: blur(20px); border-bottom: 1px solid var(--line); padding: 14px 16px; }
     .gnb-nav { background: var(--bg-2); border-bottom: 1px solid var(--line); overflow-x: auto; white-space: nowrap; scrollbar-width: none; position: sticky; top: 67px; z-index: 99; }
     .gnb-nav::-webkit-scrollbar { display: none; }
@@ -32,7 +31,6 @@
     .gnb-item.active { color: var(--primary); font-weight: 800; }
     .gnb-item.active::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--primary); }
 
-    /* Content Area & SPA Transitions */
     #main-view { flex: 1; position: relative; }
     .view-section { display: none; padding: 18px 16px; animation: slideIn var(--transition); }
     .view-section.active { display: block; }
@@ -42,7 +40,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Cards & UI */
     .card { border-radius: var(--radius-xl); background: var(--bg-2); border: 1px solid var(--line); margin-bottom: 18px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
     .card-inner { padding: 20px; }
     .category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
@@ -52,17 +49,32 @@
     
     .field { margin-bottom: 16px; }
     .field label { display: block; margin-bottom: 8px; font-size: 0.85rem; font-weight: 700; color: var(--muted); }
-    .field input, .field select { width: 100%; padding: 15px; border-radius: 16px; border: 1px solid var(--line); background: var(--surface); color: var(--text); font-size: 1rem; outline: none; transition: 0.2s; }
-    .field input:focus { border-color: var(--primary); background: var(--bg); }
+    .field input, .field select { width: 100%; padding: 15px; border-radius: 16px; border: 1px solid var(--line); background: var(--surface); color: var(--text); font-size: 1rem; outline: none; transition: 0.2s; appearance: none; }
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 15px center;
+      background-size: 18px;
+      cursor: pointer;
+    }
+    .field select option { background-color: #0b1729; color: #ffffff; }
+    .field input:focus, .field select:focus { 
+      border-color: var(--primary); 
+      background: var(--bg-2); 
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 0 3px rgba(120, 168, 255, 0.1); 
+    }
     .btn-primary { width: 100%; border: 0; border-radius: 16px; padding: 16px; font-weight: 800; background: linear-gradient(135deg, var(--primary), var(--primary-3)); color: white; cursor: pointer; transition: 0.2s; }
-    .btn-primary:active { transform: scale(0.98); }
     
-    .result-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
+    .result-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; margin-bottom: 20px; }
     .result-card { background: var(--surface); padding: 12px; border-radius: 18px; text-align: center; border: 1px solid var(--line); }
     .result-card span { font-size: 0.7rem; color: var(--muted); display: block; margin-bottom: 4px; }
     .result-card strong { font-size: 0.85rem; color: var(--primary); word-break: break-all; }
 
+    .chart-wrap { width: 100%; height: 200px; display: flex; justify-content: center; align-items: center; background: var(--surface); border-radius: 20px; padding: 10px; }
     .back-to-home { color: var(--primary); font-weight: 700; cursor: pointer; margin-bottom: 15px; display: inline-block; font-size: 0.9rem; }
+    
+    #loan-grace-field { display: none; }
+    #loan-grace-field.active { display: block; }
   </style>
 </head>
 <body>
@@ -88,11 +100,11 @@
     </nav>
 
     <main id="main-view">
-      <!-- HOME VIEW -->
+      <!-- HOME -->
       <section id="view-home" class="view-section active">
         <div class="card" style="background: linear-gradient(135deg, #1a2a4a, #07111f); padding: 30px 20px; border:none;">
           <h2 style="margin:0; font-size: 1.8rem; line-height: 1.2; color: white;">금융 계산의 모든 것,<br>한 곳에서 간편하게.</h2>
-          <p style="color: #a8b6d4; margin-top: 10px; font-size: 0.9rem;">복잡한 대출, 이자, 마진 계산을 SPA 방식으로 빠르게 확인하세요.</p>
+          <p style="color: #a8b6d4; margin-top: 10px; font-size: 0.9rem;">정확한 상환 방식별 시뮬레이션을 제공합니다.</p>
         </div>
         <div class="category-grid">
           <div class="category-item" onclick="showView('loan')"><div class="category-icon">💰</div><div style="font-weight: 800;">대출 계산기</div></div>
@@ -105,33 +117,48 @@
         </div>
       </section>
 
-      <!-- LOAN VIEW -->
+      <!-- LOAN -->
       <section id="view-loan" class="view-section">
         <div class="back-to-home" onclick="showView('home')">← 홈으로</div>
         <div class="card"><div class="card-inner">
-          <h3 style="margin-top:0;">대출 상환 계산</h3>
-          <div class="field"><label>대출 금액(원)</label><input id="loan-p" type="text" value="30,000,000" oninput="formatInput(this)"></div>
+          <h3 style="margin-top:0;">대출 상환 상세 계산</h3>
+          <div class="field"><label>대출금액(원)</label><input id="loan-p" type="text" value="30,000,000" oninput="formatInput(this)"></div>
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
             <div class="field"><label>연이율(%)</label><input id="loan-r" type="number" value="5.2" step="0.1"></div>
             <div class="field"><label>기간(개월)</label><input id="loan-m" type="number" value="36"></div>
+          </div>
+          <div class="field">
+            <label>상환 방식</label>
+            <select id="loan-method" onchange="toggleGraceField()">
+              <option value="annuity">원리금 균등분할 상환</option>
+              <option value="principal">원금 균등분할 상환</option>
+              <option value="bullet">만기일시 상환</option>
+              <option value="grace-annuity">거치후 원리금 균등</option>
+              <option value="grace-principal">거치후 원금 균등</option>
+            </select>
+          </div>
+          <div id="loan-grace-field" class="field">
+            <label>거치 기간(개월)</label>
+            <input id="loan-g" type="number" value="12">
           </div>
           <button class="btn-primary" onclick="calcLoan()">대출 계산하기</button>
         </div></div>
         <div class="card"><div class="card-inner">
           <div class="result-grid">
-            <div class="result-card"><span>월 상환액</span><strong id="res-loan-monthly">-</strong></div>
+            <div class="result-card"><span>1회차 납입액</span><strong id="res-loan-monthly">-</strong></div>
             <div class="result-card"><span>총 이자</span><strong id="res-loan-int">-</strong></div>
             <div class="result-card"><span>총 상환액</span><strong id="res-loan-total">-</strong></div>
           </div>
+          <div class="chart-wrap"><canvas id="chart-loan"></canvas></div>
         </div></div>
       </section>
 
-      <!-- INSTALLMENT VIEW -->
+      <!-- INSTALLMENT -->
       <section id="view-installment" class="view-section">
         <div class="back-to-home" onclick="showView('home')">← 홈으로</div>
         <div class="card"><div class="card-inner">
-          <h3 style="margin-top:0;">할부 납부 계산</h3>
-          <div class="field"><label>상품 금액(원)</label><input id="inst-p" type="text" value="1,800,000" oninput="formatInput(this)"></div>
+          <h3 style="margin-top:0;">할부 납부</h3>
+          <div class="field"><label>상품금액(원)</label><input id="inst-p" type="text" value="1,800,000" oninput="formatInput(this)"></div>
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
             <div class="field"><label>선수금(원)</label><input id="inst-d" type="text" value="300,000" oninput="formatInput(this)"></div>
             <div class="field"><label>개월 수</label><input id="inst-m" type="number" value="12"></div>
@@ -145,35 +172,45 @@
             <div class="result-card"><span>총 이자</span><strong id="res-inst-int">-</strong></div>
             <div class="result-card"><span>총 결제액</span><strong id="res-inst-total">-</strong></div>
           </div>
+          <div class="chart-wrap"><canvas id="chart-inst"></canvas></div>
         </div></div>
       </section>
 
-      <!-- INTEREST VIEW -->
+      <!-- INTEREST -->
       <section id="view-interest" class="view-section">
         <div class="back-to-home" onclick="showView('home')">← 홈으로</div>
         <div class="card"><div class="card-inner">
-          <h3 style="margin-top:0;">이자 수익 계산</h3>
-          <div class="field"><label>예치 원금(원)</label><input id="int-p" type="text" value="10,000,000" oninput="formatInput(this)"></div>
+          <h3 style="margin-top:0;">이자 수익 상세 계산</h3>
+          <div class="field"><label>원금(원)</label><input id="int-p" type="text" value="10,000,000" oninput="formatInput(this)"></div>
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
             <div class="field"><label>이율(%)</label><input id="int-r" type="number" value="4.5" step="0.1"></div>
             <div class="field"><label>기간(년)</label><input id="int-y" type="number" value="3"></div>
+          </div>
+          <div class="field">
+            <label>과세 방식</label>
+            <select id="int-tax">
+              <option value="15.4">일반과세 (15.4%)</option>
+              <option value="9.5">세금우대 (9.5%)</option>
+              <option value="0">비과세 (0%)</option>
+            </select>
           </div>
           <button class="btn-primary" onclick="calcInterest()">이자 계산하기</button>
         </div></div>
         <div class="card"><div class="card-inner">
           <div class="result-grid">
-            <div class="result-card"><span>만기수령액</span><strong id="res-int-total">-</strong></div>
-            <div class="result-card"><span>세전이자</span><strong id="res-int-pure">-</strong></div>
-            <div class="result-card"><span>수익률</span><strong id="res-int-yield">-</strong></div>
+            <div class="result-card"><span>최종 수령액</span><strong id="res-int-total">-</strong></div>
+            <div class="result-card"><span>공제 세금</span><strong id="res-int-tax-val">-</strong></div>
+            <div class="result-card"><span>세후 이자</span><strong id="res-int-pure">-</strong></div>
           </div>
+          <div class="chart-wrap"><canvas id="chart-int"></canvas></div>
         </div></div>
       </section>
 
-      <!-- VAT VIEW -->
+      <!-- VAT -->
       <section id="view-vat" class="view-section">
         <div class="back-to-home" onclick="showView('home')">← 홈으로</div>
         <div class="card"><div class="card-inner">
-          <h3 style="margin-top:0;">부가세 계산</h3>
+          <h3 style="margin-top:0;">부가세</h3>
           <div class="field"><label>금액(원)</label><input id="vat-a" type="text" value="110,000" oninput="formatInput(this)"></div>
           <div class="field"><label>구분</label><select id="vat-t"><option value="include">부가세 포함(합계)</option><option value="exclude">부가세 별도(공급가)</option></select></div>
           <button class="btn-primary" onclick="calcVat()">부가세 계산하기</button>
@@ -184,14 +221,15 @@
             <div class="result-card"><span>부가세</span><strong id="res-vat-value">-</strong></div>
             <div class="result-card"><span>합계금액</span><strong id="res-vat-total">-</strong></div>
           </div>
+          <div class="chart-wrap"><canvas id="chart-vat"></canvas></div>
         </div></div>
       </section>
 
-      <!-- MARGIN VIEW -->
+      <!-- MARGIN -->
       <section id="view-margin" class="view-section">
         <div class="back-to-home" onclick="showView('home')">← 홈으로</div>
         <div class="card"><div class="card-inner">
-          <h3 style="margin-top:0;">마진율 계산</h3>
+          <h3 style="margin-top:0;">마진율</h3>
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
             <div class="field"><label>매입가(원)</label><input id="marg-b" type="text" value="10,000" oninput="formatInput(this)"></div>
             <div class="field"><label>판매가(원)</label><input id="marg-s" type="text" value="20,000" oninput="formatInput(this)"></div>
@@ -205,14 +243,15 @@
             <div class="result-card"><span>마진율</span><strong id="res-marg-r">-</strong></div>
             <div class="result-card"><span>ROI</span><strong id="res-marg-roi">-</strong></div>
           </div>
+          <div class="chart-wrap"><canvas id="chart-marg"></canvas></div>
         </div></div>
       </section>
 
-      <!-- FEE VIEW -->
+      <!-- FEE -->
       <section id="view-fee" class="view-section">
         <div class="back-to-home" onclick="showView('home')">← 홈으로</div>
         <div class="card"><div class="card-inner">
-          <h3 style="margin-top:0;">수수료 계산</h3>
+          <h3 style="margin-top:0;">수수료</h3>
           <div class="field"><label>판매금액(원)</label><input id="fee-a" type="text" value="1,000,000" oninput="formatInput(this)"></div>
           <div class="field"><label>수수료율(%)</label><input id="fee-r" type="number" value="3.74" step="0.01"></div>
           <button class="btn-primary" onclick="calcFee()">수수료 계산하기</button>
@@ -223,14 +262,15 @@
             <div class="result-card"><span>수수료액</span><strong id="res-fee-val">-</strong></div>
             <div class="result-card"><span>실수령액</span><strong id="res-fee-total">-</strong></div>
           </div>
+          <div class="chart-wrap"><canvas id="chart-fee"></canvas></div>
         </div></div>
       </section>
 
-      <!-- EXCHANGE VIEW -->
+      <!-- EXCHANGE -->
       <section id="view-exchange" class="view-section">
         <div class="back-to-home" onclick="showView('home')">← 홈으로</div>
         <div class="card"><div class="card-inner">
-          <h3 style="margin-top:0;">정산(환율) 계산</h3>
+          <h3 style="margin-top:0;">정산(환율)</h3>
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
             <div class="field"><label>외화금액</label><input id="ex-a" type="number" value="100"></div>
             <div class="field"><label>환율</label><input id="ex-r" type="text" value="1,350" oninput="formatInput(this)"></div>
@@ -240,8 +280,8 @@
         <div class="card"><div class="card-inner">
           <div class="result-grid">
             <div class="result-card"><span>최종한화</span><strong id="res-ex-krw">-</strong></div>
-            <div class="result-card"><span>-</span><strong id="res-ex-none">-</strong></div>
-            <div class="result-card"><span>-</span><strong id="res-ex-none2">-</strong></div>
+            <div class="result-card"><span>-</span><strong>-</strong></div>
+            <div class="result-card"><span>-</span><strong>-</strong></div>
           </div>
         </div></div>
       </section>
@@ -249,6 +289,8 @@
   </div>
 
   <script>
+    let charts = {};
+
     function showView(viewId) {
       document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
       document.getElementById('view-' + viewId).classList.add('active');
@@ -256,6 +298,47 @@
       const activeGnb = document.getElementById('gnb-' + viewId);
       if(activeGnb) activeGnb.classList.add('active');
       window.scrollTo(0, 0);
+      
+      if(viewId !== 'home') {
+        const btn = document.querySelector(`#view-${viewId} button`);
+        if(btn) btn.click();
+      }
+    }
+
+    function toggleGraceField() {
+      const method = document.getElementById('loan-method').value;
+      const field = document.getElementById('loan-grace-field');
+      if(method.startsWith('grace-')) {
+        field.classList.add('active');
+      } else {
+        field.classList.remove('active');
+      }
+    }
+
+    function updateChart(canvasId, labels, data, colors) {
+      if(charts[canvasId]) charts[canvasId].destroy();
+      const canvas = document.getElementById(canvasId);
+      if(!canvas) return;
+      const ctx = canvas.getContext('2d');
+      charts[canvasId] = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: data,
+            backgroundColor: colors,
+            borderWidth: 0,
+            hoverOffset: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom', labels: { color: getComputedStyle(document.documentElement).getPropertyValue('--text'), font: { size: 11 } } }
+          }
+        }
+      });
     }
 
     function toggleTheme() {
@@ -264,6 +347,11 @@
       const next = current === 'light' ? 'dark' : 'light';
       html.setAttribute('data-theme', next);
       document.getElementById('theme-toggle').innerText = next === 'light' ? '☀️' : '🌙';
+      Object.keys(charts).forEach(id => {
+        const chart = charts[id];
+        chart.options.plugins.legend.labels.color = getComputedStyle(document.documentElement).getPropertyValue('--text');
+        chart.update();
+      });
     }
 
     function formatInput(el) {
@@ -275,28 +363,61 @@
 
     function calcLoan() {
       const p = getNum('loan-p'), r = Number(document.getElementById('loan-r').value)/100/12, m = Number(document.getElementById('loan-m').value);
-      if(!p || !r || !m) return;
-      const monthly = p * (r * Math.pow(1+r, m)) / (Math.pow(1+r, m) - 1);
-      document.getElementById('res-loan-monthly').innerText = toKRW(monthly);
-      document.getElementById('res-loan-int').innerText = toKRW(monthly * m - p);
-      document.getElementById('res-loan-total').innerText = toKRW(monthly * m);
+      const method = document.getElementById('loan-method').value;
+      const g = getNum('loan-g') || 0;
+      
+      if(!p || isNaN(r) || !m) return;
+
+      let firstPayment = 0, totalInt = 0;
+
+      if(method === 'bullet') {
+        firstPayment = p * r;
+        totalInt = (p * r) * m;
+      } else if(method === 'annuity') {
+        firstPayment = p * (r * Math.pow(1+r, m)) / (Math.pow(1+r, m) - 1);
+        totalInt = (firstPayment * m) - p;
+      } else if(method === 'principal') {
+        firstPayment = (p / m) + (p * r);
+        for(let i=0; i<m; i++) { totalInt += (p - (p/m)*i) * r; }
+      } else if(method === 'grace-annuity') {
+        const graceInt = (p * r) * g;
+        const remainM = m - g;
+        const monthly = p * (r * Math.pow(1+r, remainM)) / (Math.pow(1+r, remainM) - 1);
+        firstPayment = p * r; // 거치기간 중 납입액
+        totalInt = graceInt + (monthly * remainM) - p;
+      } else if(method === 'grace-principal') {
+        const graceInt = (p * r) * g;
+        const remainM = m - g;
+        firstPayment = p * r; // 거치기간 중 납입액
+        let remainInt = 0;
+        for(let i=0; i<remainM; i++) { remainInt += (p - (p/remainM)*i) * r; }
+        totalInt = graceInt + remainInt;
+      }
+
+      document.getElementById('res-loan-monthly').innerText = toKRW(firstPayment);
+      document.getElementById('res-loan-int').innerText = toKRW(totalInt);
+      document.getElementById('res-loan-total').innerText = toKRW(p + totalInt);
+      updateChart('chart-loan', ['원금', '총이자'], [p, totalInt], ['#78a8ff', '#ffb86b']);
     }
 
     function calcInstallment() {
       const p = getNum('inst-p'), d = getNum('inst-d'), m = getNum('inst-m'), r = Number(document.getElementById('inst-r').value)/100/12;
       const financed = p - d;
       const monthly = r === 0 ? financed / m : financed * (r * Math.pow(1 + r, m)) / (Math.pow(1 + r, m) - 1);
+      const totalInt = monthly * m - financed;
       document.getElementById('res-inst-monthly').innerText = toKRW(monthly);
-      document.getElementById('res-inst-int').innerText = toKRW(monthly * m - financed);
+      document.getElementById('res-inst-int').innerText = toKRW(totalInt);
       document.getElementById('res-inst-total').innerText = toKRW(monthly * m + d);
+      updateChart('chart-inst', ['할부원금', '이자'], [financed, totalInt], ['#78a8ff', '#ffb86b']);
     }
 
     function calcInterest() {
       const p = getNum('int-p'), r = Number(document.getElementById('int-r').value)/100, y = Number(document.getElementById('int-y').value);
-      const total = p * (1 + r * y);
-      document.getElementById('res-int-total').innerText = toKRW(total);
-      document.getElementById('res-int-pure').innerText = toKRW(total - p);
+      const pureInt = p * r * y;
+      document.getElementById('res-int-total').innerText = toKRW(p + pureInt);
+      document.getElementById('res-int-pure').innerText = toKRW(pureInt);
       document.getElementById('res-int-yield').innerText = (r * y * 100).toFixed(2) + "%";
+      updateChart('chart-int', ['원금', '이자수익'], [p, pureInt], ['#78a8ff', '#53d6a3']);
     }
 
     function calcVat() {
@@ -307,22 +428,27 @@
       document.getElementById('res-vat-supply').innerText = toKRW(supply);
       document.getElementById('res-vat-value').innerText = toKRW(vat);
       document.getElementById('res-vat-total').innerText = toKRW(supply + vat);
+      updateChart('chart-vat', ['공급가액', '부가세'], [supply, vat], ['#78a8ff', '#4d85ff']);
     }
 
     function calcMargin() {
       const b = getNum('marg-b'), s = getNum('marg-s'), f = Number(document.getElementById('marg-f').value)/100;
-      const profit = s - b - (s * f);
+      const fee = s * f;
+      const profit = s - b - fee;
       document.getElementById('res-marg-p').innerText = toKRW(profit);
       document.getElementById('res-marg-r').innerText = ((profit / s) * 100).toFixed(2) + "%";
       document.getElementById('res-marg-roi').innerText = ((profit / b) * 100).toFixed(2) + "%";
+      updateChart('chart-marg', ['매입가', '수수료', '순이익'], [b, fee, Math.max(0, profit)], ['#ffb86b', '#4d85ff', '#53d6a3']);
     }
 
     function calcFee() {
       const a = getNum('fee-a'), r = Number(document.getElementById('fee-r').value)/100;
-      const val = a * r;
-      document.getElementById('res-fee-net').innerText = toKRW(a - val);
-      document.getElementById('res-fee-val').innerText = toKRW(val);
-      document.getElementById('res-fee-total').innerText = toKRW(a - val);
+      const feeVal = a * r;
+      const net = a - feeVal;
+      document.getElementById('res-fee-net').innerText = toKRW(net);
+      document.getElementById('res-fee-val').innerText = toKRW(feeVal);
+      document.getElementById('res-fee-total').innerText = toKRW(net);
+      updateChart('chart-fee', ['정산금액', '수수료'], [net, feeVal], ['#53d6a3', '#4d85ff']);
     }
 
     function calcExchange() {
@@ -330,13 +456,7 @@
       document.getElementById('res-ex-krw').innerText = toKRW(a * r);
     }
 
-    window.onload = () => {
-      showView('home');
-      // 초기 테마 설정 (시스템 설정 반영 가능)
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-        // toggleTheme(); // 필요시 호출
-      }
-    };
+    window.onload = () => showView('home');
   </script>
 </body>
 </html>
