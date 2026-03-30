@@ -156,36 +156,58 @@
       gap: 12px;
     }
 
-    .brand-wrap {
+    /* Naver News Style GNB */
+    .gnb-nav {
+      position: sticky;
+      top: 67px; /* top-appbar 높이에 맞춰 조정 */
+      z-index: 19;
+      background: var(--bg-2);
+      border-bottom: 1px solid var(--line);
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; /* Firefox */
+    }
+
+    .gnb-nav::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Edge */
+    }
+
+    .gnb-list {
       display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .brand-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-3));
-      display: grid;
-      place-items: center;
-      box-shadow: 0 10px 24px rgba(77, 133, 255, 0.35);
-      font-weight: 800;
-      font-size: 1rem;
-      color: white;
-    }
-
-    .brand-text h1 {
+      padding: 0 16px;
       margin: 0;
-      font-size: 1rem;
-      letter-spacing: -0.03em;
+      list-style: none;
+    }
+
+    .gnb-item {
+      display: inline-block;
+      padding: 14px 12px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-decoration: none;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .gnb-item.active {
+      color: var(--primary);
       font-weight: 800;
     }
 
-    .brand-text p {
-      margin: 2px 0 0;
-      color: var(--muted);
-      font-size: 0.82rem;
+    .gnb-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--primary);
+    }
+
+    .gnb-item:hover {
+      color: var(--text);
     }
 
     main {
@@ -328,6 +350,52 @@
     .segmented a:hover {
       background: var(--surface-2);
       color: var(--text);
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .category-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 22px 12px;
+      border-radius: 24px;
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+      text-align: center;
+      gap: 10px;
+    }
+
+    .category-item:hover {
+      background: var(--surface-2);
+      transform: translateY(-2px);
+      border-color: var(--primary);
+    }
+
+    .category-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+      background: var(--surface);
+      margin-bottom: 2px;
+    }
+
+    .category-item span {
+      font-size: 0.94rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.02em;
     }
 
     .panel-title {
@@ -825,6 +893,19 @@
       </div>
     </header>
 
+    <nav class="gnb-nav">
+      <div class="gnb-list">
+        <a href="loan.html" class="gnb-item">대출 계산기</a>
+        <a href="installment.html" class="gnb-item">할부 계산기</a>
+        <a href="interest.html" class="gnb-item">이자 계산기</a>
+        <a href="vat.html" class="gnb-item">부가세 계산기</a>
+        <a href="margin.html" class="gnb-item">마진율 계산기</a>
+        <a href="fee.html" class="gnb-item">수수료 계산기</a>
+        <a href="exchange.html" class="gnb-item">정산 계산기</a>
+        <a href="faq.html" class="gnb-item">도움말/FAQ</a>
+      </div>
+    </nav>
+
     <main>
       <section id="home" class="hero-card">
         <div class="hero-badge">빠르고 세련된 금융 계산 경험</div>
@@ -838,22 +919,42 @@
       </section>
 
       <section class="section">
-        <div class="card">
-          <div class="card-inner">
-            <div class="segmented" style="grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, auto);">
-              <a href="#loan">대출</a>
-              <a href="#installment">할부</a>
-              <a href="#interest">이자</a>
-              <a href="#vat">부가세</a>
-              <a href="#margin">마진</a>
-              <a href="#fee">수수료</a>
-              <a href="#exchange">정산</a>
-              <a href="#faq">도움말</a>
-            </div>
-            <div class="section-head">
-              <div><h2>빠른 진입</h2><p>필요한 계산기나 가이드를 바로 확인하세요.</p></div>
-            </div>
-          </div>
+        <div class="section-head">
+          <div><h2>카테고리별 빠른 진입</h2><p>필요한 계산기를 바로 선택하세요.</p></div>
+        </div>
+        <div class="category-grid">
+          <a href="loan.html" class="category-item">
+            <div class="category-icon">💰</div>
+            <span>대출 계산기</span>
+          </a>
+          <a href="installment.html" class="category-item">
+            <div class="category-icon">💳</div>
+            <span>할부 계산기</span>
+          </a>
+          <a href="interest.html" class="category-item">
+            <div class="category-icon">📈</div>
+            <span>이자 계산기</span>
+          </a>
+          <a href="vat.html" class="category-item">
+            <div class="category-icon">🧾</div>
+            <span>부가세 계산기</span>
+          </a>
+          <a href="margin.html" class="category-item">
+            <div class="category-icon">📊</div>
+            <span>마진율 계산기</span>
+          </a>
+          <a href="fee.html" class="category-item">
+            <div class="category-icon">💸</div>
+            <span>수수료 계산기</span>
+          </a>
+          <a href="exchange.html" class="category-item">
+            <div class="category-icon">⚖️</div>
+            <span>정산 계산기</span>
+          </a>
+          <a href="faq.html" class="category-item">
+            <div class="category-icon">❓</div>
+            <span>도움말/FAQ</span>
+          </a>
         </div>
       </section>
 
