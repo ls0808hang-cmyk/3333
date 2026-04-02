@@ -2,534 +2,1621 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="google-adsense-account" content="ca-pub-1526973327653342">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="description" content="대출 상환, 할부 이자, 예적금 수익, 부가세 및 마진율까지! 모든 금융 계산을 한 번에 해결하는 올인원 정산 계산기입니다. 정확한 수식과 시각적 차트를 제공합니다.">
-  <meta name="keywords" content="대출계산기, 이자계산기, 부가세계산기, 마진율계산기, 할부계산기, 정산계산기">
-  <meta property="og:title" content="올인원 정산 계산기 | 스마트한 금융 생활의 시작">
-  <meta property="og:description" content="복잡한 금융 계산, 이제 한 곳에서 쉽고 정확하게 해결하세요.">
-  <meta property="og:url" content="https://3333-63p.pages.dev/">
-  <link rel="canonical" href="https://3333-63p.pages.dev/">
-  <title>올인원 정산 계산기 | 대출·이자·수익 통합 도구</title>
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>올인원 정산 계산기 | 대출·이자·부가세·마진율 통합 가이드</title>
+  <meta name="description" content="대출, 할부, 예금 이자, 부가세, 마진율, 수수료, 환율 정산을 한 곳에서 계산하세요. 계산 공식, 실제 예시, 해설, FAQ까지 함께 제공하는 올인원 정산 계산기입니다." />
+  <meta name="keywords" content="대출 계산기, 할부 계산기, 이자 계산기, 부가세 계산기, 마진율 계산기, 수수료 계산기, 환율 계산기, 정산 계산기" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="올인원 정산 계산기 | 대출·이자·부가세·마진율 통합 가이드" />
+  <meta property="og:description" content="계산기만 있는 화면이 아니라, 공식·예시·해설·FAQ까지 함께 제공하는 실전형 계산 도구" />
+  <meta property="og:locale" content="ko_KR" />
+  <link rel="canonical" href="https://3333-63p.pages.dev/" />
+
+  <style>
+    :root{
+      --bg:#f8fafc;
+      --card:#ffffff;
+      --ink:#0f172a;
+      --sub:#475569;
+      --line:#e2e8f0;
+      --brand:#2563eb;
+      --brand-2:#0f172a;
+      --soft:#eff6ff;
+      --good:#059669;
+      --warn:#b45309;
+      --danger:#dc2626;
+      --radius:22px;
+      --shadow:0 14px 38px rgba(15, 23, 42, .08);
+      --max:1160px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;
+      color:var(--ink);
+      background:linear-gradient(180deg,#f8fafc 0%,#eef2ff 100%);
+      line-height:1.65;
+    }
+
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    .container{
+      width:min(var(--max), calc(100% - 32px));
+      margin:0 auto;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:20;
+      backdrop-filter: blur(14px);
+      background:rgba(248,250,252,.82);
+      border-bottom:1px solid rgba(226,232,240,.9);
+    }
+
+    .topbar-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:12px 0;
+    }
+
+    .logo{
+      font-weight:800;
+      letter-spacing:-0.03em;
+      color:var(--brand-2);
+    }
+
+    .mini-nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .mini-nav a{
+      padding:8px 12px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:#fff;
+      color:var(--brand-2);
+      font-size:14px;
+      font-weight:600;
+    }
+
+    .hero{
+      padding:48px 0 28px;
+    }
+
+    .hero-box{
+      background:
+        radial-gradient(circle at top left, rgba(37,99,235,.12), transparent 34%),
+        radial-gradient(circle at right bottom, rgba(99,102,241,.12), transparent 28%),
+        #ffffff;
+      border:1px solid var(--line);
+      border-radius:30px;
+      padding:38px 28px;
+      box-shadow:var(--shadow);
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 14px;
+      border-radius:999px;
+      background:var(--soft);
+      color:var(--brand);
+      font-size:13px;
+      font-weight:800;
+      letter-spacing:.02em;
+    }
+
+    h1,h2,h3{
+      line-height:1.25;
+      letter-spacing:-0.03em;
+      margin:0 0 12px;
+    }
+
+    h1{font-size:clamp(32px, 5vw, 54px)}
+    h2{font-size:clamp(24px, 3vw, 34px)}
+    h3{font-size:22px}
+
+    .hero p.lead{
+      margin:14px 0 0;
+      color:var(--sub);
+      font-size:18px;
+      max-width:900px;
+    }
+
+    .meta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:20px;
+    }
+
+    .meta-chip{
+      background:#fff;
+      border:1px solid var(--line);
+      padding:10px 14px;
+      border-radius:999px;
+      font-size:14px;
+      color:var(--sub);
+      font-weight:700;
+    }
+
+    .section{
+      margin:22px 0;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:26px;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:22px;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:16px;
+    }
+
+    .grid-tools{
+      display:grid;
+      grid-template-columns:repeat(2, 1fr);
+      gap:22px;
+    }
+
+    .muted{color:var(--sub)}
+    .small{font-size:14px}
+    .tight > * + *{margin-top:10px}
+
+    .toc{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .toc a{
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--brand-2);
+      border-radius:999px;
+      padding:10px 14px;
+      font-weight:700;
+      font-size:14px;
+    }
+
+    .notice{
+      border-left:4px solid var(--brand);
+      background:#f8fbff;
+      padding:14px 16px;
+      border-radius:14px;
+      color:#1e3a8a;
+      margin-top:16px;
+    }
+
+    .table-wrap{
+      overflow:auto;
+      border:1px solid var(--line);
+      border-radius:18px;
+      margin-top:14px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      background:#fff;
+      min-width:680px;
+    }
+
+    th,td{
+      padding:13px 14px;
+      border-bottom:1px solid var(--line);
+      text-align:left;
+      font-size:14px;
+      vertical-align:top;
+    }
+
+    th{
+      background:#f8fafc;
+      font-weight:800;
+      color:#334155;
+    }
+
+    .tool{
+      margin-top:28px;
+      scroll-margin-top:88px;
+    }
+
+    .tool-header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+    }
+
+    .tool-tag{
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--soft);
+      color:var(--brand);
+      font-size:13px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .tool-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      align-items:start;
+    }
+
+    .form-box,
+    .result-box{
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:18px;
+      background:#fff;
+    }
+
+    .form-row{
+      display:grid;
+      gap:8px;
+      margin-bottom:14px;
+    }
+
+    label{
+      font-size:14px;
+      font-weight:800;
+      color:#334155;
+    }
+
+    input,select,button{
+      font:inherit;
+    }
+
+    input,select{
+      width:100%;
+      padding:13px 14px;
+      border-radius:14px;
+      border:1px solid #cbd5e1;
+      background:#fff;
+      color:var(--ink);
+      outline:none;
+    }
+
+    input:focus,select:focus{
+      border-color:#60a5fa;
+      box-shadow:0 0 0 4px rgba(96,165,250,.15);
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+
+    button{
+      border:0;
+      cursor:pointer;
+      border-radius:14px;
+      padding:13px 16px;
+      font-weight:800;
+    }
+
+    .btn-primary{
+      background:var(--brand);
+      color:#fff;
+    }
+
+    .btn-secondary{
+      background:#e2e8f0;
+      color:#0f172a;
+    }
+
+    .result-cards{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:12px;
+      margin-bottom:14px;
+    }
+
+    .stat{
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+      background:#f8fafc;
+    }
+
+    .stat .k{
+      display:block;
+      color:var(--sub);
+      font-size:13px;
+      font-weight:700;
+      margin-bottom:6px;
+    }
+
+    .stat .v{
+      display:block;
+      font-size:22px;
+      font-weight:900;
+      letter-spacing:-0.03em;
+    }
+
+    .summary{
+      padding:14px 16px;
+      border-radius:16px;
+      background:#f8fafc;
+      border:1px solid var(--line);
+      color:#334155;
+      font-size:15px;
+      margin-top:12px;
+    }
+
+    .formula{
+      padding:14px 16px;
+      border-radius:16px;
+      background:#fffbeb;
+      border:1px solid #fde68a;
+      color:#92400e;
+      margin-top:12px;
+      font-size:14px;
+    }
+
+    .tool-copy{
+      margin-top:16px;
+      color:var(--sub);
+      font-size:15px;
+    }
+
+    .faq details{
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px 18px;
+      background:#fff;
+    }
+
+    .faq details + details{margin-top:12px}
+    .faq summary{
+      cursor:pointer;
+      font-weight:800;
+      list-style:none;
+    }
+    .faq summary::-webkit-details-marker{display:none}
+
+    .callout{
+      border:1px dashed #93c5fd;
+      background:#f8fbff;
+      border-radius:18px;
+      padding:16px;
+      color:#1e3a8a;
+      margin-top:16px;
+    }
+
+    .footer{
+      margin:34px 0 40px;
+      color:#64748b;
+    }
+
+    .footer-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      margin-top:14px;
+    }
+
+    .divider{
+      height:1px;
+      background:var(--line);
+      margin:20px 0;
+    }
+
+    .ok{color:var(--good)}
+    .warn{color:var(--warn)}
+    .danger{color:var(--danger)}
+
+    .section-title-row{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+
+    .kicker{
+      color:var(--brand);
+      font-weight:800;
+      font-size:13px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    @media (max-width: 980px){
+      .grid-2,.grid-tools,.tool-grid{grid-template-columns:1fr}
+      .grid-3{grid-template-columns:1fr}
+    }
+
+    @media (max-width: 720px){
+      .topbar-inner{align-items:flex-start;flex-direction:column}
+      .hero-box{padding:26px 18px}
+      .card{padding:20px}
+      .result-cards{grid-template-columns:1fr}
+      .mini-nav{gap:8px}
+      .mini-nav a,.toc a{font-size:13px}
+    }
+  </style>
+
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "올인원 정산 계산기",
-    "url": "https://3333-63p.pages.dev/",
-    "applicationCategory": "FinanceApplication",
-    "operatingSystem": "All",
-    "abstract": "대출, 할부, 이자, 부가세 등 복잡한 금융 수치를 즉시 계산하고 시각화해주는 웹 애플리케이션입니다.",
-    "offers": {
-      "@type": "Offer",
-      "price": "0"
-    }
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"올인원 정산 계산기",
+    "url":"https://3333-63p.pages.dev/",
+    "description":"대출, 할부, 이자, 부가세, 마진율, 수수료, 환율 정산을 계산하고 공식과 예시까지 함께 설명하는 도구"
   }
   </script>
 
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1526973327653342" crossorigin="anonymous"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    :root {
-      --bg: #07111f; --bg-2: #0b1729; --surface: rgba(255, 255, 255, 0.06);
-      --line: rgba(255, 255, 255, 0.08); --text: #f5f8ff; --muted: #a8b6d4;
-      --primary: #78a8ff; --primary-3: #4d85ff; --radius-xl: 28px;
-      --transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    [data-theme="light"] {
-      --bg: #f8fafc; --bg-2: #ffffff; --surface: rgba(0, 0, 0, 0.04);
-      --line: rgba(0, 0, 0, 0.08); --text: #1e293b; --muted: #64748b;
-      --primary: #2563eb; --primary-3: #1d4ed8;
-    }
-    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    body { margin: 0; font-family: 'Noto Sans KR', sans-serif; color: var(--text); background: var(--bg); overflow-x: hidden; }
-    
-    .app-shell { width: min(100%, 520px); margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
-    
-    .top-appbar { position: sticky; top: 0; z-index: 100; background: var(--bg); backdrop-filter: blur(20px); border-bottom: 1px solid var(--line); padding: 14px 16px; }
-    .gnb-nav { background: var(--bg-2); border-bottom: 1px solid var(--line); overflow-x: auto; white-space: nowrap; scrollbar-width: none; position: sticky; top: 67px; z-index: 99; }
-    .gnb-nav::-webkit-scrollbar { display: none; }
-    .gnb-list { display: flex; padding: 0 8px; list-style: none; margin: 0; }
-    .gnb-item { padding: 14px 12px; color: var(--muted); font-size: 0.92rem; font-weight: 500; cursor: pointer; position: relative; transition: var(--transition); }
-    .gnb-item.active { color: var(--primary); font-weight: 800; }
-    .gnb-item.active::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--primary); }
-
-    #main-view { flex: 1; position: relative; }
-    .view-section { display: none; padding: 18px 16px; animation: slideIn var(--transition); }
-    .view-section.active { display: block; }
-    
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .card { border-radius: var(--radius-xl); background: var(--bg-2); border: 1px solid var(--line); margin-bottom: 18px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-    .card-inner { padding: 20px; }
-    .category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
-    .category-item { background: var(--bg-2); border: 1px solid var(--line); padding: 24px 12px; border-radius: 24px; text-align: center; cursor: pointer; transition: var(--transition); }
-    .category-item:hover { transform: translateY(-4px); border-color: var(--primary); }
-    .category-icon { font-size: 1.8rem; margin-bottom: 8px; }
-    
-    .field { margin-bottom: 16px; }
-    .field label { display: block; margin-bottom: 8px; font-size: 0.85rem; font-weight: 700; color: var(--muted); }
-    .field input, .field select { width: 100%; padding: 15px; border-radius: 16px; border: 1px solid var(--line); background: var(--surface); color: var(--text); font-size: 1rem; outline: none; transition: 0.2s; appearance: none; }
-    .field select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 15px center;
-      background-size: 18px;
-      cursor: pointer;
-    }
-    .field select option { background-color: #0b1729; color: #ffffff; }
-    .field input:focus, .field select:focus { 
-      border-color: var(--primary); 
-      background: var(--bg-2); 
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 0 3px rgba(120, 168, 255, 0.1); 
-    }
-    .btn-primary { width: 100%; border: 0; border-radius: 16px; padding: 16px; font-weight: 800; background: linear-gradient(135deg, var(--primary), var(--primary-3)); color: white; cursor: pointer; transition: 0.2s; }
-    
-    .result-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; margin-bottom: 20px; }
-    .result-card { background: var(--surface); padding: 12px; border-radius: 18px; text-align: center; border: 1px solid var(--line); }
-    .result-card span { font-size: 0.7rem; color: var(--muted); display: block; margin-bottom: 4px; }
-    .result-card strong { font-size: 0.85rem; color: var(--primary); word-break: break-all; }
-
-    .chart-wrap { width: 100%; height: 200px; display: flex; justify-content: center; align-items: center; background: var(--surface); border-radius: 20px; padding: 10px; }
-    .back-to-home { color: var(--primary); font-weight: 700; cursor: pointer; margin-bottom: 15px; display: inline-block; font-size: 0.9rem; }
-    
-    #loan-grace-field { display: none; }
-    #loan-grace-field.active { display: block; }
-
-    .usage-guide { margin-top: 24px; padding: 20px; border-top: 1px solid var(--line); font-size: 0.88rem; line-height: 1.6; color: var(--muted); }
-    .usage-guide h4 { color: var(--text); margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-    .usage-guide p { margin-bottom: 8px; }
-    .usage-guide ul { padding-left: 20px; margin: 0; }
-    .usage-guide li { margin-bottom: 4px; }
-  </style>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {
+        "@type":"Question",
+        "name":"은행 앱이나 카드사 앱과 계산값이 왜 조금 다를 수 있나요?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"금리 적용 방식, 일수 계산, 첫 회차 처리, 거치 기간 반영 방식, 반올림 기준이 서비스마다 다르기 때문입니다."
+        }
+      },
+      {
+        "@type":"Question",
+        "name":"부가세 포함 금액과 공급가액은 어떻게 구분하나요?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"합계금액이 이미 부가세를 포함한 값이라면 1.1로 나누어 공급가액을 구하고, 공급가액에 10%를 더하면 합계금액을 구할 수 있습니다."
+        }
+      },
+      {
+        "@type":"Question",
+        "name":"마진율과 ROI는 무엇이 다른가요?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"마진율은 판매가 대비 이익 비율이고, ROI는 원가 대비 이익 비율입니다. 판매 효율과 투자 효율을 각각 보는 지표라고 이해하면 쉽습니다."
+        }
+      },
+      {
+        "@type":"Question",
+        "name":"이 사이트에 입력한 값은 저장되나요?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"이 예제 페이지는 브라우저 안에서 계산만 수행하도록 설계되어 있으며, 서버로 값을 전송하는 기능을 포함하지 않습니다."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
-  <div class="app-shell">
-    <header class="top-appbar">
-      <div style="display:flex; justify-content: space-between; align-items:center;">
-        <div onclick="showView('home')" style="font-weight: 900; font-size: 1.2rem; letter-spacing: -1px; cursor:pointer;">올인원 계산기</div>
-        <button id="theme-toggle" onclick="toggleTheme()" style="background:none; border:0; font-size:1.2rem; cursor:pointer;">🌙</button>
-      </div>
-    </header>
+  <noscript>
+    <div style="padding:16px;background:#fee2e2;color:#991b1b;text-align:center;font-weight:700;">
+      이 페이지의 계산 기능은 자바스크립트가 필요합니다. 브라우저 설정에서 자바스크립트를 활성화해 주세요.
+    </div>
+  </noscript>
 
-    <nav class="gnb-nav">
-      <div class="gnb-list">
-        <div id="gnb-home" class="gnb-item active" onclick="showView('home')">홈</div>
-        <div id="gnb-loan" class="gnb-item" onclick="showView('loan')">대출</div>
-        <div id="gnb-installment" class="gnb-item" onclick="showView('installment')">할부</div>
-        <div id="gnb-interest" class="gnb-item" onclick="showView('interest')">이자</div>
-        <div id="gnb-vat" class="gnb-item" onclick="showView('vat')">부가세</div>
-        <div id="gnb-margin" class="gnb-item" onclick="showView('margin')">마진율</div>
-        <div id="gnb-fee" class="gnb-item" onclick="showView('fee')">수수료</div>
-        <div id="gnb-exchange" class="gnb-item" onclick="showView('exchange')">정산</div>
-      </div>
-    </nav>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="logo">올인원 정산 계산기</div>
+      <nav class="mini-nav" aria-label="빠른 이동">
+        <a href="#guide">가이드</a>
+        <a href="#examples">실제 예시</a>
+        <a href="#faq">FAQ</a>
+        <a href="#loan">대출</a>
+        <a href="#interest">이자</a>
+        <a href="#vat">부가세</a>
+        <a href="#margin">마진율</a>
+      </nav>
+    </div>
+  </header>
 
-    <main id="main-view">
-      <!-- HOME VIEW -->
-      <section id="view-home" class="view-section active">
-        <div class="card" style="background: linear-gradient(135deg, #1a2a4a, #07111f); padding: 30px 20px; border:none;">
-          <h2 style="margin:0; font-size: 1.8rem; line-height: 1.2; color: white;">금융 계산의 모든 것,<br>한 곳에서 간편하게.</h2>
-          <p style="color: #a8b6d4; margin-top: 10px; font-size: 0.9rem;">도넛 차트로 결과의 비중을 한눈에 확인하세요.</p>
+  <main class="container">
+    <section class="hero">
+      <div class="hero-box">
+        <span class="eyebrow">실무형 계산 + 설명형 콘텐츠</span>
+        <h1>대출, 이자, 부가세, 마진율을<br />한 번에 계산하는 올인원 정산 계산기</h1>
+        <p class="lead">
+          이 사이트는 단순히 숫자만 계산하는 도구가 아니라, <strong>왜 이런 결과가 나오는지</strong>,
+          <strong>어떤 상황에서 어떤 계산기를 써야 하는지</strong>,
+          <strong>계산 결과를 어떻게 해석해야 하는지</strong>까지 함께 설명하는 실전형 가이드입니다.
+          대출 실행 전 월 부담 확인, 카드 할부 비교, 예금 세후 이자 계산, 판매가 책정, 플랫폼 정산 예측, 해외 매출 환산까지 한 페이지에서 확인할 수 있습니다.
+        </p>
+
+        <div class="meta-row">
+          <span class="meta-chip">업데이트: 2026-04-02</span>
+          <span class="meta-chip">브라우저 내부 계산</span>
+          <span class="meta-chip">공식 + 예시 + FAQ 포함</span>
+          <span class="meta-chip">모바일 최적화</span>
         </div>
-        <div class="category-grid">
-          <div class="category-item" onclick="showView('loan')"><div class="category-icon">💰</div><div style="font-weight: 800;">대출 계산기</div></div>
-          <div class="category-item" onclick="showView('installment')"><div class="category-icon">💳</div><div style="font-weight: 800;">할부 계산기</div></div>
-          <div class="category-item" onclick="showView('interest')"><div class="category-icon">📈</div><div style="font-weight: 800;">이자 계산기</div></div>
-          <div class="category-item" onclick="showView('vat')"><div class="category-icon">🧾</div><div style="font-weight: 800;">부가세 계산기</div></div>
-          <div class="category-item" onclick="showView('margin')"><div class="category-icon">📊</div><div style="font-weight: 800;">마진율 계산기</div></div>
-          <div class="category-item" onclick="showView('fee')"><div class="category-icon">💸</div><div style="font-weight: 800;">수수료 계산기</div></div>
-          <div class="category-item" onclick="showView('exchange')"><div class="category-icon">⚖️</div><div style="font-weight: 800;">정산 계산기</div></div>
+
+        <div class="toc" aria-label="주요 섹션">
+          <a href="#guide">어떤 계산기를 써야 하나요?</a>
+          <a href="#examples">실제 계산 예시</a>
+          <a href="#interpret">결과를 읽는 법</a>
+          <a href="#faq">자주 묻는 질문</a>
+          <a href="#tools">계산기 바로가기</a>
         </div>
 
-        <div class="card" style="margin-top: 30px; background: var(--bg-2); border: 1px solid var(--line);">
-          <div class="card-inner" style="font-size: 0.85rem; line-height: 1.8; color: var(--muted);">
-            <h3 style="color: var(--text); margin-top: 0;">올인원 정산 계산기 가이드</h3>
-            <p><strong>대출 계산기:</strong> 원리금 균등, 원금 균등, 만기 일시 상환 등 다양한 상환 방식에 따른 월 납입금과 총 이자 비용을 상세히 계산해 드립니다. 거치 기간 설정도 가능하여 정밀한 대출 상환 계획을 세울 수 있습니다.</p>
-            <p><strong>할부 및 이자 계산기:</strong> 신용카드 할부 구매 시 발생하는 수수료와 예적금 가입 시 받게 될 세후 실질 이자 수익을 미리 확인해 보세요. 복잡한 과세 방식(일반, 우대, 비과세)을 모두 지원합니다.</p>
-            <p><strong>비즈니스 정산 도구:</strong> 판매자를 위한 마진율 계산기, 수수료 계산기, 부가세 계산기를 통해 실제 수익을 정확히 분석하세요. 플랫폼 수수료와 매입가를 고려한 순이익과 ROI를 즉시 산출합니다.</p>
-            <p><strong>편리한 사용성:</strong> 모든 계산 결과는 도넛 차트로 시각화되어 원금과 이자, 수수료의 비중을 한눈에 파악할 수 있습니다. 다크 모드 지원으로 어떠한 환경에서도 눈이 편안합니다.</p>
-          </div>
+        <div class="notice">
+          계산값은 빠른 의사결정을 돕기 위한 참고용입니다. 실제 금융상품, 카드사 청구, 세금 신고, 플랫폼 정산 결과는
+          <strong>반올림 기준, 수수료 체계, 일수 계산 방식</strong>에 따라 달라질 수 있습니다.
         </div>
-      </section>
-
-      <!-- LOAN VIEW -->
-      <section id="view-loan" class="view-section">
-        <div class="back-to-home" onclick="showView('home')">← 홈으로</div>
-        <div class="card"><div class="card-inner">
-          <h3 style="margin-top:0;">대출 상환 상세 계산</h3>
-          <div class="field"><label>대출금액(원)</label><input id="loan-p" type="text" value="30,000,000" oninput="formatInput(this)"></div>
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
-            <div class="field"><label>연이율(%)</label><input id="loan-r" type="number" value="5.2" step="0.1"></div>
-            <div class="field"><label>기간(개월)</label><input id="loan-m" type="number" value="36"></div>
-          </div>
-          <div class="field">
-            <label>상환 방식</label>
-            <select id="loan-method" onchange="updateLoanMethodInfo()">
-              <option value="annuity">원리금 균등분할 상환</option>
-              <option value="principal">원금 균등분할 상환</option>
-              <option value="bullet">만기일시 상환</option>
-              <option value="grace-annuity">거치후 원리금 균등</option>
-              <option value="grace-principal">거치후 원금 균등</option>
-            </select>
-          </div>
-          <div id="loan-method-desc" style="background: var(--surface); padding: 14px; border-radius: 16px; font-size: 0.82rem; color: var(--muted); line-height: 1.5; margin-bottom: 16px; border: 1px dashed var(--line);">
-            <strong>원리금 균등:</strong> 매달 갚는 원금과 이자의 합계가 동일합니다. 계획적인 지출 관리에 유리합니다.
-          </div>
-          <div id="loan-grace-field" class="field"><label>거치 기간(개월)</label><input id="loan-g" type="number" value="12"></div>
-          <button class="btn-primary" onclick="calcLoan()">대출 계산하기</button>
-
-          <div class="usage-guide">
-            <h4>💡 대출 상환 방식 팁</h4>
-            <p>어떤 상환 방식이 유리할까요?</p>
-            <ul>
-              <li><strong>원리금균등:</strong> 매달 나가는 돈이 일정해 가계부 관리가 쉽습니다.</li>
-              <li><strong>원금균등:</strong> 초반 부담은 크지만 전체 이자가 가장 저렴합니다.</li>
-              <li><strong>만기일시:</strong> 당장 돈이 부족할 때 유리하지만, 이자 부담이 가장 큽니다.</li>
-            </ul>
-          </div>
-        </div></div>
-        <div class="card"><div class="card-inner">
-          <div class="result-grid">
-            <div class="result-card"><span>1회차 납입액</span><strong id="res-loan-monthly">-</strong></div>
-            <div class="result-card"><span>총 이자</span><strong id="res-loan-int">-</strong></div>
-            <div class="result-card"><span>총 상환액</span><strong id="res-loan-total">-</strong></div>
-          </div>
-          <div class="chart-wrap"><canvas id="chart-loan"></canvas></div>
-        </div></div>
-      </section>
-
-      <!-- INSTALLMENT VIEW -->
-      <section id="view-installment" class="view-section">
-        <div class="back-to-home" onclick="showView('home')">← 홈으로</div>
-        <div class="card"><div class="card-inner">
-          <h3 style="margin-top:0;">할부 납부</h3>
-          <div class="field"><label>상품금액(원)</label><input id="inst-p" type="text" value="1,800,000" oninput="formatInput(this)"></div>
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
-            <div class="field"><label>선수금(원)</label><input id="inst-d" type="text" value="300,000" oninput="formatInput(this)"></div>
-            <div class="field"><label>개월 수</label><input id="inst-m" type="number" value="12"></div>
-          </div>
-          <div class="field"><label>이율(%)</label><input id="inst-r" type="number" value="7.8" step="0.1"></div>
-          <button class="btn-primary" onclick="calcInstallment()">할부 계산하기</button>
-
-          <div class="usage-guide">
-            <h4>💳 할부 구매 전 확인하세요</h4>
-            <p>신용카드 할부는 편리하지만 실질 금리가 높을 수 있습니다. 선수금을 많이 낼수록 총 할부 수수료(이자)를 크게 줄일 수 있으니 계산 결과를 통해 적절한 분할 기간을 선택하세요.</p>
-          </div>
-        </div></div>
-        <div class="card"><div class="card-inner">
-          <div class="result-grid">
-            <div class="result-card"><span>월 납입액</span><strong id="res-inst-monthly">-</strong></div>
-            <div class="result-card"><span>총 이자</span><strong id="res-inst-int">-</strong></div>
-            <div class="result-card"><span>총 결제액</span><strong id="res-inst-total">-</strong></div>
-          </div>
-          <div class="chart-wrap"><canvas id="chart-inst"></canvas></div>
-        </div></div>
-      </section>
-
-      <!-- INTEREST VIEW -->
-      <section id="view-interest" class="view-section">
-        <div class="back-to-home" onclick="showView('home')">← 홈으로</div>
-        <div class="card"><div class="card-inner">
-          <h3 style="margin-top:0;">이자 수익 상세 계산</h3>
-          <div class="field"><label>원금(원)</label><input id="int-p" type="text" value="10,000,000" oninput="formatInput(this)"></div>
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
-            <div class="field"><label>이율(%)</label><input id="int-r" type="number" value="4.5" step="0.1"></div>
-            <div class="field"><label>기간(년)</label><input id="int-y" type="number" value="3"></div>
-          </div>
-          <div class="field">
-            <label>과세 방식</label>
-            <select id="int-tax">
-              <option value="15.4">일반과세 (15.4%)</option>
-              <option value="9.5">세금우대 (9.5%)</option>
-              <option value="0">비과세 (0%)</option>
-            </select>
-          </div>
-          <button class="btn-primary" onclick="calcInterest()">이자 계산하기</button>
-
-          <div class="usage-guide">
-            <h4>📈 세금의 종류</h4>
-            <ul>
-              <li><strong>일반과세:</strong> 이자소득세 14% + 지방소득세 1.4% = 총 15.4%를 공제합니다.</li>
-              <li><strong>세금우대:</strong> 농어촌특별세 등으로 낮은 세율이 적용되는 상품입니다.</li>
-              <li><strong>비과세:</strong> ISA 계좌 등 세금을 전혀 떼지 않는 절세 상품입니다.</li>
-            </ul>
-          </div>
-        </div></div>
-        <div class="card"><div class="card-inner">
-          <div class="result-grid">
-            <div class="result-card"><span>최종 수령액</span><strong id="res-int-total">-</strong></div>
-            <div class="result-card"><span>공제 세금</span><strong id="res-int-tax-val">-</strong></div>
-            <div class="result-card"><span>세후 이자</span><strong id="res-int-pure">-</strong></div>
-          </div>
-          <div class="chart-wrap"><canvas id="chart-int"></canvas></div>
-        </div></div>
-      </section>
-
-      <!-- VAT VIEW -->
-      <section id="view-vat" class="view-section">
-        <div class="back-to-home" onclick="showView('home')">← 홈으로</div>
-        <div class="card"><div class="card-inner">
-          <h3 style="margin-top:0;">부가세</h3>
-          <div class="field"><label>금액(원)</label><input id="vat-a" type="text" value="110,000" oninput="formatInput(this)"></div>
-          <div class="field"><label>구분</label><select id="vat-t"><option value="include">부가세 포함(합계)</option><option value="exclude">부가세 별도(공급가)</option></select></div>
-          <button class="btn-primary" onclick="calcVat()">부가세 계산하기</button>
-
-          <div class="usage-guide">
-            <h4>🧾 공급가와 합계금액</h4>
-            <p>공급가액은 순수 물건 값이며, 부가세는 그 값의 10%입니다. 합계금액(판매가)은 공급가액과 부가세를 합친 금액입니다. 사업자 세금 계산서 발행 시 필수적인 구분입니다.</p>
-          </div>
-        </div></div>
-        <div class="card"><div class="card-inner">
-          <div class="result-grid">
-            <div class="result-card"><span>공급가액</span><strong id="res-vat-supply">-</strong></div>
-            <div class="result-card"><span>부가세</span><strong id="res-vat-value">-</strong></div>
-            <div class="result-card"><span>합계금액</span><strong id="res-vat-total">-</strong></div>
-          </div>
-          <div class="chart-wrap"><canvas id="chart-vat"></canvas></div>
-        </div></div>
-      </section>
-
-      <!-- MARGIN VIEW -->
-      <section id="view-margin" class="view-section">
-        <div class="back-to-home" onclick="showView('home')">← 홈으로</div>
-        <div class="card"><div class="card-inner">
-          <h3 style="margin-top:0;">마진율</h3>
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
-            <div class="field"><label>매입가(원)</label><input id="marg-b" type="text" value="10,000" oninput="formatInput(this)"></div>
-            <div class="field"><label>판매가(원)</label><input id="marg-s" type="text" value="20,000" oninput="formatInput(this)"></div>
-          </div>
-          <div class="field"><label>수수료(%)</label><input id="marg-f" type="number" value="10" step="0.1"></div>
-          <button class="btn-primary" onclick="calcMargin()">마진 계산하기</button>
-
-          <div class="usage-guide">
-            <h4>📊 마진과 ROI</h4>
-            <p><strong>마진율:</strong> 판매가 대비 순이익의 비율입니다. 사업의 수익성을 나타냅니다.</p>
-            <p><strong>ROI:</strong> 매입 원가 대비 얼마나 벌었는지를 나타냅니다. 자본 투자 효율성을 확인할 수 있습니다.</p>
-          </div>
-        </div></div>
-        <div class="card"><div class="card-inner">
-          <div class="result-grid">
-            <div class="result-card"><span>순이익</span><strong id="res-marg-p">-</strong></div>
-            <div class="result-card"><span>마진율</span><strong id="res-marg-r">-</strong></div>
-            <div class="result-card"><span>ROI</span><strong id="res-marg-roi">-</strong></div>
-          </div>
-          <div class="chart-wrap"><canvas id="chart-marg"></canvas></div>
-        </div></div>
-      </section>
-
-      <!-- FEE VIEW -->
-      <section id="view-fee" class="view-section">
-        <div class="back-to-home" onclick="showView('home')">← 홈으로</div>
-        <div class="card"><div class="card-inner">
-          <h3 style="margin-top:0;">수수료</h3>
-          <div class="field"><label>판매금액(원)</label><input id="fee-a" type="text" value="1,000,000" oninput="formatInput(this)"></div>
-          <div class="field"><label>수수료율(%)</label><input id="fee-r" type="number" value="3.74" step="0.01"></div>
-          <button class="btn-primary" onclick="calcFee()">수수료 계산하기</button>
-
-          <div class="usage-guide">
-            <h4>💸 플랫폼 수수료 안내</h4>
-            <p>스마트스토어, 쿠팡, 배달 플랫폼 등 각 서비스마다 수수료 체계가 다릅니다. 결제 수수료와 서비스 수수료를 모두 포함한 최종 요율을 입력하여 실령액을 파악하세요.</p>
-          </div>
-        </div></div>
-        <div class="card"><div class="card-inner">
-          <div class="result-grid">
-            <div class="result-card"><span>정산금액</span><strong id="res-fee-net">-</strong></div>
-            <div class="result-card"><span>수수료액</span><strong id="res-fee-val">-</strong></div>
-            <div class="result-card"><span>실수령액</span><strong id="res-fee-total">-</strong></div>
-          </div>
-          <div class="chart-wrap"><canvas id="chart-fee"></canvas></div>
-        </div></div>
-      </section>
-
-      <!-- EXCHANGE VIEW -->
-      <section id="view-exchange" class="view-section">
-        <div class="back-to-home" onclick="showView('home')">← 홈으로</div>
-        <div class="card"><div class="card-inner">
-          <h3 style="margin-top:0;">정산(환율)</h3>
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
-            <div class="field"><label>외화금액</label><input id="ex-a" type="number" value="100"></div>
-            <div class="field"><label>환율</label><input id="ex-r" type="text" value="1,350" oninput="formatInput(this)"></div>
-          </div>
-          <button class="btn-primary" onclick="calcExchange()">정산 계산하기</button>
-
-          <div class="usage-guide">
-            <h4>⚖️ 해외 정산 팁</h4>
-            <p>달러(USD)나 엔화(JPY) 등 외화로 받은 정산금을 한화로 바꿀 때 사용하세요. 은행 고시 환율과 실제 적용 환율(전신환 매입률 등)이 다를 수 있으므로 주거래 은행의 앱에서 확인한 환율을 입력하시면 더 정확합니다.</p>
-          </div>
-        </div></div>
-        <div class="card"><div class="card-inner">
-          <div class="result-grid" style="grid-template-columns: 1fr;">
-            <div class="result-card"><span>최종 한화 환산액</span><strong id="res-ex-krw" style="font-size: 1.2rem;">-</strong></div>
-          </div>
-        </div></div>
-      </section>
-    </main>
-
-    <footer style="padding: 40px 20px; text-align: center; border-top: 1px solid var(--line); margin-top: auto;">
-      <div style="font-size: 0.8rem; color: var(--muted); margin-bottom: 20px;">
-        © 2026 올인원 정산 계산기. All rights reserved.
       </div>
-      <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-        <a href="about.html" style="color: var(--muted); text-decoration: none; font-size: 0.8rem;">서비스 소개</a>
-        <a href="privacy.html" style="color: var(--muted); text-decoration: none; font-size: 0.8rem;">개인정보처리방침</a>
-        <a href="terms.html" style="color: var(--muted); text-decoration: none; font-size: 0.8rem;">이용약관</a>
-        <a href="contact.html" style="color: var(--muted); text-decoration: none; font-size: 0.8rem;">문의하기</a>
+    </section>
+
+    <section id="guide" class="section card">
+      <div class="section-title-row">
+        <div>
+          <div class="kicker">Guide</div>
+          <h2>이 사이트가 해결하는 문제</h2>
+        </div>
+        <p class="muted small">검색 유입용 설명형 본문 섹션</p>
       </div>
+
+      <div class="tight muted">
+        <p>
+          숫자를 계산하는 것 자체보다 더 중요한 것은 <strong>어떤 숫자를 넣어야 하고, 결과를 어떻게 해석해야 하는지</strong>입니다.
+          예를 들어 대출은 금액과 이율만 보는 것이 아니라 상환 방식에 따라 총 이자가 크게 달라지고,
+          판매 정산은 판매가만 보는 것이 아니라 매입가, 수수료, 부가세 여부까지 함께 봐야 실제 수익을 파악할 수 있습니다.
+        </p>
+        <p>
+          그래서 이 페이지는 각 계산기 위젯 앞뒤로 설명 문단, 실제 사례, 계산 공식, 주의사항을 함께 배치했습니다.
+          처음 방문한 사용자도 입력칸만 보고 끝나는 것이 아니라, 계산기의 목적과 해석 방법을 이해한 뒤 사용할 수 있도록 설계했습니다.
+        </p>
+        <p>
+          특히 많이 헷갈리는 항목인 <strong>원리금균등 vs 원금균등</strong>, <strong>부가세 포함가 vs 공급가</strong>,
+          <strong>마진율 vs ROI</strong>, <strong>명목 이자 vs 세후 이자</strong>를 쉽게 비교할 수 있도록 정리했습니다.
+        </p>
+      </div>
+    </section>
+
+    <section class="section grid-2">
+      <article class="card">
+        <h2>어떤 계산기를 써야 하나요?</h2>
+        <div class="tight muted">
+          <p><strong>대출 계산기</strong>는 월 납입액, 총 이자, 총 상환액을 보고 싶을 때 사용합니다. 집담보대출, 신용대출, 사업자대출처럼 상환 방식 비교가 중요할 때 특히 유용합니다.</p>
+          <p><strong>할부 계산기</strong>는 카드 할부나 분할 납부 시 월 부담과 총 비용을 비교할 때 사용합니다. 선수금이 높을수록 총 이자 부담이 줄어드는 점을 확인할 수 있습니다.</p>
+          <p><strong>이자 계산기</strong>는 예금·적금 또는 단순 이자 수익의 세후 금액을 확인할 때 사용합니다. 일반과세, 세금우대, 비과세 차이를 바로 비교할 수 있습니다.</p>
+          <p><strong>부가세 계산기</strong>는 견적서 작성, 세금계산서 확인, 공급가액 분리 계산이 필요할 때 사용합니다. 포함가에서 공급가를 역산할 때 특히 편리합니다.</p>
+          <p><strong>마진율 계산기</strong>는 온라인 판매자, 자영업자, 스마트스토어 운영자가 가격 책정 전에 실제 순이익을 가늠할 때 유용합니다.</p>
+          <p><strong>수수료 계산기</strong>는 플랫폼, PG, 중개 서비스, 배달앱 등에서 수수료를 제외한 실수령액을 예상할 때 씁니다.</p>
+          <p><strong>정산(환율) 계산기</strong>는 해외 플랫폼이나 외화 결제 매출을 원화로 환산할 때 빠르게 사용하기 좋습니다.</p>
+        </div>
+      </article>
+
+      <aside class="card">
+        <h2>많이 쓰는 상황</h2>
+        <div class="tight muted">
+          <p>아래와 같은 상황에서 자주 사용됩니다.</p>
+          <ul>
+            <li>대출 실행 전 월 상환 부담 비교</li>
+            <li>카드 할부 개월 수별 총 결제액 비교</li>
+            <li>예금 가입 전 세후 실수령액 확인</li>
+            <li>부가세 포함 금액으로부터 공급가액 역산</li>
+            <li>온라인 판매가 책정 전 순이익 확인</li>
+            <li>플랫폼 수수료 반영 후 정산액 예측</li>
+            <li>해외 매출을 환율 기준으로 원화 환산</li>
+          </ul>
+        </div>
+
+        <div class="callout">
+          <strong>입력 팁</strong><br />
+          금리는 연이율 기준으로 입력하고, 환율은 은행 앱에 표시된 실제 적용 환율에 가깝게 입력할수록 결과가 현실에 가까워집니다.
+        </div>
+      </aside>
+    </section>
+
+    <section class="section card">
+      <h2>계산기별 차이 한눈에 보기</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>계산기</th>
+              <th>주요 입력값</th>
+              <th>바로 확인할 수 있는 결과</th>
+              <th>해석 포인트</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>대출</td>
+              <td>금액, 이율, 기간, 상환 방식</td>
+              <td>월 납입액, 총 이자, 총 상환액</td>
+              <td>총 이자보다 매월 현금흐름이 더 중요할 수 있음</td>
+            </tr>
+            <tr>
+              <td>할부</td>
+              <td>상품금액, 선수금, 개월 수, 이율</td>
+              <td>월 납입액, 총 이자</td>
+              <td>개월 수가 길수록 월 부담은 줄지만 총 비용은 늘기 쉬움</td>
+            </tr>
+            <tr>
+              <td>이자</td>
+              <td>원금, 이율, 기간, 과세 방식</td>
+              <td>세후 이자, 공제 세금, 최종 수령액</td>
+              <td>세율 차이만으로도 실수령액 차이가 커질 수 있음</td>
+            </tr>
+            <tr>
+              <td>부가세</td>
+              <td>금액, 포함/별도 여부</td>
+              <td>공급가액, 부가세, 합계금액</td>
+              <td>견적·세금계산서 작성 시 가장 많이 쓰이는 기준</td>
+            </tr>
+            <tr>
+              <td>마진율</td>
+              <td>매입가, 판매가, 수수료율</td>
+              <td>순이익, 마진율, ROI</td>
+              <td>마진율과 ROI는 서로 다른 지표</td>
+            </tr>
+            <tr>
+              <td>수수료</td>
+              <td>판매금액, 수수료율</td>
+              <td>수수료액, 실수령액</td>
+              <td>플랫폼마다 부가 비용 포함 여부 확인 필요</td>
+            </tr>
+            <tr>
+              <td>정산(환율)</td>
+              <td>외화금액, 환율</td>
+              <td>원화 환산액</td>
+              <td>고시 환율과 실제 적용 환율은 다를 수 있음</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="examples" class="section card">
+      <h2>실제 계산 예시</h2>
+      <div class="grid-3">
+        <article class="stat">
+          <span class="k">예시 1</span>
+          <span class="v">3천만 원 대출</span>
+          <p class="muted small">
+            연 5%, 36개월, 원리금균등으로 넣으면 첫 달 납입액과 총 이자를 빠르게 비교할 수 있습니다.
+            같은 조건이라도 원금균등으로 바꾸면 초기 부담은 커지지만 총 이자는 낮아집니다.
+          </p>
+        </article>
+        <article class="stat">
+          <span class="k">예시 2</span>
+          <span class="v">39,900원 상품 판매</span>
+          <p class="muted small">
+            매입가 18,000원, 수수료율 12%를 넣으면 순이익과 마진율을 같이 볼 수 있습니다.
+            단순히 판매가가 높아 보여도 수수료와 매입가를 빼면 실제 이익은 크게 줄 수 있습니다.
+          </p>
+        </article>
+        <article class="stat">
+          <span class="k">예시 3</span>
+          <span class="v">부가세 포함 110,000원</span>
+          <p class="muted small">
+            포함가 기준으로 입력하면 공급가액은 100,000원, 부가세는 10,000원으로 분리됩니다.
+            견적서, 세금계산서, 거래명세서 작성 시 가장 자주 쓰이는 패턴입니다.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="interpret" class="section card">
+      <h2>계산 결과를 읽는 법</h2>
+      <div class="tight muted">
+        <p>
+          <strong>총 이자</strong>가 낮다고 해서 무조건 좋은 것은 아닙니다. 예를 들어 원금균등상환은 전체 이자가 줄어드는 대신,
+          초반 월 납입액이 높아져 현금흐름이 빠듯할 수 있습니다. 반대로 원리금균등은 매월 부담이 일정해 예산 관리가 쉽습니다.
+        </p>
+        <p>
+          <strong>세후 이자</strong>는 상품 광고에 보이는 명목 이자보다 실제 생활에 더 중요한 값입니다.
+          같은 금리라도 과세 방식에 따라 최종 수령액 차이가 발생하기 때문에 반드시 세후 기준으로 비교하는 것이 좋습니다.
+        </p>
+        <p>
+          <strong>마진율</strong>은 판매가 대비 이익 비율이고, <strong>ROI</strong>는 원가 대비 이익 비율입니다.
+          쇼핑몰 가격 책정에서는 마진율을 많이 보지만, 실제 투자 효율을 따질 때는 ROI가 더 직관적일 수 있습니다.
+        </p>
+      </div>
+    </section>
+
+    <section id="faq" class="section card faq">
+      <h2>자주 묻는 질문</h2>
+
+      <details open>
+        <summary>은행 앱이나 카드사 앱과 결과가 조금 다를 수 있는 이유는 무엇인가요?</summary>
+        <p class="muted">
+          금융기관은 일수 계산, 첫 회차 처리, 반올림, 수수료 포함 여부, 거치 기간 반영 방식이 서로 다를 수 있습니다.
+          이 페이지는 빠른 비교와 판단을 위한 기준값 계산에 초점을 둡니다.
+        </p>
+      </details>
+
+      <details>
+        <summary>부가세 포함 금액에서 공급가액은 어떻게 계산하나요?</summary>
+        <p class="muted">
+          일반적으로 합계금액을 1.1로 나누면 공급가액이 되고, 합계금액에서 공급가액을 빼면 부가세가 됩니다.
+        </p>
+      </details>
+
+      <details>
+        <summary>마진율과 ROI를 둘 다 봐야 하는 이유는 무엇인가요?</summary>
+        <p class="muted">
+          판매가 기준 성과를 보려면 마진율이, 원가 대비 효율을 보려면 ROI가 더 적합합니다.
+          둘을 같이 봐야 가격 전략과 투자 효율을 동시에 판단할 수 있습니다.
+        </p>
+      </details>
+
+      <details>
+        <summary>이 사이트에 입력한 값은 저장되나요?</summary>
+        <p class="muted">
+          이 예제 페이지는 브라우저 안에서 계산만 수행합니다. 별도의 로그인 기능이나 서버 저장 기능을 포함하지 않는 구조로 설계되어 있습니다.
+        </p>
+      </details>
+    </section>
+
+    <section id="tools" class="section">
+      <div class="card">
+        <div class="section-title-row">
+          <div>
+            <div class="kicker">Tools</div>
+            <h2>실전 계산기</h2>
+          </div>
+          <p class="muted small">각 계산기 아래에 공식과 해설을 함께 제공</p>
+        </div>
+
+        <section id="loan" class="tool">
+          <div class="tool-header">
+            <div>
+              <h3>대출 계산기</h3>
+              <p class="muted">
+                원리금균등, 원금균등, 만기일시상환, 거치 후 상환 방식을 비교할 수 있습니다.
+                월 부담과 총 이자를 함께 봐야 실제 의사결정에 도움이 됩니다.
+              </p>
+            </div>
+            <span class="tool-tag">월 납입액 + 총 이자 + 상환표</span>
+          </div>
+
+          <div class="tool-grid">
+            <div class="form-box">
+              <div class="form-row">
+                <label for="loanAmount">대출금액(원)</label>
+                <input id="loanAmount" type="number" inputmode="decimal" value="30000000" />
+              </div>
+
+              <div class="form-row">
+                <label for="loanRate">연이율(%)</label>
+                <input id="loanRate" type="number" step="0.01" inputmode="decimal" value="5" />
+              </div>
+
+              <div class="form-row">
+                <label for="loanMonths">기간(개월)</label>
+                <input id="loanMonths" type="number" inputmode="numeric" value="36" />
+              </div>
+
+              <div class="form-row">
+                <label for="loanType">상환 방식</label>
+                <select id="loanType">
+                  <option value="amortized">원리금 균등분할 상환</option>
+                  <option value="principal">원금 균등분할 상환</option>
+                  <option value="bullet">만기일시 상환</option>
+                  <option value="grace-amortized">거치후 원리금 균등</option>
+                  <option value="grace-principal">거치후 원금 균등</option>
+                </select>
+              </div>
+
+              <div class="form-row">
+                <label for="loanGrace">거치 기간(개월)</label>
+                <input id="loanGrace" type="number" inputmode="numeric" value="0" />
+              </div>
+
+              <div class="actions">
+                <button class="btn-primary" type="button" onclick="calcLoan()">대출 계산하기</button>
+                <button class="btn-secondary" type="button" onclick="resetLoan()">기본값</button>
+              </div>
+
+              <div class="formula">
+                계산 공식 개요: 월이율 = 연이율 ÷ 12, 원리금균등은 월 납입액이 일정하도록 계산하며,
+                원금균등은 매월 갚는 원금이 일정하고 이자는 잔액에 따라 줄어듭니다.
+              </div>
+
+              <div class="tool-copy">
+                <strong>해석 팁</strong><br />
+                원리금균등은 매달 같은 금액이라 관리가 쉽고, 원금균등은 초반 부담이 크지만 총 이자가 더 낮은 편입니다.
+              </div>
+            </div>
+
+            <div class="result-box" aria-live="polite">
+              <div class="result-cards">
+                <div class="stat">
+                  <span class="k">1회차 납입액</span>
+                  <span class="v" id="loanFirst">-</span>
+                </div>
+                <div class="stat">
+                  <span class="k">총 이자</span>
+                  <span class="v" id="loanInterest">-</span>
+                </div>
+                <div class="stat">
+                  <span class="k">총 상환액</span>
+                  <span class="v" id="loanTotal">-</span>
+                </div>
+              </div>
+
+              <div class="summary" id="loanSummary">
+                기본 예시값으로 계산 결과를 미리 표시합니다.
+              </div>
+
+              <div class="table-wrap" style="margin-top:14px;">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>회차</th>
+                      <th>납입액</th>
+                      <th>원금</th>
+                      <th>이자</th>
+                      <th>잔액</th>
+                    </tr>
+                  </thead>
+                  <tbody id="loanScheduleBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="installment" class="tool">
+          <div class="tool-header">
+            <div>
+              <h3>할부 계산기</h3>
+              <p class="muted">
+                신용카드 할부나 분할 납부의 월 부담을 계산합니다. 선수금이 있을 경우 실제 남은 원금에 대해서만 이자가 붙는 구조를 가정합니다.
+              </p>
+            </div>
+            <span class="tool-tag">월 납입액 + 총 이자</span>
+          </div>
+
+          <div class="tool-grid">
+            <div class="form-box">
+              <div class="form-row">
+                <label for="instPrice">상품금액(원)</label>
+                <input id="instPrice" type="number" value="1800000" />
+              </div>
+              <div class="form-row">
+                <label for="instDown">선수금(원)</label>
+                <input id="instDown" type="number" value="300000" />
+              </div>
+              <div class="form-row">
+                <label for="instMonths">개월 수</label>
+                <input id="instMonths" type="number" value="12" />
+              </div>
+              <div class="form-row">
+                <label for="instRate">이율(%)</label>
+                <input id="instRate" type="number" step="0.01" value="7.5" />
+              </div>
+              <div class="actions">
+                <button class="btn-primary" type="button" onclick="calcInstallment()">할부 계산하기</button>
+                <button class="btn-secondary" type="button" onclick="resetInstallment()">기본값</button>
+              </div>
+
+              <div class="formula">
+                남은 할부 원금 = 상품금액 - 선수금<br />
+                월 납입액은 원리금균등 방식 기준으로 계산합니다.
+              </div>
+            </div>
+
+            <div class="result-box" aria-live="polite">
+              <div class="result-cards">
+                <div class="stat">
+                  <span class="k">월 납입액</span>
+                  <span class="v" id="instMonthly">-</span>
+                </div>
+                <div class="stat">
+                  <span class="k">총 이자</span>
+                  <span class="v" id="instInterest">-</span>
+                </div>
+                <div class="stat">
+                  <span class="k">총 결제액</span>
+                  <span class="v" id="instTotal">-</span>
+                </div>
+              </div>
+              <div class="summary" id="instSummary">
+                예시값 기준 결과가 표시됩니다.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="interest" class="tool">
+          <div class="tool-header">
+            <div>
+              <h3>이자 계산기</h3>
+              <p class="muted">
+                예금, 적금, 단순 이자 수익의 세후 금액을 빠르게 계산합니다.
+                실제 상품은 복리, 월복리, 일복리, 우대금리 조건에 따라 달라질 수 있으므로 참고용으로 사용하세요.
+              </p>
+            </div>
+            <span class="tool-tag">세후 이자 + 최종 수령액</span>
+          </div>
+
+          <div class="tool-grid">
+            <div class="form-box">
+              <div class="form-row">
+                <label for="intPrincipal">원금(원)</label>
+                <input id="intPrincipal" type="number" value="10000000" />
+              </div>
+              <div class="form-row">
+                <label for="intRate">연이율(%)</label>
+                <input id="intRate" type="number" step="0.01" value="3.8" />
+              </div>
+              <div class="form-row">
+                <label for="intYears">기간(년)</label>
+                <input id="intYears" type="number" step="0.1" value="1" />
+              </div>
+              <div class="form-row">
+                <label for="intTax">과세 방식</label>
+                <select id="intTax">
+                  <option value="0.154">일반과세 (15.4%)</option>
+                  <option value="0.095">세금우대 (9.5%)</option>
+                  <option value="0">비과세 (0%)</option>
+                </select>
+              </div>
+              <div class="actions">
+                <button class="btn-primary" type="button" onclick="calcInterest()">이자 계산하기</button>
+                <button class="btn-secondary" type="button" onclick="resetInterest()">기본값</button>
+              </div>
+
+              <div class="formula">
+                단순 이자 기준: 세전 이자 = 원금 × 연이율 × 기간<br />
+                세후 이자 = 세전 이자 - 세금
+              </div>
+            </div>
+
+            <div class="result-box" aria-live="polite">
+              <div class="result-cards">
+                <div class="stat">
+                  <span class="k">최종 수령액</span>
+                  <span class="v" id="intFinal">-</span>
+                </div>
+                <div class="stat">
+                  <span class="k">공제 세금</span>
+                  <span class="v" id="intTaxAmount">-</span>
+                </div>
+                <div class="stat">
+                  <span class="k">세후 이자</span>
+                  <span class="v" id="intNet">-</span>
+                </div>
+              </div>
+              <div class="summary" id="intSummary">
+                예시값 기준 결과가 표시됩니다.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="vat" class="tool">
+          <div class="tool-header">
+            <div>
+              <h3>부가세 계산기</h3>
+              <p class="muted">
+                합계금액에서 공급가액과 부가세를 나누거나, 공급가액에서 부가세를 더해 총액을 구할 수 있습니다.
+                견적서 작성, 세금계산서 검토, 매입·매출 금액 확인 시 자주 사용하는 계산입니다.
+              </p>
+            </div>
+            <span class="tool-tag">공급가액 + 부가세 + 합계금액</span>
+          </div>
+
+          <div class="tool-grid">
+            <div class="form-box">
+              <div class="form-row">
+                <label for="vatAmount">금액(원)</label>
+                <input id="vatAmount" type="number" value="110000" />
+              </div>
+              <div class="form-row">
+                <label for="vatMode">구분</label>
+                <select id="vatMode">
+                  <option value="inclusive">부가세 포함(합계)</option>
+                  <option value="exclusive">부가세 별도(공급가)</option>
+                </select>
+              </div>
+              <div class="actions">
+                <button class="btn-primary" type="button" onclick="calcVat()">부가세 계산하기</button>
+                <button class="btn-secondary" type="button" onclick="resetVat()">기본값</button>
+              </div>
+
+              <div class="formula">
+                포함가 기준: 공급가액 = 합계금액 ÷ 1.1<br />
+                별도가 기준: 부가세 = 공급가액 × 10%
+              </div>
+            </div>
+
+            <div class="result-box" aria-live="polite">
+              <div class="result-cards">
+                <div class="stat">
+                  <span class="k">공급가액</span>
+                  <span class="v" id="vatSupply">-</span>
+                </div>
+                <div class="stat">
+                  <span class="k">부가세</span>
+                  <span class="v" id="vatTax">-</span>
+                </div>
+                <div class="stat">
+                  <span class="k">합계금액</span>
+                  <span class="v" id="vatTotal">-</span>
+                </div>
+              </div>
+              <div class="summary" id="vatSummary">
+                예시값 기준 결과가 표시됩니다.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="margin" class="tool">
+          <div class="tool-header">
+            <div>
+              <h3>마진율 계산기</h3>
+              <p class="muted">
+                판매가, 매입가, 수수료율을 기준으로 실제 순이익을 계산합니다.
+                온라인 쇼핑몰, 스마트스토어, 배달앱, 위탁판매, 사입 판매 등에서 가격 전략을 점검할 때 유용합니다.
+              </p>
+            </div>
+            <span class="tool-tag">순이익 + 마진율 + ROI</span>
+          </div>
+
+          <div class="tool-grid">
+            <div class="form-box">
+              <div class="form-row">
+                <label for="marginCost">매입가(원)</label>
+                <input id="marginCost" type="number" value="18000" />
+              </div>
+              <div class="form-row">
+                <label for="marginPrice">판매가(원)</label>
+                <input id="marginPrice" type="number" value="39900" />
+              </div>
+              <div class="form-row">
+                <label for="marginFee">수수료율(%)</label>
+                <input id="marginFee" type="number" step="0.01" value="12" />
+              </div>
+              <div class="actions">
+                <button class="btn-primary" type="button" onclick="calcMargin()">마진 계산하기</button>
+                <button class="btn-secondary" type="button" onclick="resetMargin()">기본값</button>
+              </div>
+
+              <div class="formula">
+                순이익 = 판매가 - 매입가 - 수수료액<br />
+                마진율 = 순이익 ÷ 판매가 × 100, ROI = 순이익 ÷ 매입가 × 100
+              </div>
+            </div>
+
+            <div class="result-box" aria-live="polite">
+              <div class="result-cards">
+                <div class="stat">
+                  <span class="k">순이익</span>
+                  <span class="v" id="marginProfit">-</span>
+                </div>
+                <div class="stat">
+                  <span class="k">마진율</span>
+                  <span class="v" id="marginRateOut">-</span>
+                </div>
+                <div class="stat">
+                  <span class="k">ROI</span>
+                  <span class="v" id="marginRoi">-</span>
+                </div>
+              </div>
+              <div class="summary" id="marginSummary">
+                예시값 기준 결과가 표시됩니다.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="fee" class="tool">
+          <div class="tool-header">
+            <div>
+              <h3>수수료 계산기</h3>
+              <p class="muted">
+                플랫폼 수수료, 중개 수수료, 판매 수수료를 반영해 실제 실수령액을 확인합니다.
+                플랫폼별로 정산 기준이 다를 수 있으므로, 결제 수수료와 서비스 수수료를 합산한 최종 비율을 넣는 것이 좋습니다.
+              </p>
+            </div>
+            <span class="tool-tag">수수료액 + 실수령액</span>
+          </div>
+
+          <div class="tool-grid">
+            <div class="form-box">
+              <div class="form-row">
+                <label for="feeSale">판매금액(원)</label>
+                <input id="feeSale" type="number" value="500000" />
+              </div>
+              <div class="form-row">
+                <label for="feeRate">수수료율(%)</label>
+                <input id="feeRate" type="number" step="0.01" value="8.8" />
+              </div>
+              <div class="actions">
+                <button class="btn-primary" type="button" onclick="calcFee()">수수료 계산하기</button>
+                <button class="btn-secondary" type="button" onclick="resetFee()">기본값</button>
+              </div>
+
+              <div class="formula">
+                수수료액 = 판매금액 × 수수료율<br />
+                실수령액 = 판매금액 - 수수료액
+              </div>
+            </div>
+
+            <div class="result-box" aria-live="polite">
+              <div class="result-cards">
+                <div class="stat">
+                  <span class="k">정산 기준 금액</span>
+                  <span class="v" id="feeBase">-</span>
+                </div>
+                <div class="stat">
+                  <span class="k">수수료액</span>
+                  <span class="v" id="feeAmount">-</span>
+                </div>
+                <div class="stat">
+                  <span class="k">실수령액</span>
+                  <span class="v" id="feeNet">-</span>
+                </div>
+              </div>
+              <div class="summary" id="feeSummary">
+                예시값 기준 결과가 표시됩니다.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="fx" class="tool">
+          <div class="tool-header">
+            <div>
+              <h3>정산(환율) 계산기</h3>
+              <p class="muted">
+                달러, 엔화 등 외화 기준 정산금을 원화로 바꿀 때 사용합니다.
+                은행 고시 환율과 실제 전신환 매입 환율, 카드사 환율이 다를 수 있으므로 실제 적용 환율을 입력하세요.
+              </p>
+            </div>
+            <span class="tool-tag">원화 환산액</span>
+          </div>
+
+          <div class="tool-grid">
+            <div class="form-box">
+              <div class="form-row">
+                <label for="fxAmount">외화금액</label>
+                <input id="fxAmount" type="number" step="0.01" value="1250" />
+              </div>
+              <div class="form-row">
+                <label for="fxRate">환율</label>
+                <input id="fxRate" type="number" step="0.01" value="1365.5" />
+              </div>
+              <div class="actions">
+                <button class="btn-primary" type="button" onclick="calcFx()">정산 계산하기</button>
+                <button class="btn-secondary" type="button" onclick="resetFx()">기본값</button>
+              </div>
+
+              <div class="formula">
+                원화 환산액 = 외화금액 × 환율
+              </div>
+            </div>
+
+            <div class="result-box" aria-live="polite">
+              <div class="result-cards">
+                <div class="stat">
+                  <span class="k">최종 한화 환산액</span>
+                  <span class="v" id="fxTotal">-</span>
+                </div>
+                <div class="stat">
+                  <span class="k">적용 환율</span>
+                  <span class="v" id="fxRateOut">-</span>
+                </div>
+                <div class="stat">
+                  <span class="k">외화 기준 금액</span>
+                  <span class="v" id="fxAmountOut">-</span>
+                </div>
+              </div>
+              <div class="summary" id="fxSummary">
+                예시값 기준 결과가 표시됩니다.
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </section>
+
+    <section class="section card">
+      <h2>최신 업데이트</h2>
+      <div class="tight muted">
+        <p><strong>2026-04-02</strong> — 계산기 화면 앞에 설명형 본문, 비교표, 실제 예시, FAQ 섹션을 추가했습니다.</p>
+        <p><strong>2026-04-02</strong> — 각 계산기에 기본 예시값과 결과 요약 문장을 넣어 빈 화면처럼 보이지 않도록 구성했습니다.</p>
+        <p><strong>2026-04-02</strong> — 대출 계산기에 상환표 미리보기를 추가해 계산 결과 해석성을 높였습니다.</p>
+      </div>
+    </section>
+
+    <footer class="footer card">
+      <h2 style="font-size:22px;">이용 안내</h2>
+      <p class="muted">
+        본 페이지의 계산 결과는 정보 제공 목적의 참고값입니다. 실제 금융상품 가입, 카드 할부 계약, 세무 신고, 플랫폼 정산에는
+        각 기관의 약관, 수수료 정책, 세율, 적용 환율, 반올림 기준이 우선합니다.
+      </p>
+      <p class="muted">
+        이 페이지는 사용자가 입력한 숫자를 브라우저에서 계산하는 구조를 기준으로 작성되었습니다.
+        운영 정책, 개인정보 처리방침, 문의 채널은 아래 링크에서 확인할 수 있도록 별도 페이지를 유지해 주세요.
+      </p>
+
+      <div class="divider"></div>
+
+      <div class="footer-links">
+        <a href="/about.html">서비스 소개</a>
+        <a href="/privacy.html">개인정보처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/contact.html">문의하기</a>
+      </div>
+
+      <p class="small" style="margin-top:18px;">© 2026 올인원 정산 계산기. All rights reserved.</p>
     </footer>
-  </div>
+  </main>
 
   <script>
-    let charts = {};
+    const nf = new Intl.NumberFormat('ko-KR');
 
-    function showView(viewId) {
-      document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
-      document.getElementById('view-' + viewId).classList.add('active');
-      document.querySelectorAll('.gnb-item').forEach(item => item.classList.remove('active'));
-      const activeGnb = document.getElementById('gnb-' + viewId);
-      if(activeGnb) activeGnb.classList.add('active');
-      window.scrollTo(0, 0);
-      if(viewId !== 'home') {
-        const btn = document.querySelector(`#view-${viewId} button`);
-        if(btn) btn.click();
-      }
+    function toNumber(value) {
+      const n = parseFloat(value);
+      return Number.isFinite(n) ? n : 0;
     }
 
-    function updateLoanMethodInfo() {
-      const method = document.getElementById('loan-method').value;
-      const descEl = document.getElementById('loan-method-desc');
-      const graceField = document.getElementById('loan-grace-field');
-      
-      const descriptions = {
-        'annuity': '<strong>원리금 균등:</strong> 매달 갚는 원금과 이자의 합계가 동일합니다. 계획적인 지출 관리에 유리합니다.',
-        'principal': '<strong>원금 균등:</strong> 매달 동일한 원금을 갚습니다. 시간이 갈수록 이자가 줄어들어 총 이자 비용이 가장 적습니다.',
-        'bullet': '<strong>만기일시:</strong> 대출 기간 동안 이자만 납부하고 만기에 원금을 일시 상환합니다. 월 부담은 가장 적습니다.',
-        'grace-annuity': '<strong>거치후 원리금 균등:</strong> 거치 기간 동안 이자만 내다가 이후 원리금 균등 방식으로 상환합니다.',
-        'grace-principal': '<strong>거치후 원금 균등:</strong> 거치 기간 동안 이자만 내다가 이후 원금 균등 방식으로 상환합니다.'
-      };
-
-      descEl.innerHTML = descriptions[method];
-      
-      if(method.startsWith('grace-')) {
-        graceField.classList.add('active');
-      } else {
-        graceField.classList.remove('active');
-      }
+    function formatKRW(value) {
+      return nf.format(Math.round(value)) + '원';
     }
 
-    function updateChart(canvasId, labels, data, colors) {
-      if(charts[canvasId]) charts[canvasId].destroy();
-      const canvas = document.getElementById(canvasId);
-      if(!canvas) return;
-      charts[canvasId] = new Chart(canvas.getContext('2d'), {
-        type: 'doughnut',
-        data: {
-          labels: labels,
-          datasets: [{ data: data, backgroundColor: colors, borderWidth: 0, hoverOffset: 4 }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { position: 'bottom', labels: { color: getComputedStyle(document.documentElement).getPropertyValue('--text'), font: { size: 11 } } } }
-        }
+    function formatMoney(value) {
+      return nf.format(Math.round(value));
+    }
+
+    function formatPercent(value) {
+      return (Math.round(value * 100) / 100).toLocaleString('ko-KR') + '%';
+    }
+
+    function setText(id, text) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    }
+
+    function renderLoanSchedule(rows) {
+      const body = document.getElementById('loanScheduleBody');
+      if (!body) return;
+      body.innerHTML = '';
+      rows.slice(0, 12).forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${row.month}회차</td>
+          <td>${formatKRW(row.payment)}</td>
+          <td>${formatKRW(row.principal)}</td>
+          <td>${formatKRW(row.interest)}</td>
+          <td>${formatKRW(row.balance)}</td>
+        `;
+        body.appendChild(tr);
       });
     }
-
-    function toggleTheme() {
-      const html = document.documentElement;
-      const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-      html.setAttribute('data-theme', next);
-      document.getElementById('theme-toggle').innerText = next === 'light' ? '☀️' : '🌙';
-      Object.keys(charts).forEach(id => {
-        charts[id].options.plugins.legend.labels.color = getComputedStyle(document.documentElement).getPropertyValue('--text');
-        charts[id].update();
-      });
-    }
-
-    function formatInput(el) {
-      let v = el.value.replace(/[^0-9]/g, "");
-      el.value = v ? Number(v).toLocaleString() : "";
-    }
-    function getNum(id) { return Number(document.getElementById(id).value.replace(/,/g, "")); }
-    function toKRW(v) { return Math.round(v).toLocaleString() + "원"; }
 
     function calcLoan() {
-      const p = getNum('loan-p'), r = Number(document.getElementById('loan-r').value)/100/12, m = Number(document.getElementById('loan-m').value);
-      const method = document.getElementById('loan-method').value, g = getNum('loan-g') || 0;
-      if(!p || isNaN(r) || !m) return;
-      let firstPayment = 0, totalInt = 0;
-      if(method === 'bullet') { firstPayment = p * r; totalInt = (p * r) * m; }
-      else if(method === 'annuity') { firstPayment = p * (r * Math.pow(1+r, m)) / (Math.pow(1+r, m) - 1); totalInt = (firstPayment * m) - p; }
-      else if(method === 'principal') { firstPayment = (p / m) + (p * r); for(let i=0; i<m; i++) totalInt += (p - (p/m)*i) * r; }
-      else if(method === 'grace-annuity') { const graceInt = (p * r) * g, remainM = m - g, monthly = p * (r * Math.pow(1+r, remainM)) / (Math.pow(1+r, remainM) - 1); firstPayment = p * r; totalInt = graceInt + (monthly * remainM) - p; }
-      else if(method === 'grace-principal') { const graceInt = (p * r) * g, remainM = m - g; firstPayment = p * r; let remainInt = 0; for(let i=0; i<remainM; i++) remainInt += (p - (p/remainM)*i) * r; totalInt = graceInt + remainInt; }
-      document.getElementById('res-loan-monthly').innerText = toKRW(firstPayment);
-      document.getElementById('res-loan-int').innerText = toKRW(totalInt);
-      document.getElementById('res-loan-total').innerText = toKRW(p + totalInt);
-      updateChart('chart-loan', ['원금', '총이자'], [p, totalInt], ['#78a8ff', '#ffb86b']);
+      const amount = toNumber(document.getElementById('loanAmount').value);
+      const annualRate = toNumber(document.getElementById('loanRate').value);
+      const months = Math.max(1, Math.floor(toNumber(document.getElementById('loanMonths').value)));
+      const type = document.getElementById('loanType').value;
+      let grace = Math.max(0, Math.floor(toNumber(document.getElementById('loanGrace').value)));
+      grace = Math.min(grace, Math.max(0, months - 1));
+      const r = annualRate / 100 / 12;
+
+      if (amount <= 0) {
+        setText('loanSummary', '대출금액은 0보다 커야 합니다.');
+        return;
+      }
+
+      let balance = amount;
+      let rows = [];
+      let totalInterest = 0;
+      let totalPayment = 0;
+
+      function pushRow(month, payment, principal, interest, balanceLeft) {
+        totalInterest += interest;
+        totalPayment += payment;
+        rows.push({
+          month,
+          payment,
+          principal,
+          interest,
+          balance: Math.max(0, balanceLeft)
+        });
+      }
+
+      function annuityPayment(principal, monthlyRate, n) {
+        if (n <= 0) return 0;
+        if (monthlyRate === 0) return principal / n;
+        return principal * monthlyRate / (1 - Math.pow(1 + monthlyRate, -n));
+      }
+
+      let monthIndex = 1;
+
+      if (type === 'bullet') {
+        for (let i = 1; i < months; i++) {
+          const interest = balance * r;
+          const payment = interest;
+          pushRow(monthIndex++, payment, 0, interest, balance);
+        }
+        const lastInterest = balance * r;
+        const lastPayment = balance + lastInterest;
+        pushRow(monthIndex++, lastPayment, balance, lastInterest, 0);
+        balance = 0;
+      } else if (type === 'amortized') {
+        const payment = annuityPayment(balance, r, months);
+        for (let i = 1; i <= months; i++) {
+          const interest = balance * r;
+          let principal = payment - interest;
+          if (i === months) principal = balance;
+          const actualPayment = principal + interest;
+          balance -= principal;
+          pushRow(monthIndex++, actualPayment, principal, interest, balance);
+        }
+      } else if (type === 'principal') {
+        const fixedPrincipal = amount / months;
+        for (let i = 1; i <= months; i++) {
+          const interest = balance * r;
+          const principal = (i === months) ? balance : fixedPrincipal;
+          const payment = principal + interest;
+          balance -= principal;
+          pushRow(monthIndex++, payment, principal, interest, balance);
+        }
+      } else if (type === 'grace-amortized' || type === 'grace-principal') {
+        for (let i = 0; i < grace; i++) {
+          const interest = balance * r;
+          pushRow(monthIndex++, interest, 0, interest, balance);
+        }
+
+        const remain = months - grace;
+
+        if (type === 'grace-amortized') {
+          const payment = annuityPayment(balance, r, remain);
+          for (let i = 1; i <= remain; i++) {
+            const interest = balance * r;
+            let principal = payment - interest;
+            if (i === remain) principal = balance;
+            const actualPayment = principal + interest;
+            balance -= principal;
+            pushRow(monthIndex++, actualPayment, principal, interest, balance);
+          }
+        } else {
+          const fixedPrincipal = balance / remain;
+          for (let i = 1; i <= remain; i++) {
+            const interest = balance * r;
+            const principal = (i === remain) ? balance : fixedPrincipal;
+            const payment = principal + interest;
+            balance -= principal;
+            pushRow(monthIndex++, payment, principal, interest, balance);
+          }
+        }
+      }
+
+      const firstPayment = rows.length ? rows[0].payment : 0;
+      const total = amount + totalInterest;
+
+      setText('loanFirst', formatKRW(firstPayment));
+      setText('loanInterest', formatKRW(totalInterest));
+      setText('loanTotal', formatKRW(total));
+      setText(
+        'loanSummary',
+        `입력한 조건 기준 첫 회차 납입액은 ${formatKRW(firstPayment)}이고, 전체 기간 동안 발생하는 총 이자는 ${formatKRW(totalInterest)}입니다. 총 상환액은 ${formatKRW(total)}이며, 상환 방식에 따라 초기 부담과 총 이자 수준이 달라집니다.`
+      );
+
+      renderLoanSchedule(rows);
+    }
+
+    function resetLoan() {
+      document.getElementById('loanAmount').value = 30000000;
+      document.getElementById('loanRate').value = 5;
+      document.getElementById('loanMonths').value = 36;
+      document.getElementById('loanType').value = 'amortized';
+      document.getElementById('loanGrace').value = 0;
+      calcLoan();
     }
 
     function calcInstallment() {
-      const p = getNum('inst-p'), d = getNum('inst-d'), m = getNum('inst-m'), r = Number(document.getElementById('inst-r').value)/100/12;
-      const financed = p - d, monthly = r === 0 ? financed / m : financed * (r * Math.pow(1 + r, m)) / (Math.pow(1 + r, m) - 1), totalInt = monthly * m - financed;
-      document.getElementById('res-inst-monthly').innerText = toKRW(monthly);
-      document.getElementById('res-inst-int').innerText = toKRW(totalInt);
-      document.getElementById('res-inst-total').innerText = toKRW(monthly * m + d);
-      updateChart('chart-inst', ['할부원금', '이자'], [financed, totalInt], ['#78a8ff', '#ffb86b']);
+      const price = toNumber(document.getElementById('instPrice').value);
+      const down = toNumber(document.getElementById('instDown').value);
+      const months = Math.max(1, Math.floor(toNumber(document.getElementById('instMonths').value)));
+      const annualRate = toNumber(document.getElementById('instRate').value);
+      const principal = Math.max(0, price - down);
+      const r = annualRate / 100 / 12;
+
+      let monthly = 0;
+      if (r === 0) {
+        monthly = principal / months;
+      } else {
+        monthly = principal * r / (1 - Math.pow(1 + r, -months));
+      }
+
+      const totalInstallment = monthly * months;
+      const totalInterest = totalInstallment - principal;
+      const totalPaid = totalInstallment + down;
+
+      setText('instMonthly', formatKRW(monthly));
+      setText('instInterest', formatKRW(totalInterest));
+      setText('instTotal', formatKRW(totalPaid));
+      setText(
+        'instSummary',
+        `선수금을 제외한 실제 할부 원금은 ${formatKRW(principal)}입니다. 월 납입액은 ${formatKRW(monthly)}이며, 총 이자 부담은 ${formatKRW(totalInterest)}입니다. 할부 기간을 늘리면 월 부담은 줄 수 있지만 총 비용은 늘어날 수 있습니다.`
+      );
+    }
+
+    function resetInstallment() {
+      document.getElementById('instPrice').value = 1800000;
+      document.getElementById('instDown').value = 300000;
+      document.getElementById('instMonths').value = 12;
+      document.getElementById('instRate').value = 7.5;
+      calcInstallment();
     }
 
     function calcInterest() {
-      const p = getNum('int-p'), r = Number(document.getElementById('int-r').value)/100, y = Number(document.getElementById('int-y').value);
-      const taxRate = Number(document.getElementById('int-tax').value)/100;
-      const grossInt = p * r * y;
-      const taxVal = grossInt * taxRate;
-      const netInt = grossInt - taxVal;
-      document.getElementById('res-int-total').innerText = toKRW(p + netInt);
-      document.getElementById('res-int-tax-val').innerText = toKRW(taxVal);
-      document.getElementById('res-int-pure').innerText = toKRW(netInt);
-      updateChart('chart-int', ['원금', '세후 이자', '공제 세금'], [p, netInt, taxVal], ['#78a8ff', '#53d6a3', '#ffb86b']);
+      const principal = toNumber(document.getElementById('intPrincipal').value);
+      const rate = toNumber(document.getElementById('intRate').value) / 100;
+      const years = toNumber(document.getElementById('intYears').value);
+      const taxRate = toNumber(document.getElementById('intTax').value);
+
+      const grossInterest = principal * rate * years;
+      const tax = grossInterest * taxRate;
+      const netInterest = grossInterest - tax;
+      const finalAmount = principal + netInterest;
+
+      setText('intFinal', formatKRW(finalAmount));
+      setText('intTaxAmount', formatKRW(tax));
+      setText('intNet', formatKRW(netInterest));
+      setText(
+        'intSummary',
+        `세전 이자는 ${formatKRW(grossInterest)}이고, 세금은 ${formatKRW(tax)}입니다. 따라서 실제 손에 들어오는 세후 이자는 ${formatKRW(netInterest)}이며, 만기 기준 최종 수령액은 ${formatKRW(finalAmount)}입니다.`
+      );
+    }
+
+    function resetInterest() {
+      document.getElementById('intPrincipal').value = 10000000;
+      document.getElementById('intRate').value = 3.8;
+      document.getElementById('intYears').value = 1;
+      document.getElementById('intTax').value = 0.154;
+      calcInterest();
     }
 
     function calcVat() {
-      const a = getNum('vat-a'), t = document.getElementById('vat-t').value;
-      let supply, vat;
-      if(t === 'include') { supply = a / 1.1; vat = a - supply; } 
-      else { supply = a; vat = a * 0.1; }
-      document.getElementById('res-vat-supply').innerText = toKRW(supply);
-      document.getElementById('res-vat-value').innerText = toKRW(vat);
-      document.getElementById('res-vat-total').innerText = toKRW(supply + vat);
-      updateChart('chart-vat', ['공급가액', '부가세'], [supply, vat], ['#78a8ff', '#4d85ff']);
+      const amount = toNumber(document.getElementById('vatAmount').value);
+      const mode = document.getElementById('vatMode').value;
+
+      let supply = 0;
+      let vat = 0;
+      let total = 0;
+
+      if (mode === 'inclusive') {
+        total = amount;
+        supply = amount / 1.1;
+        vat = total - supply;
+      } else {
+        supply = amount;
+        vat = supply * 0.1;
+        total = supply + vat;
+      }
+
+      setText('vatSupply', formatKRW(supply));
+      setText('vatTax', formatKRW(vat));
+      setText('vatTotal', formatKRW(total));
+      setText(
+        'vatSummary',
+        mode === 'inclusive'
+          ? `입력한 금액은 부가세가 포함된 합계금액으로 보고 계산했습니다. 공급가액은 ${formatKRW(supply)}, 부가세는 ${formatKRW(vat)}입니다.`
+          : `입력한 금액은 공급가액으로 보고 계산했습니다. 부가세는 ${formatKRW(vat)}이며, 최종 합계금액은 ${formatKRW(total)}입니다.`
+      );
+    }
+
+    function resetVat() {
+      document.getElementById('vatAmount').value = 110000;
+      document.getElementById('vatMode').value = 'inclusive';
+      calcVat();
     }
 
     function calcMargin() {
-      const b = getNum('marg-b'), s = getNum('marg-s'), f = Number(document.getElementById('marg-f').value)/100;
-      const fee = s * f, profit = s - b - fee;
-      document.getElementById('res-marg-p').innerText = toKRW(profit);
-      document.getElementById('res-marg-r').innerText = ((profit / s) * 100).toFixed(2) + "%";
-      document.getElementById('res-marg-roi').innerText = ((profit / b) * 100).toFixed(2) + "%";
-      updateChart('chart-marg', ['매입가', '수수료', '순이익'], [b, fee, Math.max(0, profit)], ['#ffb86b', '#4d85ff', '#53d6a3']);
+      const cost = toNumber(document.getElementById('marginCost').value);
+      const price = toNumber(document.getElementById('marginPrice').value);
+      const feeRate = toNumber(document.getElementById('marginFee').value) / 100;
+
+      const feeAmount = price * feeRate;
+      const profit = price - cost - feeAmount;
+      const marginRate = price > 0 ? (profit / price) * 100 : 0;
+      const roi = cost > 0 ? (profit / cost) * 100 : 0;
+
+      setText('marginProfit', formatKRW(profit));
+      setText('marginRateOut', formatPercent(marginRate));
+      setText('marginRoi', formatPercent(roi));
+      setText(
+        'marginSummary',
+        `수수료를 반영한 실제 순이익은 ${formatKRW(profit)}입니다. 판매가 대비 마진율은 ${formatPercent(marginRate)}, 원가 대비 ROI는 ${formatPercent(roi)}입니다. 판매 전략을 볼 때는 마진율, 투자 효율을 볼 때는 ROI를 함께 확인하세요.`
+      );
+    }
+
+    function resetMargin() {
+      document.getElementById('marginCost').value = 18000;
+      document.getElementById('marginPrice').value = 39900;
+      document.getElementById('marginFee').value = 12;
+      calcMargin();
     }
 
     function calcFee() {
-      const a = getNum('fee-a'), r = Number(document.getElementById('fee-r').value)/100;
-      const feeVal = a * r, net = a - feeVal;
-      document.getElementById('res-fee-net').innerText = toKRW(net);
-      document.getElementById('res-fee-val').innerText = toKRW(feeVal);
-      document.getElementById('res-fee-total').innerText = toKRW(net);
-      updateChart('chart-fee', ['정산금액', '수수료'], [net, feeVal], ['#53d6a3', '#4d85ff']);
+      const sale = toNumber(document.getElementById('feeSale').value);
+      const rate = toNumber(document.getElementById('feeRate').value) / 100;
+
+      const fee = sale * rate;
+      const net = sale - fee;
+
+      setText('feeBase', formatKRW(sale));
+      setText('feeAmount', formatKRW(fee));
+      setText('feeNet', formatKRW(net));
+      setText(
+        'feeSummary',
+        `판매금액 ${formatKRW(sale)}에 수수료율 ${formatPercent(rate * 100)}를 적용하면 수수료액은 ${formatKRW(fee)}이고, 실수령액은 ${formatKRW(net)}입니다. 실제 플랫폼에서는 정산 주기, 부가 수수료, 부가세 포함 여부를 추가로 확인해야 합니다.`
+      );
     }
 
-    function calcExchange() {
-      const a = Number(document.getElementById('ex-a').value), r = getNum('ex-r');
-      document.getElementById('res-ex-krw').innerText = toKRW(a * r);
+    function resetFee() {
+      document.getElementById('feeSale').value = 500000;
+      document.getElementById('feeRate').value = 8.8;
+      calcFee();
     }
 
-    window.onload = () => showView('home');
+    function calcFx() {
+      const amount = toNumber(document.getElementById('fxAmount').value);
+      const rate = toNumber(document.getElementById('fxRate').value);
+      const total = amount * rate;
+
+      setText('fxTotal', formatKRW(total));
+      setText('fxRateOut', rate.toLocaleString('ko-KR'));
+      setText('fxAmountOut', amount.toLocaleString('ko-KR'));
+      setText(
+        'fxSummary',
+        `외화금액 ${amount.toLocaleString('ko-KR')}에 환율 ${rate.toLocaleString('ko-KR')}를 적용한 결과, 원화 환산액은 ${formatKRW(total)}입니다. 은행 고시 환율과 실제 적용 환율 차이를 확인하면 더 정확한 정산이 가능합니다.`
+      );
+    }
+
+    function resetFx() {
+      document.getElementById('fxAmount').value = 1250;
+      document.getElementById('fxRate').value = 1365.5;
+      calcFx();
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      calcLoan();
+      calcInstallment();
+      calcInterest();
+      calcVat();
+      calcMargin();
+      calcFee();
+      calcFx();
+    });
   </script>
 </body>
 </html>
