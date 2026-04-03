@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>부가세 계산기 가이드 | 공급가액, 부가세, 합계금액 쉽게 이해하기</title>
+  <meta name="description" content="부가세 계산기 사용법을 쉽게 설명하는 가이드 페이지입니다. 공급가액, 부가세, 합계금액, 부가세 포함가와 별도가의 차이, 실제 예시와 FAQ까지 한 번에 정리했습니다." />
+  <meta name="keywords" content="부가세 계산기, VAT 계산기, 공급가액 계산, 합계금액 계산, 부가세 포함가, 부가세 별도가, 세금계산서, 견적서 계산" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="canonical" href="https://3333-63p.pages.dev/vat-guide.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="부가세 계산기 가이드 | 공급가액, 부가세, 합계금액 쉽게 이해하기" />
+  <meta property="og:description" content="부가세 계산기를 단순 도구가 아니라 이해형 콘텐츠로 정리한 페이지. 포함가/별도가 차이, 공식, 예시, 해석, FAQ까지 포함." />
+  <meta property="og:locale" content="ko_KR" />
+
+  <style>
+    :root{
+      --bg:#f8fafc;
+      --card:#ffffff;
+      --ink:#0f172a;
+      --sub:#475569;
+      --line:#e2e8f0;
+      --brand:#2563eb;
+      --brand-soft:#eff6ff;
+      --warm:#fff7ed;
+      --warm-line:#fed7aa;
+      --radius:22px;
+      --shadow:0 16px 36px rgba(15,23,42,.08);
+      --max:1080px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;
+      color:var(--ink);
+      background:linear-gradient(180deg,#f8fafc 0%,#eef2ff 100%);
+      line-height:1.7;
+    }
+
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    .container{
+      width:min(var(--max), calc(100% - 32px));
+      margin:0 auto;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:20;
+      backdrop-filter:blur(14px);
+      background:rgba(248,250,252,.86);
+      border-bottom:1px solid rgba(226,232,240,.9);
+    }
+
+    .topbar-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:12px 0;
+      flex-wrap:wrap;
+    }
+
+    .logo{
+      font-weight:900;
+      letter-spacing:-0.03em;
+      color:#0f172a;
+    }
+
+    .mini-nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .mini-nav a{
+      padding:9px 13px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:#0f172a;
+      font-size:14px;
+      font-weight:700;
+    }
+
+    .hero{
+      padding:42px 0 22px;
+    }
+
+    .hero-box{
+      background:
+        radial-gradient(circle at top left, rgba(37,99,235,.12), transparent 34%),
+        radial-gradient(circle at right bottom, rgba(99,102,241,.10), transparent 30%),
+        #fff;
+      border:1px solid var(--line);
+      border-radius:30px;
+      padding:36px 28px;
+      box-shadow:var(--shadow);
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 14px;
+      border-radius:999px;
+      background:var(--brand-soft);
+      color:var(--brand);
+      font-size:13px;
+      font-weight:900;
+      letter-spacing:.02em;
+    }
+
+    h1,h2,h3{
+      margin:0 0 12px;
+      line-height:1.25;
+      letter-spacing:-0.03em;
+    }
+
+    h1{font-size:clamp(30px,5vw,52px)}
+    h2{font-size:clamp(24px,3vw,34px)}
+    h3{font-size:22px}
+
+    .lead{
+      font-size:18px;
+      color:var(--sub);
+      margin:14px 0 0;
+      max-width:920px;
+    }
+
+    .meta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:20px;
+    }
+
+    .chip{
+      padding:10px 14px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid var(--line);
+      color:var(--sub);
+      font-size:14px;
+      font-weight:700;
+    }
+
+    .toc{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:20px;
+    }
+
+    .toc a{
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:#0f172a;
+      font-size:14px;
+      font-weight:800;
+    }
+
+    .section{
+      margin:22px 0;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:26px;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:20px;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+    }
+
+    .muted{color:var(--sub)}
+    .small{font-size:14px}
+
+    .notice{
+      margin-top:18px;
+      border-left:4px solid var(--brand);
+      background:#f8fbff;
+      color:#1e3a8a;
+      border-radius:14px;
+      padding:14px 16px;
+    }
+
+    .warm-box{
+      margin-top:16px;
+      background:var(--warm);
+      border:1px solid var(--warm-line);
+      border-radius:16px;
+      padding:14px 16px;
+      color:#9a3412;
+    }
+
+    .table-wrap{
+      overflow:auto;
+      border:1px solid var(--line);
+      border-radius:18px;
+      margin-top:14px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      background:#fff;
+      min-width:720px;
+    }
+
+    th,td{
+      padding:12px 14px;
+      border-bottom:1px solid var(--line);
+      text-align:left;
+      font-size:14px;
+      vertical-align:top;
+    }
+
+    th{
+      background:#f8fafc;
+      color:#334155;
+      font-weight:900;
+    }
+
+    .kicker{
+      color:var(--brand);
+      font-size:13px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      font-weight:900;
+      margin-bottom:6px;
+    }
+
+    .stat{
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+      background:#f8fafc;
+    }
+
+    .stat .k{
+      display:block;
+      color:var(--sub);
+      font-size:13px;
+      font-weight:700;
+      margin-bottom:8px;
+    }
+
+    .stat .v{
+      display:block;
+      font-size:24px;
+      font-weight:900;
+      letter-spacing:-0.03em;
+    }
+
+    .list-tight{
+      margin:0;
+      padding-left:18px;
+    }
+
+    .list-tight li + li{margin-top:8px}
+
+    .formula{
+      background:#fffbeb;
+      border:1px solid #fde68a;
+      color:#92400e;
+      border-radius:16px;
+      padding:14px 16px;
+      margin-top:14px;
+      font-size:14px;
+    }
+
+    .calculator{
+      margin-top:10px;
+    }
+
+    .tool-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      align-items:start;
+    }
+
+    .form-box,.result-box{
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:18px;
+      background:#fff;
+    }
+
+    .form-row{
+      display:grid;
+      gap:8px;
+      margin-bottom:14px;
+    }
+
+    label{
+      font-size:14px;
+      font-weight:800;
+      color:#334155;
+    }
+
+    input,select,button{
+      font:inherit;
+    }
+
+    input,select{
+      width:100%;
+      padding:13px 14px;
+      border-radius:14px;
+      border:1px solid #cbd5e1;
+      background:#fff;
+      color:#0f172a;
+      outline:none;
+    }
+
+    input:focus,select:focus{
+      border-color:#60a5fa;
+      box-shadow:0 0 0 4px rgba(96,165,250,.15);
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+
+    button{
+      border:0;
+      cursor:pointer;
+      border-radius:14px;
+      padding:13px 16px;
+      font-weight:900;
+    }
+
+    .btn-primary{
+      background:var(--brand);
+      color:#fff;
+    }
+
+    .btn-secondary{
+      background:#e2e8f0;
+      color:#0f172a;
+    }
+
+    .result-cards{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-bottom:14px;
+    }
+
+    .summary{
+      padding:14px 16px;
+      border-radius:16px;
+      background:#f8fafc;
+      border:1px solid var(--line);
+      color:#334155;
+      font-size:15px;
+      margin-top:12px;
+    }
+
+    .faq details{
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:#fff;
+      padding:16px 18px;
+    }
+
+    .faq details + details{margin-top:12px}
+    .faq summary{
+      cursor:pointer;
+      list-style:none;
+      font-weight:900;
+    }
+    .faq summary::-webkit-details-marker{display:none}
+
+    .footer{
+      margin:24px 0 40px;
+    }
+
+    .footer-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      margin-top:14px;
+    }
+
+    .divider{
+      height:1px;
+      background:var(--line);
+      margin:20px 0;
+    }
+
+    @media (max-width:980px){
+      .grid-2,.tool-grid,.grid-3{grid-template-columns:1fr}
+    }
+
+    @media (max-width:720px){
+      .hero-box{padding:26px 18px}
+      .card{padding:20px}
+      .result-cards{grid-template-columns:1fr}
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Article",
+    "headline":"부가세 계산기 가이드 | 공급가액, 부가세, 합계금액 쉽게 이해하기",
+    "description":"부가세 계산기 사용법과 공급가액, 합계금액, 포함가와 별도가 차이, 실제 예시와 FAQ를 정리한 설명형 가이드 페이지",
+    "author":{
+      "@type":"Organization",
+      "name":"올인원 정산 계산기"
+    },
+    "publisher":{
+      "@type":"Organization",
+      "name":"올인원 정산 계산기"
+    },
+    "datePublished":"2026-04-02",
+    "dateModified":"2026-04-02",
+    "mainEntityOfPage":"https://3333-63p.pages.dev/vat-guide.html"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {
+        "@type":"Question",
+        "name":"부가세 포함 금액에서 공급가액은 어떻게 계산하나요?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"일반적인 10% 기준 예시에서는 합계금액을 1.1로 나누어 공급가액을 구하고, 합계금액에서 공급가액을 빼면 부가세를 구할 수 있습니다."
+        }
+      },
+      {
+        "@type":"Question",
+        "name":"공급가액만 알 때 합계금액은 어떻게 구하나요?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"일반적인 10% 기준 예시에서는 공급가액에 10%를 더하면 부가세 포함 합계금액을 계산할 수 있습니다."
+        }
+      },
+      {
+        "@type":"Question",
+        "name":"견적서 금액이 부가세 포함인지 별도인지 왜 중요하나요?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"같은 숫자여도 포함가인지 별도가인지에 따라 실제 공급가액과 세액이 달라집니다. 계약, 견적, 세금계산서 검토에서 이 구분이 매우 중요합니다."
+        }
+      },
+      {
+        "@type":"Question",
+        "name":"이 페이지의 계산값은 세무 신고에 바로 사용해도 되나요?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"이 페이지는 일반적인 계산 예시와 빠른 참고용입니다. 실제 신고나 발행 전에는 업종별 규정, 면세 여부, 반올림 기준, 회계 처리 기준을 별도로 확인하는 것이 좋습니다."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="logo">올인원 정산 계산기</div>
+      <nav class="mini-nav" aria-label="페이지 이동">
+        <a href="/">홈</a>
+        <a href="#what">언제 쓰나요</a>
+        <a href="#types">포함가와 별도가</a>
+        <a href="#examples">예시</a>
+        <a href="#calculator">계산기</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-box">
+        <span class="eyebrow">VAT Guide</span>
+        <h1>부가세 계산기 가이드<br />공급가액, 부가세, 합계금액 쉽게 이해하기</h1>
+        <p class="lead">
+          부가세 계산에서 가장 많이 헷갈리는 부분은 <strong>입력한 금액이 부가세 포함인지, 별도인지</strong>입니다.
+          같은 110,000원이라도 포함가인지 별도가인지에 따라 공급가액과 세액이 달라집니다.
+          이 페이지는 부가세 계산기를 처음 쓰는 사람도 이해할 수 있도록,
+          <strong>공급가액·부가세·합계금액의 관계</strong>, <strong>포함가와 별도가의 차이</strong>,
+          <strong>실제 예시와 해석 방법</strong>까지 한 번에 정리한 설명형 가이드입니다.
+        </p>
+
+        <div class="meta-row">
+          <span class="chip">업데이트 2026-04-02</span>
+          <span class="chip">설명형 콘텐츠 페이지</span>
+          <span class="chip">실제 예시 포함</span>
+          <span class="chip">하단 계산기 제공</span>
+        </div>
+
+        <div class="toc">
+          <a href="#what">부가세 계산기가 필요한 이유</a>
+          <a href="#types">포함가와 별도가 차이</a>
+          <a href="#formula">공식 이해하기</a>
+          <a href="#examples">실제 계산 예시</a>
+          <a href="#interpret">결과 읽는 법</a>
+          <a href="#calculator">부가세 계산기</a>
+        </div>
+
+        <div class="notice">
+          이 페이지는 <strong>일반적인 10% 기준 계산 예시</strong>를 바탕으로 작성한 참고용 가이드입니다.
+          실제 세무 처리에서는 업종별 규정, 면세 여부, 발행 방식, 반올림 기준 등에 따라 결과가 달라질 수 있습니다.
+        </div>
+      </div>
+    </section>
+
+    <section id="what" class="section card">
+      <div class="kicker">When to use</div>
+      <h2>부가세 계산기는 언제 필요한가요?</h2>
+      <div class="grid-2">
+        <div class="muted">
+          <p>
+            부가세 계산기는 단순히 세금 숫자를 나누는 도구가 아니라,
+            <strong>거래 금액의 구조를 명확하게 파악하는 도구</strong>에 가깝습니다.
+            견적서를 만들 때, 세금계산서를 확인할 때, 거래처와 금액을 협의할 때,
+            혹은 쇼핑몰 운영 중 공급가 기준으로 수익을 분석할 때 자주 사용됩니다.
+          </p>
+          <p>
+            특히 실무에서 자주 발생하는 문제는 “이 금액이 이미 부가세가 포함된 숫자인지,
+            아니면 공급가액만 적힌 숫자인지”를 놓치는 것입니다.
+            이 구분을 잘못 이해하면 매출 계산, 정산 금액, 이익 분석까지 모두 어긋날 수 있습니다.
+          </p>
+          <p>
+            그래서 부가세 계산을 할 때는 최소한 아래 3가지를 함께 확인하는 것이 좋습니다.
+          </p>
+          <ul class="list-tight">
+            <li>입력한 금액이 부가세 포함가인지 별도가인지</li>
+            <li>공급가액과 부가세가 각각 얼마인지</li>
+            <li>최종 합계금액이 실제 거래 금액과 일치하는지</li>
+          </ul>
+        </div>
+
+        <aside class="stat">
+          <span class="k">대표 사용 상황</span>
+          <div class="muted small">
+            <p>견적서 작성 전 공급가액 계산</p>
+            <p>세금계산서 금액 확인</p>
+            <p>거래명세서 검토</p>
+            <p>부가세 포함 판매가 역산</p>
+            <p>매입·매출 정산 전 금액 분리</p>
+            <p>온라인 판매 수익 구조 분석</p>
+          </div>
+
+          <div class="warm-box">
+            <strong>실무 팁</strong><br />
+            금액이 맞지 않을 때는 계산기보다 먼저
+            “이 숫자가 포함가인지 별도가인지”부터 다시 확인하는 것이 가장 빠릅니다.
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="types" class="section card">
+      <div class="kicker">Price modes</div>
+      <h2>포함가와 별도가는 무엇이 다를까요?</h2>
+      <p class="muted">
+        부가세 계산에서 핵심은 입력 모드를 정확히 구분하는 것입니다.
+        같은 숫자라도 어떤 기준으로 입력했는지에 따라 계산 결과가 달라집니다.
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>구분</th>
+              <th>의미</th>
+              <th>예시 입력값</th>
+              <th>주의할 점</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>부가세 포함가</td>
+              <td>이미 공급가액과 부가세가 합쳐진 최종 금액</td>
+              <td>110,000원</td>
+              <td>이 경우 공급가액은 100,000원, 부가세는 10,000원처럼 역산해야 함</td>
+            </tr>
+            <tr>
+              <td>부가세 별도가</td>
+              <td>공급가액만 입력된 상태, 세금은 아직 더하지 않은 금액</td>
+              <td>100,000원</td>
+              <td>최종 합계금액을 보려면 별도로 부가세를 더해야 함</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="formula">
+        핵심 이해: 일반적인 10% 기준 예시에서는<br />
+        포함가 110,000원 → 공급가액 100,000원 + 부가세 10,000원<br />
+        별도가 100,000원 → 부가세 10,000원 추가 → 합계금액 110,000원
+      </div>
+    </section>
+
+    <section id="formula" class="section grid-2">
+      <article class="card">
+        <div class="kicker">Formula basics</div>
+        <h2>부가세 계산 공식은 어떻게 이해하면 좋을까요?</h2>
+        <div class="muted">
+          <p>
+            부가세 계산은 복잡해 보이지만 핵심 구조는 단순합니다.
+            공급가액이 있고, 여기에 일정 비율의 세액이 붙어 최종 합계금액이 됩니다.
+            반대로 합계금액만 알고 있다면 공급가액과 세액을 다시 분리해서 계산할 수 있습니다.
+          </p>
+          <p>
+            초보자 입장에서는 공식을 외우기보다 아래 3개 개념만 이해하면 훨씬 쉽습니다.
+          </p>
+          <ul class="list-tight">
+            <li><strong>공급가액</strong> = 실제 물건이나 서비스 자체의 금액</li>
+            <li><strong>부가세</strong> = 공급가액에 붙는 세액</li>
+            <li><strong>합계금액</strong> = 공급가액 + 부가세</li>
+          </ul>
+          <p>
+            즉, 계산기에서 무엇을 입력하든 결국 공급가액과 세액의 관계를 나누거나 합치는 과정이라고 생각하면 됩니다.
+          </p>
+        </div>
+      </article>
+
+      <aside class="card">
+        <div class="kicker">Easy takeaway</div>
+        <h2>이 부분만 기억해도 충분합니다</h2>
+        <div class="muted">
+          <p>포함가는 이미 세금이 들어간 숫자입니다.</p>
+          <p>별도가는 세금을 아직 더하지 않은 숫자입니다.</p>
+          <p>공급가액과 합계금액을 혼동하면 견적과 정산이 어긋날 수 있습니다.</p>
+          <p>부가세 계산은 먼저 입력 금액의 기준을 확인하는 것이 절반입니다.</p>
+        </div>
+      </aside>
+    </section>
+
+    <section id="examples" class="section card">
+      <div class="kicker">Examples</div>
+      <h2>실제 계산 예시로 보면 더 쉽습니다</h2>
+      <p class="muted">
+        아래 예시는 이해를 돕기 위한 대표적인 사례입니다. 실제 문서 작성이나 신고 전에는 거래 조건과 기준을 다시 확인하세요.
+      </p>
+
+      <div class="grid-3">
+        <article class="stat">
+          <span class="k">예시 1</span>
+          <span class="v">포함가 110,000원</span>
+          <p class="muted small">
+            이미 부가세가 포함된 금액이라고 보면,
+            공급가액은 100,000원이고 부가세는 10,000원으로 나뉩니다.
+            포함가를 역산하는 대표적인 사례입니다.
+          </p>
+        </article>
+
+        <article class="stat">
+          <span class="k">예시 2</span>
+          <span class="v">별도가 100,000원</span>
+          <p class="muted small">
+            공급가액만 알고 있는 경우에는 부가세 10,000원을 더해
+            최종 합계금액 110,000원을 구할 수 있습니다.
+            견적서 작성 시 자주 쓰는 방식입니다.
+          </p>
+        </article>
+
+        <article class="stat">
+          <span class="k">예시 3</span>
+          <span class="v">판매가 분석</span>
+          <p class="muted small">
+            온라인 판매가가 부가세 포함인지 별도인지에 따라
+            실제 매출 인식과 수익 분석 값이 달라질 수 있습니다.
+            마진율 계산 전에도 이 구분이 중요합니다.
+          </p>
+        </article>
+      </div>
+
+      <div class="warm-box">
+        같은 110,000원이라도 “포함가인지 별도가인지”에 따라 해석이 달라집니다.
+        숫자보다 먼저 <strong>기준</strong>을 확인하는 습관이 중요합니다.
+      </div>
+    </section>
+
+    <section id="interpret" class="section card">
+      <div class="kicker">How to read results</div>
+      <h2>계산 결과는 어떻게 읽어야 하나요?</h2>
+      <div class="muted">
+        <p>
+          계산 결과를 볼 때 가장 먼저 확인해야 하는 것은
+          <strong>내가 보고 싶은 값이 공급가액인지, 합계금액인지</strong>입니다.
+          예를 들어 거래처와 실제 계약 금액을 이야기할 때는 합계금액이 중요할 수 있고,
+          세금계산서나 수익 분석에서는 공급가액을 더 자주 보게 됩니다.
+        </p>
+        <p>
+          공급가액은 상품이나 서비스 자체의 순수 금액을 이해하는 데 유용하고,
+          합계금액은 실제 결제되거나 청구되는 최종 금액을 확인하는 데 유용합니다.
+          둘을 혼동하면 견적서, 발주서, 정산표, 판매가 분석표가 서로 맞지 않게 됩니다.
+        </p>
+        <p>
+          그래서 결과를 읽을 때는 단순히 숫자만 보는 것이 아니라,
+          <strong>이 숫자가 어떤 문서에서 어떤 기준으로 쓰일 값인지</strong>를 함께 생각해야 합니다.
+        </p>
+      </div>
+    </section>
+
+    <section class="section grid-2">
+      <article class="card">
+        <div class="kicker">Common mistakes</div>
+        <h2>자주 하는 실수</h2>
+        <ul class="list-tight muted">
+          <li>포함가와 별도가를 혼동함</li>
+          <li>공급가액을 최종 결제금액으로 착각함</li>
+          <li>거래처가 준 금액의 기준을 확인하지 않음</li>
+          <li>세금계산서와 견적서 기준이 다른데 그대로 비교함</li>
+          <li>판매가 분석에서 부가세 포함 여부를 반영하지 않음</li>
+          <li>계산값을 바로 신고 기준으로 확정해 버림</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <div class="kicker">Practical tip</div>
+        <h2>현실적인 확인 순서</h2>
+        <div class="muted">
+          <p>1순위는 입력한 금액이 포함가인지 별도가인지 확인하는 것입니다.</p>
+          <p>2순위는 공급가액과 부가세가 각각 얼마인지 보는 것입니다.</p>
+          <p>3순위는 최종 합계금액이 실제 청구·결제 금액과 맞는지 확인합니다.</p>
+          <p>부가세 계산은 숫자 계산보다 기준 확인이 더 중요할 때가 많습니다.</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="calculator" class="section card calculator">
+      <div class="kicker">VAT calculator</div>
+      <h2>부가세 계산기</h2>
+      <p class="muted">
+        아래 계산기는 예시값이 기본으로 들어 있어 첫 화면부터 결과를 볼 수 있게 구성했습니다.
+        입력 금액과 기준 모드를 바꾸면 공급가액, 부가세, 합계금액을 바로 확인할 수 있습니다.
+      </p>
+
+      <div class="tool-grid">
+        <div class="form-box">
+          <div class="form-row">
+            <label for="vatAmount">금액(원)</label>
+            <input id="vatAmount" type="number" value="110000" />
+          </div>
+
+          <div class="form-row">
+            <label for="vatMode">구분</label>
+            <select id="vatMode">
+              <option value="inclusive">부가세 포함(합계금액 기준)</option>
+              <option value="exclusive">부가세 별도(공급가액 기준)</option>
+            </select>
+          </div>
+
+          <div class="actions">
+            <button class="btn-primary" type="button" onclick="calcVat()">부가세 계산하기</button>
+            <button class="btn-secondary" type="button" onclick="resetVat()">기본값</button>
+          </div>
+
+          <div class="formula">
+            일반적인 10% 기준 예시<br />
+            포함가 기준: 공급가액 = 합계금액 ÷ 1.1<br />
+            별도가 기준: 부가세 = 공급가액 × 10%
+          </div>
+        </div>
+
+        <div class="result-box" aria-live="polite">
+          <div class="result-cards">
+            <div class="stat">
+              <span class="k">공급가액</span>
+              <span class="v" id="vatSupply">-</span>
+            </div>
+            <div class="stat">
+              <span class="k">부가세</span>
+              <span class="v" id="vatTax">-</span>
+            </div>
+            <div class="stat">
+              <span class="k">합계금액</span>
+              <span class="v" id="vatTotal">-</span>
+            </div>
+          </div>
+
+          <div class="summary" id="vatSummary">
+            예시 결과를 불러오는 중입니다.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="section card faq">
+      <div class="kicker">FAQ</div>
+      <h2>자주 묻는 질문</h2>
+
+      <details open>
+        <summary>부가세 포함 금액에서 공급가액은 어떻게 계산하나요?</summary>
+        <p class="muted">
+          일반적인 10% 기준 예시에서는 합계금액을 1.1로 나누어 공급가액을 구하고,
+          합계금액에서 공급가액을 빼면 부가세를 계산할 수 있습니다.
+        </p>
+      </details>
+
+      <details>
+        <summary>공급가액만 알 때 합계금액은 어떻게 구하나요?</summary>
+        <p class="muted">
+          일반적인 10% 기준 예시에서는 공급가액에 10%를 더하면 부가세 포함 합계금액을 구할 수 있습니다.
+        </p>
+      </details>
+
+      <details>
+        <summary>포함가와 별도가를 왜 꼭 구분해야 하나요?</summary>
+        <p class="muted">
+          같은 숫자라도 기준이 다르면 공급가액과 세액이 달라지기 때문입니다.
+          견적, 계약, 세금계산서, 정산, 수익 분석에서 기준을 잘못 잡으면 숫자가 서로 맞지 않게 됩니다.
+        </p>
+      </details>
+
+      <details>
+        <summary>이 페이지 계산값을 바로 세무 신고 기준으로 써도 되나요?</summary>
+        <p class="muted">
+          이 페이지는 일반적인 계산 예시와 빠른 참고용입니다.
+          실제 신고나 발행 전에는 업종별 규정, 면세 여부, 반올림 기준, 회계 처리 기준을 따로 확인하는 것이 좋습니다.
+        </p>
+      </details>
+    </section>
+
+    <section class="section card">
+      <div class="kicker">Related guides</div>
+      <h2>같이 보면 좋은 페이지</h2>
+      <div class="muted">
+        <p><a href="/">올인원 정산 계산기 홈</a> — 전체 계산기와 기본 설명 보기</p>
+        <p><a href="/loan-guide.html">대출 계산기 가이드</a> — 월 상환액, 총 이자, 상환 방식 이해하기</p>
+        <p><a href="/margin-guide.html">마진율 계산기 가이드</a> — 순이익, 마진율, ROI 차이 정리</p>
+      </div>
+    </section>
+
+    <footer class="footer card">
+      <h2 style="font-size:22px;">이용 안내</h2>
+      <p class="muted">
+        본 페이지의 계산 결과는 정보 제공 목적의 참고값입니다. 실제 세무 처리, 세금계산서 발행, 신고 업무 전에는 관련 기준과 문서를 반드시 확인하세요.
+      </p>
+      <p class="muted">
+        이 페이지는 부가세 계산기를 보다 쉽게 이해하도록 돕기 위해 작성된 설명형 콘텐츠입니다.
+        계산기만 제공하는 화면이 아니라, 사용 이유와 결과 해석 방법까지 함께 볼 수 있도록 구성했습니다.
+      </p>
+
+      <div class="divider"></div>
+
+      <div class="footer-links">
+        <a href="/about.html">서비스 소개</a>
+        <a href="/privacy.html">개인정보처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/contact.html">문의하기</a>
+      </div>
+
+      <p class="small muted" style="margin-top:18px;">
+        최종 업데이트: 2026-04-02 · 작성: 올인원 정산 계산기
+      </p>
+    </footer>
+  </main>
+
+  <script>
+    const nf = new Intl.NumberFormat('ko-KR');
+
+    function toNumber(value){
+      const n = parseFloat(value);
+      return Number.isFinite(n) ? n : 0;
+    }
+
+    function formatKRW(value){
+      return nf.format(Math.round(value)) + '원';
+    }
+
+    function setText(id, text){
+      const el = document.getElementById(id);
+      if(el) el.textContent = text;
+    }
+
+    function calcVat(){
+      const amount = toNumber(document.getElementById('vatAmount').value);
+      const mode = document.getElementById('vatMode').value;
+
+      let supply = 0;
+      let vat = 0;
+      let total = 0;
+
+      if(mode === 'inclusive'){
+        total = amount;
+        supply = amount / 1.1;
+        vat = total - supply;
+      } else {
+        supply = amount;
+        vat = supply * 0.1;
+        total = supply + vat;
+      }
+
+      setText('vatSupply', formatKRW(supply));
+      setText('vatTax', formatKRW(vat));
+      setText('vatTotal', formatKRW(total));
+
+      if(mode === 'inclusive'){
+        setText(
+          'vatSummary',
+          `입력한 ${formatKRW(amount)}은 부가세가 이미 포함된 합계금액으로 보고 계산했습니다. 공급가액은 ${formatKRW(supply)}, 부가세는 ${formatKRW(vat)}입니다. 포함가 기준에서는 합계금액을 그대로 두고 내부 구성을 나누어 보는 방식으로 이해하면 쉽습니다.`
+        );
+      } else {
+        setText(
+          'vatSummary',
+          `입력한 ${formatKRW(amount)}은 공급가액 기준으로 보고 계산했습니다. 부가세는 ${formatKRW(vat)}이며, 최종 합계금액은 ${formatKRW(total)}입니다. 별도가 기준에서는 공급가액에 세액을 더해 실제 청구 금액을 확인하는 방식으로 이해하면 쉽습니다.`
+        );
+      }
+    }
+
+    function resetVat(){
+      document.getElementById('vatAmount').value = 110000;
+      document.getElementById('vatMode').value = 'inclusive';
+      calcVat();
+    }
+
+    document.addEventListener('DOMContentLoaded', function(){
+      calcVat();
+    });
+  </script>
+</body>
+</html>

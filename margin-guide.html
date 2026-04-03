@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>마진율 계산기 가이드 | 순이익, 마진율, ROI 쉽게 이해하기</title>
+  <meta name="description" content="마진율 계산기 사용법을 쉽게 설명하는 가이드 페이지입니다. 순이익, 마진율, ROI 차이와 계산 공식, 판매가·매입가·수수료 구조, 실제 예시와 FAQ까지 한 번에 정리했습니다." />
+  <meta name="keywords" content="마진율 계산기, 순이익 계산, ROI 계산기, 판매가 계산, 수수료 계산, 스마트스토어 마진, 온라인 판매 마진율, 쇼핑몰 수익 계산" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="canonical" href="https://3333-63p.pages.dev/margin-guide.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="마진율 계산기 가이드 | 순이익, 마진율, ROI 쉽게 이해하기" />
+  <meta property="og:description" content="마진율 계산기를 단순 도구가 아니라 이해형 콘텐츠로 정리한 페이지. 순이익, 마진율, ROI 차이, 공식, 예시, 해석, FAQ까지 포함." />
+  <meta property="og:locale" content="ko_KR" />
+
+  <style>
+    :root{
+      --bg:#f8fafc;
+      --card:#ffffff;
+      --ink:#0f172a;
+      --sub:#475569;
+      --line:#e2e8f0;
+      --brand:#2563eb;
+      --brand-soft:#eff6ff;
+      --warm:#fff7ed;
+      --warm-line:#fed7aa;
+      --radius:22px;
+      --shadow:0 16px 36px rgba(15,23,42,.08);
+      --max:1080px;
+      --good:#059669;
+      --warn:#d97706;
+      --bad:#dc2626;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;
+      color:var(--ink);
+      background:linear-gradient(180deg,#f8fafc 0%,#eef2ff 100%);
+      line-height:1.7;
+    }
+
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    .container{
+      width:min(var(--max), calc(100% - 32px));
+      margin:0 auto;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:20;
+      backdrop-filter:blur(14px);
+      background:rgba(248,250,252,.86);
+      border-bottom:1px solid rgba(226,232,240,.9);
+    }
+
+    .topbar-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:12px 0;
+      flex-wrap:wrap;
+    }
+
+    .logo{
+      font-weight:900;
+      letter-spacing:-0.03em;
+      color:#0f172a;
+    }
+
+    .mini-nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .mini-nav a{
+      padding:9px 13px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:#0f172a;
+      font-size:14px;
+      font-weight:700;
+    }
+
+    .hero{
+      padding:42px 0 22px;
+    }
+
+    .hero-box{
+      background:
+        radial-gradient(circle at top left, rgba(37,99,235,.12), transparent 34%),
+        radial-gradient(circle at right bottom, rgba(99,102,241,.10), transparent 30%),
+        #fff;
+      border:1px solid var(--line);
+      border-radius:30px;
+      padding:36px 28px;
+      box-shadow:var(--shadow);
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 14px;
+      border-radius:999px;
+      background:var(--brand-soft);
+      color:var(--brand);
+      font-size:13px;
+      font-weight:900;
+      letter-spacing:.02em;
+    }
+
+    h1,h2,h3{
+      margin:0 0 12px;
+      line-height:1.25;
+      letter-spacing:-0.03em;
+    }
+
+    h1{font-size:clamp(30px,5vw,52px)}
+    h2{font-size:clamp(24px,3vw,34px)}
+    h3{font-size:22px}
+
+    .lead{
+      font-size:18px;
+      color:var(--sub);
+      margin:14px 0 0;
+      max-width:920px;
+    }
+
+    .meta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:20px;
+    }
+
+    .chip{
+      padding:10px 14px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid var(--line);
+      color:var(--sub);
+      font-size:14px;
+      font-weight:700;
+    }
+
+    .toc{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:20px;
+    }
+
+    .toc a{
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:#0f172a;
+      font-size:14px;
+      font-weight:800;
+    }
+
+    .section{
+      margin:22px 0;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:26px;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:20px;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+    }
+
+    .muted{color:var(--sub)}
+    .small{font-size:14px}
+
+    .notice{
+      margin-top:18px;
+      border-left:4px solid var(--brand);
+      background:#f8fbff;
+      color:#1e3a8a;
+      border-radius:14px;
+      padding:14px 16px;
+    }
+
+    .warm-box{
+      margin-top:16px;
+      background:var(--warm);
+      border:1px solid var(--warm-line);
+      border-radius:16px;
+      padding:14px 16px;
+      color:#9a3412;
+    }
+
+    .table-wrap{
+      overflow:auto;
+      border:1px solid var(--line);
+      border-radius:18px;
+      margin-top:14px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      background:#fff;
+      min-width:720px;
+    }
+
+    th,td{
+      padding:12px 14px;
+      border-bottom:1px solid var(--line);
+      text-align:left;
+      font-size:14px;
+      vertical-align:top;
+    }
+
+    th{
+      background:#f8fafc;
+      color:#334155;
+      font-weight:900;
+    }
+
+    .kicker{
+      color:var(--brand);
+      font-size:13px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      font-weight:900;
+      margin-bottom:6px;
+    }
+
+    .stat{
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+      background:#f8fafc;
+    }
+
+    .stat .k{
+      display:block;
+      color:var(--sub);
+      font-size:13px;
+      font-weight:700;
+      margin-bottom:8px;
+    }
+
+    .stat .v{
+      display:block;
+      font-size:24px;
+      font-weight:900;
+      letter-spacing:-0.03em;
+    }
+
+    .list-tight{
+      margin:0;
+      padding-left:18px;
+    }
+
+    .list-tight li + li{margin-top:8px}
+
+    .formula{
+      background:#fffbeb;
+      border:1px solid #fde68a;
+      color:#92400e;
+      border-radius:16px;
+      padding:14px 16px;
+      margin-top:14px;
+      font-size:14px;
+    }
+
+    .calculator{
+      margin-top:10px;
+    }
+
+    .tool-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      align-items:start;
+    }
+
+    .form-box,.result-box{
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:18px;
+      background:#fff;
+    }
+
+    .form-row{
+      display:grid;
+      gap:8px;
+      margin-bottom:14px;
+    }
+
+    label{
+      font-size:14px;
+      font-weight:800;
+      color:#334155;
+    }
+
+    input,select,button{
+      font:inherit;
+    }
+
+    input,select{
+      width:100%;
+      padding:13px 14px;
+      border-radius:14px;
+      border:1px solid #cbd5e1;
+      background:#fff;
+      color:#0f172a;
+      outline:none;
+    }
+
+    input:focus,select:focus{
+      border-color:#60a5fa;
+      box-shadow:0 0 0 4px rgba(96,165,250,.15);
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+
+    button{
+      border:0;
+      cursor:pointer;
+      border-radius:14px;
+      padding:13px 16px;
+      font-weight:900;
+    }
+
+    .btn-primary{
+      background:var(--brand);
+      color:#fff;
+    }
+
+    .btn-secondary{
+      background:#e2e8f0;
+      color:#0f172a;
+    }
+
+    .result-cards{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-bottom:14px;
+    }
+
+    .summary{
+      padding:14px 16px;
+      border-radius:16px;
+      background:#f8fafc;
+      border:1px solid var(--line);
+      color:#334155;
+      font-size:15px;
+      margin-top:12px;
+    }
+
+    .health{
+      margin-top:12px;
+      padding:14px 16px;
+      border-radius:16px;
+      font-size:14px;
+      font-weight:700;
+      border:1px solid var(--line);
+      background:#fff;
+    }
+
+    .health.good{
+      color:var(--good);
+      border-color:#a7f3d0;
+      background:#ecfdf5;
+    }
+
+    .health.warn{
+      color:var(--warn);
+      border-color:#fed7aa;
+      background:#fff7ed;
+    }
+
+    .health.bad{
+      color:var(--bad);
+      border-color:#fecaca;
+      background:#fef2f2;
+    }
+
+    .faq details{
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:#fff;
+      padding:16px 18px;
+    }
+
+    .faq details + details{margin-top:12px}
+    .faq summary{
+      cursor:pointer;
+      list-style:none;
+      font-weight:900;
+    }
+    .faq summary::-webkit-details-marker{display:none}
+
+    .footer{
+      margin:24px 0 40px;
+    }
+
+    .footer-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      margin-top:14px;
+    }
+
+    .divider{
+      height:1px;
+      background:var(--line);
+      margin:20px 0;
+    }
+
+    @media (max-width:980px){
+      .grid-2,.tool-grid,.grid-3{grid-template-columns:1fr}
+    }
+
+    @media (max-width:720px){
+      .hero-box{padding:26px 18px}
+      .card{padding:20px}
+      .result-cards{grid-template-columns:1fr}
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Article",
+    "headline":"마진율 계산기 가이드 | 순이익, 마진율, ROI 쉽게 이해하기",
+    "description":"마진율 계산기 사용법과 순이익, 마진율, ROI 차이, 판매가·매입가·수수료 관계, 실제 예시와 FAQ를 정리한 설명형 가이드 페이지",
+    "author":{
+      "@type":"Organization",
+      "name":"올인원 정산 계산기"
+    },
+    "publisher":{
+      "@type":"Organization",
+      "name":"올인원 정산 계산기"
+    },
+    "datePublished":"2026-04-03",
+    "dateModified":"2026-04-03",
+    "mainEntityOfPage":"https://3333-63p.pages.dev/margin-guide.html"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {
+        "@type":"Question",
+        "name":"마진율과 ROI는 무엇이 다른가요?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"마진율은 판매가 대비 순이익 비율이고, ROI는 원가 대비 순이익 비율입니다. 판매 효율을 볼 때는 마진율, 투자 효율을 볼 때는 ROI가 더 직관적입니다."
+        }
+      },
+      {
+        "@type":"Question",
+        "name":"순이익이 있는데도 마진율이 낮을 수 있나요?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"그럴 수 있습니다. 순이익 금액이 양수여도 판매가가 높거나 수수료가 커서 판매가 대비 이익 비율이 낮으면 마진율은 낮게 나올 수 있습니다."
+        }
+      },
+      {
+        "@type":"Question",
+        "name":"수수료만 반영하면 충분한가요?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"아닙니다. 실제 수익 분석에서는 택배비, 포장비, 광고비, 반품 비용, 쿠폰 비용 등 추가 비용까지 같이 보는 것이 더 정확합니다."
+        }
+      },
+      {
+        "@type":"Question",
+        "name":"이 페이지 계산값을 바로 판매 전략 기준으로 써도 되나요?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"이 페이지는 빠른 비교와 참고용 계산입니다. 실제 가격 책정 전에는 추가 비용, 세금, 환불률, 광고비, 할인 정책 등을 함께 검토하는 것이 좋습니다."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="logo">올인원 정산 계산기</div>
+      <nav class="mini-nav" aria-label="페이지 이동">
+        <a href="/">홈</a>
+        <a href="#what">언제 쓰나요</a>
+        <a href="#types">마진율과 ROI</a>
+        <a href="#examples">예시</a>
+        <a href="#calculator">계산기</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-box">
+        <span class="eyebrow">Margin Guide</span>
+        <h1>마진율 계산기 가이드<br />순이익, 마진율, ROI 쉽게 이해하기</h1>
+        <p class="lead">
+          판매를 시작할 때 가장 많이 하는 실수는 <strong>판매가만 보고 “남는 장사”라고 생각하는 것</strong>입니다.
+          실제로는 매입가, 플랫폼 수수료, 결제 수수료, 각종 운영비를 함께 봐야 진짜 수익 구조가 보입니다.
+          이 페이지는 마진율 계산기를 처음 쓰는 사람도 이해할 수 있도록,
+          <strong>순이익·마진율·ROI의 차이</strong>, <strong>판매가와 원가의 관계</strong>,
+          <strong>실제 예시와 결과 해석 방법</strong>까지 한 번에 정리한 설명형 가이드입니다.
+        </p>
+
+        <div class="meta-row">
+          <span class="chip">업데이트 2026-04-03</span>
+          <span class="chip">설명형 콘텐츠 페이지</span>
+          <span class="chip">실제 예시 포함</span>
+          <span class="chip">하단 계산기 제공</span>
+        </div>
+
+        <div class="toc">
+          <a href="#what">마진 계산기가 필요한 이유</a>
+          <a href="#types">마진율과 ROI 차이</a>
+          <a href="#formula">공식 이해하기</a>
+          <a href="#examples">실제 계산 예시</a>
+          <a href="#interpret">결과 읽는 법</a>
+          <a href="#calculator">마진율 계산기</a>
+        </div>
+
+        <div class="notice">
+          이 페이지는 <strong>판매가·매입가·수수료 기준의 기본 수익 구조</strong>를 빠르게 이해하기 위한 가이드입니다.
+          실제 운영에서는 광고비, 택배비, 포장비, 반품 비용, 부가세 여부까지 함께 고려해야 더 정확한 판단이 가능합니다.
+        </div>
+      </div>
+    </section>
+
+    <section id="what" class="section card">
+      <div class="kicker">When to use</div>
+      <h2>마진율 계산기는 언제 필요한가요?</h2>
+      <div class="grid-2">
+        <div class="muted">
+          <p>
+            마진율 계산기는 단순히 “이 상품 팔면 얼마 남지?”를 확인하는 도구가 아닙니다.
+            실제로는 <strong>가격 전략을 세우는 기준</strong>이고, 잘못 쓰면 팔수록 손해가 나는 구조를 미리 발견하는 데 도움이 됩니다.
+            특히 온라인 쇼핑몰, 스마트스토어, 쿠팡, 배달앱, 위탁판매, 사입 판매처럼
+            플랫폼 수수료가 붙는 구조에서는 겉으로 보이는 판매가와 실제 손에 남는 금액이 크게 다를 수 있습니다.
+          </p>
+          <p>
+            예를 들어 판매가가 39,900원이고 매입가가 18,000원이라면 얼핏 많이 남아 보일 수 있습니다.
+            하지만 여기에 플랫폼 수수료가 붙고, 광고비나 부대비용이 더해지면
+            실제 순이익은 생각보다 작아질 수 있습니다.
+          </p>
+          <p>
+            그래서 마진 계산을 할 때는 최소한 아래 3가지를 함께 확인하는 것이 좋습니다.
+          </p>
+          <ul class="list-tight">
+            <li>판매 후 실제로 남는 순이익 금액이 얼마인지</li>
+            <li>판매가 대비 이익 비율인 마진율이 충분한지</li>
+            <li>원가 대비 이익 비율인 ROI가 투자 효율 기준에서 괜찮은지</li>
+          </ul>
+        </div>
+
+        <aside class="stat">
+          <span class="k">대표 사용 상황</span>
+          <div class="muted small">
+            <p>쇼핑몰 판매가 책정 전 수익 확인</p>
+            <p>스마트스토어 상품 등록 전 마진 점검</p>
+            <p>플랫폼 수수료 반영 후 순이익 비교</p>
+            <p>할인 행사 전 가격 방어선 체크</p>
+            <p>사입 상품과 위탁 상품 수익 구조 비교</p>
+            <p>광고 시작 전 최소 손익 기준 파악</p>
+          </div>
+
+          <div class="warm-box">
+            <strong>실무 팁</strong><br />
+            판매가를 정할 때는 “얼마에 팔까?”보다
+            “이 가격에 팔면 실제로 얼마 남나?”를 먼저 보는 습관이 중요합니다.
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="types" class="section card">
+      <div class="kicker">Core concepts</div>
+      <h2>순이익, 마진율, ROI는 무엇이 다를까요?</h2>
+      <p class="muted">
+        많은 사람이 이 세 가지를 비슷하게 느끼지만, 실제로는 보는 기준이 다릅니다.
+        무엇을 기준으로 이익을 나누는지에 따라 의미가 달라집니다.
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>항목</th>
+              <th>의미</th>
+              <th>계산 기준</th>
+              <th>언제 특히 중요할까</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>순이익</td>
+              <td>판매 후 실제로 남는 금액</td>
+              <td>판매가 - 매입가 - 수수료</td>
+              <td>한 건 팔았을 때 실제로 얼마 남는지 볼 때</td>
+            </tr>
+            <tr>
+              <td>마진율</td>
+              <td>판매가 대비 순이익 비율</td>
+              <td>순이익 ÷ 판매가 × 100</td>
+              <td>판매 효율과 가격 경쟁력을 볼 때</td>
+            </tr>
+            <tr>
+              <td>ROI</td>
+              <td>원가 대비 순이익 비율</td>
+              <td>순이익 ÷ 매입가 × 100</td>
+              <td>투입 원가 대비 수익 효율을 볼 때</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="formula">
+        핵심 이해:<br />
+        순이익은 “얼마가 남는가”를 보는 숫자이고,<br />
+        마진율은 “판매가 대비 얼마나 효율적인가”,<br />
+        ROI는 “원가 대비 얼마나 잘 벌었는가”를 보는 숫자입니다.
+      </div>
+    </section>
+
+    <section id="formula" class="section grid-2">
+      <article class="card">
+        <div class="kicker">Formula basics</div>
+        <h2>마진 계산 공식은 어떻게 이해하면 좋을까요?</h2>
+        <div class="muted">
+          <p>
+            마진 계산은 복잡해 보이지만 기본 구조는 단순합니다.
+            먼저 판매가에서 매입가를 빼고, 여기에 플랫폼 수수료를 추가로 빼면 기본적인 순이익이 나옵니다.
+            그다음 이 순이익을 판매가나 원가로 나누면 비율 지표가 만들어집니다.
+          </p>
+          <p>
+            초보자 입장에서는 공식을 외우기보다 아래 3개 개념만 기억하면 훨씬 쉬워집니다.
+          </p>
+          <ul class="list-tight">
+            <li><strong>순이익</strong> = 실제로 남는 돈</li>
+            <li><strong>마진율</strong> = 판매가 대비 이익 비율</li>
+            <li><strong>ROI</strong> = 원가 대비 이익 비율</li>
+          </ul>
+          <p>
+            즉, 같은 순이익이라도 판매가가 높은 구조인지, 원가가 낮은 구조인지에 따라
+            마진율과 ROI는 다르게 나올 수 있습니다.
+          </p>
+        </div>
+      </article>
+
+      <aside class="card">
+        <div class="kicker">Easy takeaway</div>
+        <h2>이 부분만 기억해도 충분합니다</h2>
+        <div class="muted">
+          <p>순이익이 양수라고 해서 항상 좋은 구조는 아닙니다.</p>
+          <p>마진율이 낮으면 많이 팔아도 체감 수익이 약할 수 있습니다.</p>
+          <p>ROI가 높으면 적은 원가로 더 효율적인 수익을 낸다는 뜻입니다.</p>
+          <p>플랫폼 수수료를 빼지 않으면 실제 수익을 과대평가하기 쉽습니다.</p>
+        </div>
+      </aside>
+    </section>
+
+    <section id="examples" class="section card">
+      <div class="kicker">Examples</div>
+      <h2>실제 계산 예시로 보면 더 쉽습니다</h2>
+      <p class="muted">
+        아래 예시는 이해를 돕기 위한 대표적인 사례입니다. 실제 운영에서는 광고비나 배송비까지 포함하면 값이 달라질 수 있습니다.
+      </p>
+
+      <div class="grid-3">
+        <article class="stat">
+          <span class="k">예시 1</span>
+          <span class="v">판매가 39,900원</span>
+          <p class="muted small">
+            매입가 18,000원, 수수료율 12%라면
+            판매가가 높아 보여도 실제 순이익은 계산 전 직감보다 작을 수 있습니다.
+            온라인 판매자가 가장 자주 확인하는 패턴입니다.
+          </p>
+        </article>
+
+        <article class="stat">
+          <span class="k">예시 2</span>
+          <span class="v">수수료만 바뀌는 경우</span>
+          <p class="muted small">
+            같은 상품이라도 플랫폼 수수료가 8%인지 15%인지에 따라
+            순이익과 마진율이 눈에 띄게 달라질 수 있습니다.
+            플랫폼 비교 시 꼭 확인해야 합니다.
+          </p>
+        </article>
+
+        <article class="stat">
+          <span class="k">예시 3</span>
+          <span class="v">가격 할인 전 점검</span>
+          <p class="muted small">
+            할인 행사 전 판매가를 낮추면 전환율은 좋아질 수 있지만
+            마진율이 크게 떨어져 팔수록 바빠지기만 하고 남는 건 적을 수 있습니다.
+          </p>
+        </article>
+      </div>
+
+      <div class="warm-box">
+        판매량이 늘어도 마진 구조가 약하면 피로도만 커질 수 있습니다.
+        그래서 가격 정책은 항상 <strong>순이익 + 마진율 + ROI</strong>를 함께 보고 판단하는 것이 좋습니다.
+      </div>
+    </section>
+
+    <section id="interpret" class="section card">
+      <div class="kicker">How to read results</div>
+      <h2>계산 결과는 어떻게 읽어야 하나요?</h2>
+      <div class="muted">
+        <p>
+          계산 결과를 볼 때 가장 먼저 확인해야 하는 것은 <strong>순이익이 실제 운영 기준에서 충분한가</strong>입니다.
+          예를 들어 순이익이 3,000원이라고 해도 상품 준비, CS, 반품 대응, 광고 운영까지 포함하면 체감상 매우 낮게 느껴질 수 있습니다.
+        </p>
+        <p>
+          다음으로 봐야 하는 값은 <strong>마진율</strong>입니다.
+          마진율은 판매가 대비 얼마나 효율적으로 이익을 남기는지를 보여주기 때문에,
+          가격 경쟁이 심한 시장에서는 특히 중요합니다.
+        </p>
+        <p>
+          마지막으로 <strong>ROI</strong>는 원가 대비 효율을 보여줍니다.
+          같은 순이익이라도 원가를 적게 넣고 더 높은 이익을 만들었다면 ROI가 높게 나옵니다.
+          사입 구조나 테스트 판매 단계에서는 ROI를 같이 보면 훨씬 판단이 쉬워집니다.
+        </p>
+        <p>
+          그래서 결과를 읽을 때는 단순히 “남는다/안 남는다”가 아니라,
+          <strong>얼마나 남는지, 그 비율이 충분한지, 투입 대비 효율이 괜찮은지</strong>를 함께 보는 것이 중요합니다.
+        </p>
+      </div>
+    </section>
+
+    <section class="section grid-2">
+      <article class="card">
+        <div class="kicker">Common mistakes</div>
+        <h2>자주 하는 실수</h2>
+        <ul class="list-tight muted">
+          <li>판매가와 매입가만 보고 수익을 판단함</li>
+          <li>플랫폼 수수료를 빼지 않음</li>
+          <li>순이익과 마진율을 같은 뜻으로 생각함</li>
+          <li>할인 행사 전 손익선 체크를 하지 않음</li>
+          <li>광고비, 택배비, 포장비를 별도로 보지 않음</li>
+          <li>한 건 기준 이익만 보고 전체 운영 효율을 놓침</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <div class="kicker">Practical tip</div>
+        <h2>현실적인 확인 순서</h2>
+        <div class="muted">
+          <p>1순위는 한 건 판매 시 실제 순이익이 얼마 남는지 보는 것입니다.</p>
+          <p>2순위는 마진율이 내 업종 기준에서 충분한지 확인합니다.</p>
+          <p>3순위는 ROI를 보고 원가 대비 효율이 괜찮은지 봅니다.</p>
+          <p>4순위는 광고비, 배송비, 반품 비용까지 더해 실제 운영 기준으로 다시 검토합니다.</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="calculator" class="section card calculator">
+      <div class="kicker">Margin calculator</div>
+      <h2>마진율 계산기</h2>
+      <p class="muted">
+        아래 계산기는 예시값이 기본으로 들어 있어 첫 화면부터 결과를 볼 수 있게 구성했습니다.
+        판매가, 매입가, 수수료율을 바꾸면 순이익, 마진율, ROI를 바로 확인할 수 있습니다.
+      </p>
+
+      <div class="tool-grid">
+        <div class="form-box">
+          <div class="form-row">
+            <label for="marginCost">매입가(원)</label>
+            <input id="marginCost" type="number" value="18000" />
+          </div>
+
+          <div class="form-row">
+            <label for="marginPrice">판매가(원)</label>
+            <input id="marginPrice" type="number" value="39900" />
+          </div>
+
+          <div class="form-row">
+            <label for="marginFee">수수료율(%)</label>
+            <input id="marginFee" type="number" step="0.01" value="12" />
+          </div>
+
+          <div class="actions">
+            <button class="btn-primary" type="button" onclick="calcMargin()">마진 계산하기</button>
+            <button class="btn-secondary" type="button" onclick="resetMargin()">기본값</button>
+          </div>
+
+          <div class="formula">
+            기본 공식<br />
+            수수료액 = 판매가 × 수수료율<br />
+            순이익 = 판매가 - 매입가 - 수수료액<br />
+            마진율 = 순이익 ÷ 판매가 × 100<br />
+            ROI = 순이익 ÷ 매입가 × 100
+          </div>
+
+          <div class="warm-box">
+            실제 운영에서는 이 계산값에 광고비, 택배비, 포장비, 반품 비용 등을 추가로 반영하면 더 정확합니다.
+          </div>
+        </div>
+
+        <div class="result-box" aria-live="polite">
+          <div class="result-cards">
+            <div class="stat">
+              <span class="k">순이익</span>
+              <span class="v" id="marginProfit">-</span>
+            </div>
+            <div class="stat">
+              <span class="k">마진율</span>
+              <span class="v" id="marginRateOut">-</span>
+            </div>
+            <div class="stat">
+              <span class="k">ROI</span>
+              <span class="v" id="marginRoi">-</span>
+            </div>
+          </div>
+
+          <div class="summary" id="marginSummary">
+            예시 결과를 불러오는 중입니다.
+          </div>
+
+          <div class="health" id="marginHealth">
+            마진 상태를 분석하는 중입니다.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="section card faq">
+      <div class="kicker">FAQ</div>
+      <h2>자주 묻는 질문</h2>
+
+      <details open>
+        <summary>마진율과 ROI는 무엇이 다른가요?</summary>
+        <p class="muted">
+          마진율은 판매가 대비 순이익 비율이고, ROI는 원가 대비 순이익 비율입니다.
+          판매 효율을 볼 때는 마진율이, 투입 원가 대비 성과를 볼 때는 ROI가 더 직관적입니다.
+        </p>
+      </details>
+
+      <details>
+        <summary>순이익이 있는데도 마진율이 낮을 수 있나요?</summary>
+        <p class="muted">
+          그럴 수 있습니다. 순이익 금액이 양수여도 판매가 대비 비율이 작으면 마진율은 낮게 나옵니다.
+          그래서 금액과 비율을 같이 보는 것이 중요합니다.
+        </p>
+      </details>
+
+      <details>
+        <summary>수수료만 반영하면 충분한가요?</summary>
+        <p class="muted">
+          아닙니다. 실제 운영에서는 택배비, 포장비, 광고비, 반품 비용, 쿠폰 비용, 부가세 여부까지 함께 봐야 더 현실적인 손익 판단이 가능합니다.
+        </p>
+      </details>
+
+      <details>
+        <summary>이 페이지 계산값을 바로 판매 전략 기준으로 써도 되나요?</summary>
+        <p class="muted">
+          이 페이지는 빠른 비교와 참고용 계산입니다.
+          실제 가격 책정 전에는 추가 비용, 세금, 환불률, 광고비, 할인 정책 등을 함께 검토하는 것이 좋습니다.
+        </p>
+      </details>
+    </section>
+
+    <section class="section card">
+      <div class="kicker">Related guides</div>
+      <h2>같이 보면 좋은 페이지</h2>
+      <div class="muted">
+        <p><a href="/">올인원 정산 계산기 홈</a> — 전체 계산기와 기본 설명 보기</p>
+        <p><a href="/loan-guide.html">대출 계산기 가이드</a> — 월 상환액, 총 이자, 상환 방식 이해하기</p>
+        <p><a href="/vat-guide.html">부가세 계산기 가이드</a> — 공급가액, 부가세, 합계금액 이해하기</p>
+      </div>
+    </section>
+
+    <footer class="footer card">
+      <h2 style="font-size:22px;">이용 안내</h2>
+      <p class="muted">
+        본 페이지의 계산 결과는 정보 제공 목적의 참고값입니다. 실제 판매 전략, 가격 책정, 정산 판단 전에는 플랫폼 정책, 광고비, 배송비, 세금 구조, 반품률 등을 반드시 함께 검토하세요.
+      </p>
+      <p class="muted">
+        이 페이지는 마진율 계산기를 보다 쉽게 이해하도록 돕기 위해 작성된 설명형 콘텐츠입니다.
+        계산기만 제공하는 화면이 아니라, 사용 이유와 결과 해석 방법까지 함께 볼 수 있도록 구성했습니다.
+      </p>
+
+      <div class="divider"></div>
+
+      <div class="footer-links">
+        <a href="/about.html">서비스 소개</a>
+        <a href="/privacy.html">개인정보처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/contact.html">문의하기</a>
+      </div>
+
+      <p class="small muted" style="margin-top:18px;">
+        최종 업데이트: 2026-04-03 · 작성: 올인원 정산 계산기
+      </p>
+    </footer>
+  </main>
+
+  <script>
+    const nf = new Intl.NumberFormat('ko-KR');
+
+    function toNumber(value){
+      const n = parseFloat(value);
+      return Number.isFinite(n) ? n : 0;
+    }
+
+    function formatKRW(value){
+      return nf.format(Math.round(value)) + '원';
+    }
+
+    function formatPercent(value){
+      return (Math.round(value * 100) / 100).toLocaleString('ko-KR') + '%';
+    }
+
+    function setText(id, text){
+      const el = document.getElementById(id);
+      if(el) el.textContent = text;
+    }
+
+    function setHealth(text, type){
+      const box = document.getElementById('marginHealth');
+      if(!box) return;
+      box.className = 'health ' + type;
+      box.textContent = text;
+    }
+
+    function calcMargin(){
+      const cost = toNumber(document.getElementById('marginCost').value);
+      const price = toNumber(document.getElementById('marginPrice').value);
+      const feeRate = toNumber(document.getElementById('marginFee').value) / 100;
+
+      if(price <= 0){
+        setText('marginSummary', '판매가는 0보다 커야 합니다.');
+        setHealth('판매가를 먼저 올바르게 입력해 주세요.', 'bad');
+        return;
+      }
+
+      if(cost < 0 || feeRate < 0){
+        setText('marginSummary', '매입가와 수수료율은 음수가 될 수 없습니다.');
+        setHealth('입력값을 다시 확인해 주세요.', 'bad');
+        return;
+      }
+
+      const feeAmount = price * feeRate;
+      const profit = price - cost - feeAmount;
+      const marginRate = price > 0 ? (profit / price) * 100 : 0;
+      const roi = cost > 0 ? (profit / cost) * 100 : 0;
+
+      setText('marginProfit', formatKRW(profit));
+      setText('marginRateOut', formatPercent(marginRate));
+      setText('marginRoi', cost > 0 ? formatPercent(roi) : '-');
+
+      setText(
+        'marginSummary',
+        `판매가 ${formatKRW(price)}, 매입가 ${formatKRW(cost)}, 수수료율 ${formatPercent(feeRate * 100)} 기준으로 계산했습니다. 수수료액은 ${formatKRW(feeAmount)}이고, 실제 순이익은 ${formatKRW(profit)}입니다. 판매가 대비 마진율은 ${formatPercent(marginRate)}이며, 원가 대비 ROI는 ${cost > 0 ? formatPercent(roi) : '계산 불가'}입니다.`
+      );
+
+      if(profit < 0){
+        setHealth('현재 구조는 적자입니다. 판매가 인상, 매입가 절감, 수수료 구조 점검이 필요합니다.', 'bad');
+      } else if(marginRate < 10){
+        setHealth('이익은 남지만 마진율이 낮은 편입니다. 광고비나 반품 비용이 추가되면 체감 수익이 크게 줄 수 있습니다.', 'warn');
+      } else {
+        setHealth('기본 계산 기준에서는 비교적 안정적인 구조로 보입니다. 다만 실제 운영비를 추가로 반영해 다시 확인하는 것이 좋습니다.', 'good');
+      }
+    }
+
+    function resetMargin(){
+      document.getElementById('marginCost').value = 18000;
+      document.getElementById('marginPrice').value = 39900;
+      document.getElementById('marginFee').value = 12;
+      calcMargin();
+    }
+
+    document.addEventListener('DOMContentLoaded', function(){
+      calcMargin();
+    });
+  </script>
+</body>
+</html>
