@@ -3,55 +3,211 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="올인원 정산 계산기의 미션과 전문적인 금융 계산 로직에 대해 알아보세요.">
   <title>서비스 소개 | 올인원 정산 계산기</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;800&display=swap" rel="stylesheet">
+  <meta name="description" content="올인원 정산 계산기는 대출, 이자, 부가세, 마진율, 수수료, 환율 정산 계산과 설명형 가이드를 함께 제공하는 실전형 계산 도구입니다." />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="canonical" href="https://3333-63p.pages.dev/about.html" />
+
   <style>
-    :root { --bg: #f8fafc; --text: #1e293b; --primary: #2563eb; --muted: #64748b; }
-    body { font-family: 'Noto Sans KR', sans-serif; line-height: 1.8; color: var(--text); max-width: 800px; margin: 0 auto; padding: 40px 20px; background: var(--bg); }
-    h1 { font-size: 2.2rem; font-weight: 800; color: var(--text); margin-bottom: 24px; border-bottom: 4px solid var(--primary); display: inline-block; }
-    h2 { font-size: 1.6rem; margin-top: 40px; color: var(--text); border-left: 5px solid var(--primary); padding-left: 15px; }
-    p { margin-bottom: 20px; }
-    .auth-box { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin: 30px 0; border: 1px solid #e2e8f0; }
-    .formula-list { font-family: monospace; background: #f1f5f9; padding: 15px; border-radius: 10px; font-size: 0.9rem; color: #334155; }
-    .mission-box { background: linear-gradient(135deg, var(--primary), #1d4ed8); color: white; padding: 35px; border-radius: 20px; margin-top: 40px; }
-    .mission-box h2 { color: white; margin-top: 0; border: none; padding: 0; }
-    .back-link { display: inline-block; margin-top: 40px; color: var(--primary); text-decoration: none; font-weight: bold; border: 2px solid var(--primary); padding: 10px 25px; border-radius: 30px; transition: 0.3s; }
-    .back-link:hover { background: var(--primary); color: white; }
+    :root{
+      --bg:#f8fafc;
+      --card:#ffffff;
+      --ink:#0f172a;
+      --sub:#475569;
+      --line:#e2e8f0;
+      --brand:#2563eb;
+      --soft:#eff6ff;
+      --radius:22px;
+      --shadow:0 16px 36px rgba(15,23,42,.08);
+      --max:980px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;
+      color:var(--ink);
+      background:linear-gradient(180deg,#f8fafc 0%,#eef2ff 100%);
+      line-height:1.75;
+    }
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{width:min(var(--max), calc(100% - 32px));margin:0 auto}
+    .topbar{
+      position:sticky; top:0; z-index:20;
+      backdrop-filter:blur(12px);
+      background:rgba(248,250,252,.86);
+      border-bottom:1px solid var(--line);
+    }
+    .topbar-inner{
+      display:flex; justify-content:space-between; align-items:center;
+      gap:12px; padding:12px 0; flex-wrap:wrap;
+    }
+    .logo{font-weight:900; color:var(--ink); letter-spacing:-0.03em}
+    .nav{display:flex; gap:10px; flex-wrap:wrap}
+    .nav a{
+      padding:9px 13px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:#fff;
+      color:var(--ink);
+      font-size:14px;
+      font-weight:700;
+    }
+    .hero{padding:40px 0 20px}
+    .hero-box,.card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+    }
+    .hero-box{
+      padding:34px 26px;
+      background:
+        radial-gradient(circle at top left, rgba(37,99,235,.12), transparent 34%),
+        radial-gradient(circle at right bottom, rgba(99,102,241,.10), transparent 30%),
+        #fff;
+    }
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 14px;
+      border-radius:999px;
+      background:var(--soft);
+      color:var(--brand);
+      font-size:13px;
+      font-weight:900;
+    }
+    h1,h2{
+      margin:0 0 12px;
+      letter-spacing:-0.03em;
+      line-height:1.25;
+    }
+    h1{font-size:clamp(30px,5vw,48px)}
+    h2{font-size:clamp(22px,3vw,32px)}
+    .lead{font-size:18px; color:var(--sub); margin:14px 0 0}
+    .section{margin:22px 0}
+    .card{padding:24px}
+    .muted{color:var(--sub)}
+    .grid{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+    ul{margin:0; padding-left:20px}
+    li+li{margin-top:8px}
+    .note{
+      margin-top:16px;
+      padding:14px 16px;
+      border-radius:16px;
+      background:#f8fbff;
+      border-left:4px solid var(--brand);
+      color:#1e3a8a;
+    }
+    .footer{margin:24px 0 40px}
+    .footer-links{display:flex; gap:14px; flex-wrap:wrap; margin-top:14px}
+    .divider{height:1px; background:var(--line); margin:18px 0}
+    @media (max-width:760px){
+      .grid{grid-template-columns:1fr}
+      .hero-box,.card{padding:20px}
+    }
   </style>
 </head>
 <body>
-  <h1>서비스 소개</h1>
-  
-  <p><strong>올인원 정산 계산기</strong>는 복잡한 금융 수치를 투명하고 정확하게 시각화하여 사용자의 합리적인 의사결정을 돕기 위해 구축된 전문 금융 유틸리티 웹 서비스입니다.</p>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="logo">올인원 정산 계산기</div>
+      <nav class="nav" aria-label="상단 메뉴">
+        <a href="/">홈</a>
+        <a href="/loan-guide.html">대출 가이드</a>
+        <a href="/vat-guide.html">부가세 가이드</a>
+        <a href="/margin-guide.html">마진율 가이드</a>
+        <a href="/contact.html">문의하기</a>
+      </nav>
+    </div>
+  </header>
 
-  <div class="auth-box">
-    <h2>검증된 계산 로직 (Expertise)</h2>
-    <p>저희 서비스는 시중 은행 및 국세청의 표준 산식을 준수합니다.</p>
-    <ul style="list-style: none; padding: 0;">
-      <li><strong>대출 상환:</strong> 원리금균등분할상환(Amortization) 산식을 기반으로 소수점 단위까지 정밀 계산합니다.</li>
-      <li><strong>이자 수익:</strong> 대한민국 소득세법에 따른 일반과세(15.4%), 세금우대율을 적용합니다.</li>
-      <li><strong>비즈니스 마진:</strong> Net Profit Margin 및 ROI(Return on Investment) 표준 지표를 사용합니다.</li>
-    </ul>
-  </div>
+  <main class="container">
+    <section class="hero">
+      <div class="hero-box">
+        <span class="eyebrow">About</span>
+        <h1>올인원 정산 계산기 소개</h1>
+        <p class="lead">
+          올인원 정산 계산기는 대출, 이자, 부가세, 마진율, 수수료, 환율 정산처럼
+          실무에서 자주 쓰는 숫자를 빠르게 계산하고, 그 결과를 실제로 어떻게 해석해야 하는지까지 함께 설명하는 정보형 서비스입니다.
+        </p>
+      </div>
+    </section>
 
-  <h2>왜 이 서비스를 만들었나요?</h2>
-  <p>수많은 계산기 앱이 존재하지만, 대부분은 과도한 광고로 사용성을 해치거나 계산 과정을 블랙박스처럼 숨기고 있습니다. 저희는 <strong>"가장 빠르고, 가장 깨끗하며, 가장 정확한"</strong> 도구를 제공하는 것을 목표로 합니다.</p>
-  
-  <div class="auth-box" style="background: #fffbeb;">
-    <h3 style="margin-top: 0; color: #92400e;">🔒 보안 및 개인정보 (Trust)</h3>
-    <p>사용자가 입력하는 모든 데이터는 <strong>서버로 전송되지 않고 사용자의 웹 브라우저 내에서만 처리</strong>됩니다. 민감한 금융 정보를 안심하고 입력하셔도 좋습니다. (Client-side Processing Only)</p>
-  </div>
+    <section class="section card">
+      <h2>이 사이트가 하는 일</h2>
+      <p class="muted">
+        이 사이트는 단순한 계산기 모음이 아니라, 사용자가 계산 결과를 이해하고 실제 판단에 활용할 수 있도록
+        설명형 가이드와 예시를 함께 제공하는 것을 목표로 합니다.
+        같은 숫자라도 어떤 기준으로 입력했는지, 어떤 상황에서 어떤 계산기를 써야 하는지에 따라 의미가 달라질 수 있기 때문에
+        도구와 설명을 함께 제공하는 구조로 운영합니다.
+      </p>
+      <div class="note">
+        계산기만 제공하는 화면보다, 공식·예시·주의사항·FAQ를 함께 제공하는 구조를 기본 원칙으로 삼고 있습니다.
+      </div>
+    </section>
 
-  <div class="mission-box">
-    <h2>우리의 미션</h2>
-    <p>"복잡한 숫자를 명확한 통찰로 바꾸는 것."<br>단순한 결과값 출력을 넘어, 차트를 통한 시각적 비중 분석으로 여러분의 자산 관리에 실질적인 도움을 드립니다.</p>
-  </div>
+    <section class="section grid">
+      <article class="card">
+        <h2>주요 제공 콘텐츠</h2>
+        <ul class="muted">
+          <li>대출 계산기 및 상환 방식 가이드</li>
+          <li>예금·이자 계산과 세후 수령액 해설</li>
+          <li>부가세 포함가·별도가 계산과 문서 해석 가이드</li>
+          <li>마진율, 순이익, ROI 계산과 가격 전략 참고 자료</li>
+          <li>수수료 및 환율 정산 계산</li>
+          <li>실제 예시, FAQ, 결과 해석 문서</li>
+        </ul>
+      </article>
 
-  <p style="margin-top: 40px; font-size: 0.9rem; color: var(--muted);">
-    본 서비스는 지속적으로 업데이트되며, 금융 정책 변화에 맞춰 계산 로직을 정교화하고 있습니다. 문의 사항은 <a href="contact.html">문의하기</a>를 이용해 주세요.
-  </p>
+      <article class="card">
+        <h2>누구에게 도움이 되나요?</h2>
+        <ul class="muted">
+          <li>대출 실행 전 월 상환액을 비교하려는 사용자</li>
+          <li>스마트스토어·쇼핑몰 판매가를 검토하는 판매자</li>
+          <li>부가세 포함 금액과 공급가액을 구분해야 하는 사용자</li>
+          <li>플랫폼 수수료와 정산액을 계산해야 하는 운영자</li>
+          <li>복잡한 공식보다 쉬운 설명과 예시가 필요한 초보 사용자</li>
+        </ul>
+      </article>
+    </section>
 
-  <a href="index.html" class="back-link">← 메인 페이지로 돌아가기</a>
+    <section class="section card">
+      <h2>운영 원칙</h2>
+      <ul class="muted">
+        <li>계산 결과는 보기 쉬운 숫자뿐 아니라 해석 문장까지 함께 제공합니다.</li>
+        <li>사용자가 많이 헷갈리는 개념은 별도 가이드 페이지로 설명합니다.</li>
+        <li>정보성 문서와 도구 화면을 함께 제공하여 이해도를 높입니다.</li>
+        <li>가능한 한 모바일에서도 읽기 쉽고 입력하기 쉬운 구조를 유지합니다.</li>
+        <li>오류 제보나 개선 요청이 들어오면 검토 후 반영할 수 있습니다.</li>
+      </ul>
+    </section>
+
+    <section class="section card">
+      <h2>중요 안내</h2>
+      <p class="muted">
+        이 사이트의 계산 결과와 설명은 정보 제공 및 참고 목적입니다.
+        실제 금융상품 계약, 세무 신고, 회계 처리, 법률 판단, 플랫폼 정산에는 각 기관의 약관,
+        정책, 반올림 기준, 세율, 적용 환율, 일정 등이 우선합니다.
+      </p>
+      <p class="muted">
+        따라서 중요한 의사결정 전에는 반드시 관련 기관, 공식 문서, 또는 전문가의 안내를 함께 확인하시기 바랍니다.
+      </p>
+    </section>
+
+    <footer class="footer card">
+      <h2 style="font-size:22px;">관련 페이지</h2>
+      <p class="muted">서비스 운영 정보와 사용자 안내를 아래 페이지에서 확인할 수 있습니다.</p>
+      <div class="footer-links">
+        <a href="/privacy.html">개인정보처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/contact.html">문의하기</a>
+      </div>
+      <div class="divider"></div>
+      <p class="muted" style="margin:0;">최종 업데이트: 2026-04-03</p>
+    </footer>
+  </main>
 </body>
 </html>
